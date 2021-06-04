@@ -4,7 +4,7 @@ So you would like to help improve the error messages we see in the Haskell toolc
 
 Welcome! We're glad to have you, and we will do our best to ensure your efforts are worthwhile.
 
-
+This repository is unrelated to Haskell's [`errors` package](https://hackage.haskell.org/package/errors), which [lives elsewhere](https://github.com/Gabriel439/Haskell-Errors-Library).
 ## Project Goals
 
 * Serve the Haskell community, focusing on improvements to the error messages seen in the Haskell ecosystem.
