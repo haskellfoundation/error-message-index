@@ -34,5 +34,3 @@ We welcome contributions that help to further progress the project towards its g
 Contributions may come in the form of changes to the code base, as well as opening or commenting on issues and pull requests.
 
 All contributors are expected to follow the [Haskell Foundation's Code of Conduct](https://haskell.foundation/guidelines-for-respectful-communication/).
-
-Please see the [Contributor's Guide](CONTRIBUTING.md) for more information.
