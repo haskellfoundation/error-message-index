@@ -22,6 +22,8 @@ This project is taking shape, so many details are still being worked out, howeve
   * We should identify specific improvements to the messaging
   * We will reach out to and work collaboratively with tool developers
   * We should document and help improve understanding of the error messaging
+* For tools that use error message codes:
+  * We describe the messages and how to interpret them in the Haskell Message Index (see below)
 
 As a result, this repo may include code that demonstrates the errors we wish to improve, as well as code and material to render documentation relevant to explaining each error and the possible situations the error relates to.
 
@@ -33,3 +35,25 @@ We welcome contributions that help to further progress the project towards its g
 Contributions may come in the form of changes to the code base, as well as opening or commenting on issues and pull requests.
 
 All contributors are expected to follow the [Haskell Foundation's Code of Conduct](https://haskell.foundation/guidelines-for-respectful-communication/).
+
+## The Haskell Message Index
+
+Haskell tooling emits a variety of errors, warnings, and other messages. In an unreleased branch, GHC emits a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
+
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving the site. Thanks!
+
+### Running Locally
+
+The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, run:
+```
+$ cabal run -- site watch
+```
+or
+```
+$ stack run -- site watch
+```
+which fires up an HTTP server on `localhost:8080`.
+
+### Maintenance
+
+The Message Index is a project of the [Haskell Foundation](http://haskell.foundation). Please get in touch if you have ideas, requests, or any other feedback!

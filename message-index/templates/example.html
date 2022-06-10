@@ -1,0 +1,19 @@
+$body$
+
+<ul>
+$for(files)$
+<li>
+  <code>$name$</code>:
+  <p>
+    <div class="example before">
+      <p>Before:</p>
+      <pre>$before$</pre>
+    </div>
+    <div class="example after">
+      <p>After:</p>
+      <pre>$after$</pre>
+    </div>
+  </p>
+</li>
+$endfor$
+</ul>
