@@ -7,7 +7,7 @@ When using the language extension `{-# LANGUAGE Strict #-}` or `{-# LANGUAGE Str
 ## Error Message
 
 ```
-Main.hs:9:8: error:  [GHC-95909]
+StrictExtension.hs:9:8: error:  [GHC-95909]
     • Constructor ‘A’ does not have the required strict field(s): b
     • In the expression: A {a = True}
       In an equation for ‘aBad’: aBad = A {a = True}
@@ -15,7 +15,7 @@ Main.hs:9:8: error:  [GHC-95909]
 9 | aBad = A { a = True }
   |        ^^^^^^^^^^^^^^
 
-Main.hs:12:12: error: [GHC-95909]
+StrictExtension.hs:12:12: error: [GHC-95909]
     • Constructor ‘A’ does not have the required strict field(s): a
     • In the expression: A {b = 5}
       In an equation for ‘aAlsoBad’: aAlsoBad = A {b = 5}

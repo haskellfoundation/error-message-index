@@ -7,7 +7,7 @@ The instantiation of a strict field in a record is missing. In `aFine`, we can l
 ## Error Message
 
 ```
-Main.hs:12:8: error: [GHC-95909]
+StrictBangPatterns.hs:12:8: error: [GHC-95909]
     • Constructor ‘A’ does not have the required strict field(s): a
     • In the expression: A {b = 5}
       In an equation for ‘aBad’: aBad = A {b = 5}
