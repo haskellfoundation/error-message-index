@@ -10,7 +10,7 @@ The message index is in the directory `message-index`.
 ## Building GHC with Error Codes
 
 Please follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian),
-switching to the wip/T21684` branch before compilation.
+switching to the `wip/T21684` branch before compilation.
 Your error messages would then contain an ID.
 
 ```
