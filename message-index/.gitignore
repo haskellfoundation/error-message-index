@@ -1,0 +1,7 @@
+*~
+/dist-newstyle/
+/_cache/
+/_site/
+/.stack-work
+*.hi
+*.o
