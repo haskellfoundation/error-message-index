@@ -13,4 +13,4 @@
 
  ## Explanation
 
- A space is missing before the typa application and the expression cannot be correctly parsed.
+ A space is missing before the type application. The expression cannot be correctly parsed.
