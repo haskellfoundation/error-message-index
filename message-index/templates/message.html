@@ -1,3 +1,17 @@
+$if(flag)$
+<p>
+  <i>Flag: <code>$flag$</code></i>
+  $if(flagset)$
+  (included in <code>$flagset$</code>)
+  $else$
+  (on by default)
+  $endif$
+</p>
+$endif$
+$if(extension)$
+<p><i>Language extension: <code>$extension$</code></i></p>
+$endif$
+
 $body$
 
 <h2>Examples</h2>
