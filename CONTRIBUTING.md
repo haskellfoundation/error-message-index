@@ -74,7 +74,7 @@ A message with ID `GHC-123` and two examples might have the following structure:
      * `/messages/GHC-123/example1/index.md` - description and metadata for the first example
      * `/messages/GHC-123/example1/before/Main.hs` - an example file that exhibits the error
      * `/messages/GHC-123/example1/after/Main.hs` - an example file in which the error has been fixed
-     * `/messages/GHC-123/example2/` - files related to the first example
+     * `/messages/GHC-123/example2/` - files related to the second example
      * `/messages/GHC-123/example2/index.md` - description and metadata for the second example
      * `/messages/GHC-123/example2/before/Main.hs` - an example file that exhibits the error
      * `/messages/GHC-123/example2/after/Main.hs` - an example file in which the error has been fixed
