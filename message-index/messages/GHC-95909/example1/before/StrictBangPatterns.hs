@@ -1,5 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
 
+module StrictBangPatterns where
+
 data A = A
     { a :: !Bool
     , b :: Int
