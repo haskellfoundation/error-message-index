@@ -195,12 +195,12 @@ getExamples = do
 getExampleFiles :: Compiler [(FilePath, Maybe (Item String), Maybe (Item String))]
 getExampleFiles = do
   me <- getUnderlying
-  exampleName <- case splitDirectories $ toFilePath me of
-    ["messages", _id, exampleName, _mdFile] -> pure exampleName
+  (id, exampleName) <- case splitDirectories $ toFilePath me of
+    ["messages", id, exampleName, _mdFile] -> pure (id, exampleName)
     _ -> fail "Not processing an example"
 
-  before <- loadAll (fromGlob ("messages/*/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
-  after <- loadAll (fromGlob ("messages/*/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
+  before <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
+  after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
   pure
     [ ( name,
