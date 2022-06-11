@@ -1,6 +1,6 @@
 ---
 title: Empty character literals
-summary: 
+summary: Incorrect TemplateHaskell syntax
 introduced: 9.6.1
 severity: error
 ---
