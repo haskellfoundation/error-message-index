@@ -5,10 +5,12 @@
  ## Error Message
 
  ```
-<interactive>:84:6: error:
+Example.hs:7:5: error:
     @-pattern in expression context: g@Int
     Type application syntax requires a space before '@'
-
+  |
+7 | f = g@Int
+  |     ^^^^^
  ```
 
  ## Explanation
