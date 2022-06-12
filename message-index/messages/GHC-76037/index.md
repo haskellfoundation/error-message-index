@@ -1,7 +1,7 @@
 ---
 title: Not In Scope Error
 summary:  An identifier is not in scope
-introduced: 9.4.1
+introduced: 9.6.1
 severity: error
 ---
 
