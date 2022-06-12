@@ -6,4 +6,4 @@ flag: "-Wmissing-import-lists"
 introduced: 9.6.1
 ---
 
-If an import statement brings identifiers into scope, but those constructors are not explicitly listed, then they might become ambiguous in the future.
+If an import statement brings identifiers into scope, but those identifiers are not explicitly listed, then they might become ambiguous in the future.
