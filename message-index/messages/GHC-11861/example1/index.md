@@ -5,7 +5,7 @@ introduced: 9.6.1
 severity: error
 ---
 
-Empty character was given in a single quote. This is not a valid literal. If you want to pass a whitechar use explicit space character `' '` or other from the list: newline, vertab, space, tab, uniWhite.
+An empty pair of single quotes is not a valid literal. To indicate a whitespace character, either use an explicit space character `' '` or an escape code such as `'\n'` for a newline.
 
 ## Example error text
 
