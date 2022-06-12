@@ -1,6 +1,6 @@
 ---
 title: Cannot derive well-kinded instance
-summary: An instance cannot be derived because the kinds cannot be made to match
+summary: An instance cannot be derived because the kinds cannot be made to match.
 introduced: 9.6.1
 severity: error
 ---
