@@ -1,7 +1,4 @@
 ---
-title: Mistaken variable scope
----
----
 title: Attempted to refer to another function's argument
 ---
 
