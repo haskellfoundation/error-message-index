@@ -1,6 +1,6 @@
 ---
-title: Missing space after exclamation `!`
-summary: Bang pattern in expression context
+title: Missing space after exclamation mark `!`
+summary: Bang pattern in expression context.
 severity: error
 introduced: 9.6.1
 ---

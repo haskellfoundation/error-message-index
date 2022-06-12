@@ -1,6 +1,6 @@
 ---
 title: Illegal deriving item
-summary: Something other than a type class appears in a deriving statement
+summary: Something other than a type class appears in a deriving statement.
 introduced: 9.6.1
 severity: error
 ---

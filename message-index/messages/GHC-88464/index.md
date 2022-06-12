@@ -1,6 +1,6 @@
 ---
 title: Variable not in scope
-summary: An unknown variable name was referenced
+summary: An unknown variable name was referenced.
 introduced: 9.6.1
 severity: error
 ---
