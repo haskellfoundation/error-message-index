@@ -15,8 +15,11 @@ $endif$
 $body$
 
 <h2>Examples</h2>
-<ul>
 $for(examples)$
-<li><a href="$url$">$title$</a></li>
+<details>
+  <summary>$title$</summary>
+  <div class="example-container">
+    $body$
+  </div>
+</details>
 $endfor$
-</ul>
