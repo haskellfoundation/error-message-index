@@ -2,7 +2,7 @@
 title: Do notation in pattern match
 ---
 
-When pattern matching, `do` blocks are not allowed as expressions to be pattern matched against.
+When pattern matching, `do` expressions are not allowed as patterns to be matched against.
 
 ## Error Message
 ```
