@@ -1,6 +1,4 @@
-{-# LANGUAGE BangPatterns #-}
-
-module StringBangPatterns where
+module MissingStrictField where
 
 data A = A
     { a :: !Bool

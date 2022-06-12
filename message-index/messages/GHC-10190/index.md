@@ -1,6 +1,6 @@
 ---
 title: Empty enumeration
-summary: An enumeration would be empty
+summary: An enumeration would be empty.
 introduced: 9.6.1
 severity: warning
 ---
