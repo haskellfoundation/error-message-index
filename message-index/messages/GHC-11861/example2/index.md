@@ -5,7 +5,7 @@ introduced: 9.6.1
 severity: error
 ---
 
-Empty character was given in a single quote. This is not a valid literal.
+An empty pair of single quotes is not a Haskell character literal.
 
 If you use TemplateHaskell `''T` syntax is valid and:
 > ''T has type Name, and names the type constructor T. That is, ''⟨thing⟩ interprets ⟨thing⟩ in a type context.
