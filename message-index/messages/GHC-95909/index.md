@@ -1,6 +1,6 @@
 ---
 title: Missing strict fields
-summary: Constructor was not instantiated with required strict field(s)
+summary: Constructor was not instantiated with required strict field(s).
 severity: error
 introduced: 9.6.1
 ---
