@@ -1,6 +1,9 @@
 module NotARecordSelector where
 
-newtype Bar = Bar { bar :: Int }
+class Foo a where
+  foo :: a -> ()
 
-foo :: Bar -> Bar
-foo x = x { bar = 1 }
+data Bar = Bar { bar :: () }
+
+test :: Bar
+test = undefined { bar = () }
