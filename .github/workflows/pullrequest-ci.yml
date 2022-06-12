@@ -1,0 +1,35 @@
+name: Pullrequest CI
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build-and-test:
+    name: Build site
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Haskell
+      uses: haskell/actions/setup@v2
+
+    - name: Check out repo
+      uses: actions/checkout@v3
+      
+    - name: Read the Cabal cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cabal/store
+          message-index/dist-newstyle
+        key: cabal-cache-${{ github.sha }}
+        restore-keys: |
+          cabal-cache
+
+    - name: Update the Cabal index
+      run: cabal update
+
+    - name: Build with Hakyll
+      working-directory: message-index
+      run: cabal run site build
