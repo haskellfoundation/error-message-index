@@ -6,7 +6,7 @@ When pattern matching, `(if .. then .. else)` blocks are not allowed as expressi
 
 In this example, if `a` is `True` then we want to pattern match `b` to `"something"`; if `a` is `False`, we want to pattern match `b` with `"something else"` instead. For instance, `f True "something else"` is `False` and `f False "something else"` is `True`.
 
-However we cannot use an `if` statement within a pattern match; the solution can be to either to match on a tuple of `(a, b)` or to move the if statement outside of the pattern.
+However we cannot use an `if` expression within a pattern match; the solution can be to either to match on a tuple of `(a, b)` or to move the `if` expression outside of the pattern.
 
 ## Error Message
 
