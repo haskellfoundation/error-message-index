@@ -1,6 +1,6 @@
 ---
-title: Missing Fields
-summary: Initialization of record with missing fields
+title: Missing field(s)
+summary: Initialization of record with missing field(s).
 severity: warning
 introduced: 9.6.1
 flag: -Wmissing-fields

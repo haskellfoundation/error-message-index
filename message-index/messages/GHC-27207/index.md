@@ -1,6 +1,6 @@
 ---
 title: Missing space after tilde `~`
-summary: Lazy pattern in expression context
+summary: Lazy pattern in expression context.
 severity: error
 introduced: 9.6.1
 ---

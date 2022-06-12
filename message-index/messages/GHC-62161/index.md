@@ -1,6 +1,6 @@
 ---
-title: Incomplete Patterns
-summary: Pattern match(es) are non-exhaustive
+title: Incomplete patterns
+summary: Pattern match(es) are non-exhaustive.
 severity: warning
 introduced: 9.6.1
 flag: -fwarn-incomplete-patterns

@@ -90,8 +90,8 @@ example message description:
 
 ````markdown
 ---
-title: Unification Error
-summary: Two types that should match are in conflict
+title: Unification error
+summary: Two types that should match are in conflict.
 introduced: 9.4.1
 severity: error
 ---
@@ -107,9 +107,9 @@ Unification error: Expected type A but got type B
 ```
 ````
 
-The fields in the metadata block should be: 
- * `title` - a short title used for the page header and for links to the description
- * `summary` - a short summary used in the message index
+The fields in the metadata block should be:
+ * `title` - a short title used for the page header and for links to the description, in regular sentence case (First word capitalised only, no ending `.`)
+ * `summary` - a short summary used in the message index, in regular sentence case (and finished with a `.`)
  * `introduced` - the tool version in which the error code was introduced (optional)
  * `removed` - if the message was removed, the first version which no longer produces this message (optional)
  * `flag` - the flag which enables this warning (optional)

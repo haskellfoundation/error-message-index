@@ -1,7 +1,7 @@
 ---
-title: Type Application Without Space
-summary:  Parsing error of type application
-introduced: 9.4.1
+title: Type application without space
+summary:  Parsing error of type application.
+introduced: 9.6.1
 severity: error
 ---
 
