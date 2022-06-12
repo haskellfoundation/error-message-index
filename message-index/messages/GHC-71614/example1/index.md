@@ -2,7 +2,7 @@
 title: Empty parameter list in lambda
 ---
 
-The parameter list of a lambda expression must contain at least on parameter, but here it is empty.
+The parameter list of a lambda expression must contain at least one parameter, but here it is empty.
 
 ## Error Message
 
