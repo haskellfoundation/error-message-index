@@ -178,6 +178,25 @@ nav#breadcrumb a {
   color: black;
   text-decoration: underline;
   text-transform: none;
-  diplay: inline;
+  display: inline;
+  margin: 0;
+}
+
+.beforeafter {
+  padding-top: 5px;
+  margin-bottom: 0px;
+  font-style: italic;
+}
+
+.filename {
+  background-color: #eaeaea;
+  padding-left: 5px;
+}
+
+.filename pre {
+  margin: 5px;
+}
+
+table pre {
   margin: 0;
 }
