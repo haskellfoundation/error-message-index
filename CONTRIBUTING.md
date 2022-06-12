@@ -82,6 +82,10 @@ A message with ID `GHC-123` and two examples might have the following structure:
 The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
 
+You can also use the `makeFolder.sh` templating script. Usage is as follows:
+```bash
+./makeFolder.sh <NUMERIC-ERROR-CODE> <HaskellModuleName>
+```
 ### Message Descriptions
 
 Message descriptions (in `index.md` in the message directory) are
@@ -107,7 +111,7 @@ Unification error: Expected type A but got type B
 ```
 ````
 
-The fields in the metadata block should be: 
+The fields in the metadata block should be:
  * `title` - a short title used for the page header and for links to the description
  * `summary` - a short summary used in the message index
  * `introduced` - the tool version in which the error code was introduced (optional)
