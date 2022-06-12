@@ -1,5 +1,5 @@
 ---
-title: Typo: lower-case class name
+title: "Typo: lower-case class name"
 ---
 
 ## Error Message
