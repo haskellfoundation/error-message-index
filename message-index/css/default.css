@@ -165,6 +165,10 @@ article .header {
   width: 45%;
 }
 
+.example pre {
+  overflow-x: scroll;
+}
+
 nav#breadcrumb {
   text-align: right;
 }
