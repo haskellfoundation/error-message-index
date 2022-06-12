@@ -7,4 +7,4 @@ flag: -Wduplicate-exports
 flagset: -Wdefault
 ---
 
-An export list of a module exports mentions the same identifier twice.
+An export list of a module mentions the same identifier twice.
