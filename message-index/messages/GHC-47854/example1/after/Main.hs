@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -fwarn-duplicate-exports #-}
+{-# OPTIONS_GHC -Wduplicate-exports #-}
 
 module Example (answer) where
 
