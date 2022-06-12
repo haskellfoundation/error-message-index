@@ -11,7 +11,7 @@ However we cannot use an `if` statement within a pattern match; the solution can
 ## Error Message
 
 ```
-IfThenElseInPattern.hs:5:6: error:
+IfThenElseInPattern.hs:5:6: error: [GHC-45696]
     (if ... then ... else ...)-syntax in pattern
   |
 5 |     (if a then b == "something" else b == "something else") -> True
