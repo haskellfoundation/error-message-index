@@ -165,6 +165,13 @@ article .header {
   width: 45%;
 }
 
+main pre code {
+  background-color: #fafafa;
+  font-family: monospace;
+  display: inline-block;
+  padding: 10px;
+}
+
 .example pre {
   overflow-x: scroll;
 }
