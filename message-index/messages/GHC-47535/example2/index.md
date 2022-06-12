@@ -1,5 +1,5 @@
 ---
-title: Identifier is not a record selector
+title: Identifier is a class method, not a record selector
 ---
 
 The identifier `foo` is used as a record selector, but it refers to a function of the `Foo` class instead.

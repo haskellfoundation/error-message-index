@@ -1,5 +1,5 @@
 ---
-title: Identifier is not a record selector
+title: Identifier is a top-level binding, not a record selector
 ---
 
 The identifier `foo` is used as a record selector, but is never declared as such.
