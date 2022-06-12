@@ -1,6 +1,6 @@
 ---
 title: Duplicate Exports
-summary: Duplicate entry in an export list
+summary: An identifier apperas twice in an export list.
 severity: warning
 introduced: 9.6.1
 flag: -Wduplicate-exports
