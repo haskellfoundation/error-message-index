@@ -1,8 +1,8 @@
 ---
-title: All fields are strict without explicit bang patterns if the language extension is enabled
+title: All fields are strict if the StrictData language extension is enabled
 ---
 
-When using the language extension `{-# LANGUAGE Strict #-}` or `{-# LANGUAGE StrictData #-}`, all fields are strict, even if we do not explicitly use the strictness bang pattern `!`. Thus, we must instantiate all fields on construction.
+When using the language extension `{-# LANGUAGE Strict #-}` or `{-# LANGUAGE StrictData #-}`, all fields are strict, even if we do not explicitly use the strictness flag `!`. Thus, we must instantiate all fields on construction.
 
 ## Error Message
 
