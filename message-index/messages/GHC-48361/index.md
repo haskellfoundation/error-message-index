@@ -5,6 +5,4 @@ severity: error
 introduced: 9.6.1
 ---
 
-Patterns bind values to variables.  It would be interesting to allow
-for types variables, which you could then use in type annotations on
-the right-hand side.  But this is not supported by this ghc version.
+Patterns can bind constructor arguments to variables, but they are not able to bind type arguments to type variables.
