@@ -7,8 +7,7 @@ severity: error
 
 An empty pair of single quotes is not a Haskell character literal.
 
-If you use TemplateHaskell `''T` syntax is valid and, following [TemplateHaskellQuotes](https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html#extension-TemplateHaskellQuotes):
-> ''T has type Name, and names the type constructor T. That is, ''⟨thing⟩ interprets ⟨thing⟩ in a type context.
+When Template Haskell is enabled, `''T` is syntax that refers to a quoted name of the type T. In this case, '' is not an empty character literal, but rather part of the quotation syntax for type names. Read more at [TemplateHaskellQuotes](https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html#extension-TemplateHaskellQuotes)
 
 Empty literal character error means in that context, that you did not put a constructor name after quotation marks.
 
