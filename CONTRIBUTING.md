@@ -111,6 +111,10 @@ The fields in the metadata block should be:
  * `title` - a short title used for the page header and for links to the description
  * `summary` - a short summary used in the message index
  * `introduced` - the tool version in which the error code was introduced (optional)
+ * `removed` - if the message was removed, the first version which no longer produces this message (optional)
+ * `flag` - the flag which enables this warning (optional)
+ * `flagset` - the flagsets which include this warning (optional)
+ * `extension` - the language extension which has to be enabled in order for this message to be emitted (optional)
 
 ### Example Descriptions
 Example descriptions are written in Markdown with Pandoc-style
