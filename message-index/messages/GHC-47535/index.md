@@ -5,4 +5,4 @@ severity: error
 introduced: 9.6.1
 ---
 
-Within a record expression `{ selector1 = ..., ..., selectorN = ... }`, the selectors must be bound by a single record declaration.
+Within a record update expression `r { selector1 = ..., ..., selectorN = ... }`, the selectors `selector1` ... `selectorN` must be bound by a record constructor declaration.
