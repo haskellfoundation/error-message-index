@@ -1,5 +1,4 @@
 # Haskell Errors
-[![.github/workflows/deploy.yml](https://github.com/haskell/error-messages/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/haskell/error-messages/actions/workflows/deploy.yml)
 
 So you would like to help improve the error messages we see in the Haskell toolchain and ecosystem?
 
@@ -38,6 +37,7 @@ Contributions may come in the form of changes to the code base, as well as openi
 All contributors are expected to follow the [Haskell Foundation's Code of Conduct](https://haskell.foundation/guidelines-for-respectful-communication/).
 
 ## The Haskell Message Index
+[![.github/workflows/deploy.yml](https://github.com/haskell/error-messages/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/haskell/error-messages/actions/workflows/deploy.yml)
 
 Haskell tooling emits a variety of errors, warnings, and other messages. In an unreleased branch, GHC emits a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
 
