@@ -1,4 +1,5 @@
 # Haskell Errors
+[![.github/workflows/deploy.yml](https://github.com/haskell/error-messages/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/haskell/error-messages/actions/workflows/deploy.yml)
 
 So you would like to help improve the error messages we see in the Haskell toolchain and ecosystem?
 
