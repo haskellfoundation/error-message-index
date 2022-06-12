@@ -30,6 +30,10 @@ main = hakyll $ do
     route idRoute
     compile compressCssCompiler
 
+  match "js/*" $ do
+    route idRoute
+    compile copyFileCompiler
+
   match "contact.markdown" $
     version "nav" $ do
       route $ setExtension "html"
