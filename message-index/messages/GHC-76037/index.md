@@ -1,6 +1,6 @@
 ---
 title: Not In Scope Error
-summary:  An identifier is not in scope
+summary:  An identifier is not in scope.
 introduced: 9.6.1
 severity: error
 ---
