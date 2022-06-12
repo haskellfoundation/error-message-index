@@ -45,7 +45,7 @@ Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving th
 
 ### Running Locally
 
-The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, run:
+The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, enter the `message-index` directory and run:
 ```
 $ cabal run -- site watch
 ```
@@ -54,6 +54,22 @@ or
 $ stack run -- site watch
 ```
 which fires up an HTTP server on `localhost:8000`.
+
+The error messages:
+```
+cabal: There is no <pkgname>.cabal package file or cabal.project file. To
+build packages locally you need at minimum a <pkgname>.cabal file. You can use
+'cabal init' to create one.
+
+For non-trivial projects you will also want a cabal.project file in the root
+directory of your project. This file lists the packages in your project and
+all other build configuration. See the Cabal user guide for full details.
+```
+and
+```
+No executables found.
+```
+typically indicate that the site was started from the root of the repository, rather than the `message-index` directory.
 
 ### Maintenance
 
