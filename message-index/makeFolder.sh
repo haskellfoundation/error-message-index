@@ -23,6 +23,7 @@ BODY HERE
 ERROR HERE
 \`\`\`"
 
+git checkout -b "GHC-$1"
 mkdir "messages/GHC-$1"
 mkdir "messages/GHC-$1/example1"
 mkdir "messages/GHC-$1/example1/before"
