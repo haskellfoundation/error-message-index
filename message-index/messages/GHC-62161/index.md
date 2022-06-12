@@ -3,7 +3,7 @@ title: Incomplete patterns
 summary: Pattern match(es) are non-exhaustive.
 severity: warning
 introduced: 9.6.1
-flag: -fwarn-incomplete-patterns
+flag: -Wincomplete-patterns
 flagset: -W
 ---
 
