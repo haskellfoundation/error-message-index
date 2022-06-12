@@ -53,7 +53,7 @@ or
 ```
 $ stack run -- site watch
 ```
-which fires up an HTTP server on `localhost:8080`.
+which fires up an HTTP server on `localhost:8000`.
 
 ### Maintenance
 
