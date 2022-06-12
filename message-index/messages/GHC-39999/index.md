@@ -1,6 +1,6 @@
 ---
-title: Missing type class instance
-summary: An expression requires a type class instances which is not provided by the context.
+title: No instance arising
+summary: An expression requires a type class instance which is not provided by the context.
 introduced: 9.6.1
 severity: error
 ---
