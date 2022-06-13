@@ -160,20 +160,17 @@ article .header {
   }
 }
 
-.example {
-  display: inline-block;
-  width: 45%;
-}
-
 main pre code {
   background-color: #fafafa;
-  font-family: monospace;
-  display: inline-block;
   padding: 10px;
 }
 
-.example pre {
-  overflow-x: scroll;
+main code {
+  background-color: #eaeaea;
+  font-family: monospace;
+  display: inline-block;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 nav#breadcrumb {
