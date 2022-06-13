@@ -117,9 +117,6 @@ The fields in the metadata block should be:
  * `introduced` - the tool version in which the error code was introduced (optional)
  * `removed` - if the message was removed, the first version which no longer produces this message (optional)
  * `flag` - the flag which enables this warning (optional). Use `-Wfoo`, not `-fwarn-foo`.
- * `flagset` - the flagsets which include this warning (optional)
-
-    Flagsets are `-Wdefault`, `-W`, `-Wall`, `-Wcompat`. See <https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/using-warnings.html> for the list of warning flags enabled respectively.
  * `extension` - the language extension which has to be enabled in order for this message to be emitted (optional)
 
 ### Example Descriptions

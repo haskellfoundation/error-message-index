@@ -4,7 +4,6 @@ summary: Pattern match(es) are non-exhaustive.
 severity: warning
 introduced: 9.6.1
 flag: -Wincomplete-patterns
-flagset: -W
 ---
 
 A function definition or `case` expression did not cover all cases. This may

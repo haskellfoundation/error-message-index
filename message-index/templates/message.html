@@ -1,10 +1,10 @@
 $if(flag)$
 <p>
-  <i>Flag: <code>$flag$</code></i>
-  $if(flagset)$
-  (included in <code>$flagset$</code>)
+  <i>Flag: <code>$flag$</code></i><br/>
+  $if(on_by_default)$
+  <i>Enabled by default</i>
   $else$
-  (on by default)
+  <i>Enabled by:</i> <code>$flag_group$</code>
   $endif$
 </p>
 $endif$

@@ -1,4 +1,5 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
@@ -8,7 +9,7 @@ import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Functor ((<&>))
-import Data.List (find, nub, sort)
+import Data.List (find, lookup, nub, sort)
 import qualified Data.Map.Strict as Map
 import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
@@ -103,6 +104,7 @@ main = hakyll $ do
         >>= loadAndApplyTemplate
           "templates/message.html"
           ( listField "examples" defaultContext (pure examples)
+              <> flagSetFields
               <> defaultContext
           )
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
@@ -153,6 +155,10 @@ main = hakyll $ do
         >>= applyAsTemplate indexCtx
         >>= loadAndApplyTemplate "templates/default.html" indexCtx
         >>= relativizeUrls
+
+  -- Needed for flagInfo below
+  match "warning-sets/warning-sets-9.5.txt" $ do
+    compile $ getResourceBody
 
   match "templates/*" $ compile templateBodyCompiler
 
@@ -230,3 +236,30 @@ getMsgId = do
     ["messages", code, "index.html"] -> pure (Just code)
     ["messages", code, "index.md"] -> pure (Just code)
     _ -> pure Nothing
+
+-- The output of ./warning-sets/warning-sets
+type WarningFlagInfo = [(String, (Bool, [String]))]
+
+flagInfo :: Compiler (Maybe (Bool, [String]))
+flagInfo = do
+  me <- getUnderlying
+  f <- getMetadataField me "flag"
+  case f of
+    Nothing -> return Nothing
+    Just f -> do
+      -- TODO: Can we parse (and turn into a Data.Map) only once?
+      lookup f . read @WarningFlagInfo <$> loadBody "warning-sets/warning-sets-9.5.txt"
+
+flagSetFields :: Context String
+flagSetFields =
+  mconcat
+    [ field "on_by_default" $ \_me -> do
+        -- Boolean field; so return or fail
+        flagInfo >>= \case
+          Just (True, _) -> return ""
+          _ -> noResult "",
+      field "flag_group" $ \_me -> do
+        flagInfo >>= \case
+          Just (_, g) -> return $ unwords g
+          Nothing -> return ""
+    ]
