@@ -33,10 +33,12 @@ footer {
 
 h1 {
   font-size: 2.4rem;
+  color: #6D28D9;
 }
 
 h2 {
   font-size: 2rem;
+  color: #6D28D9;
 }
 
 article .header {
@@ -166,7 +168,7 @@ main pre code {
 }
 
 main code {
-  background-color: #eaeaea;
+  background-color: #EDE4FA;
   font-family: monospace;
   display: inline-block;
   padding-left: 2px;
@@ -206,17 +208,23 @@ table pre {
 }
 
 details {
+  border: 2px solid #C7A1FF;
+  padding: 5px;
   margin-bottom: 10px;
 }
 
 summary {
-  font-size: large;
-  font-style: italic;
+  font-weight: bold;
 }
 
 .example-container {
+  margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.example-container h2 {
+  font-size: small;
 }
 
 .single_flt {
