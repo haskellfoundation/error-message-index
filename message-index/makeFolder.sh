@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 defHask="module $2 where
 
