@@ -207,3 +207,22 @@ nav#breadcrumb a {
 table pre {
   margin: 0;
 }
+
+details {
+  margin-bottom: 10px;
+}
+
+summary {
+  font-size: large;
+  font-style: italic;
+}
+
+.example-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.single_flt {
+  width: 100%;
+  margin-bottom: 10px;
+}

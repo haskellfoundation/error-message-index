@@ -84,11 +84,10 @@ main = hakyll $ do
                         field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
                       ]
                   )
-                  (return [Item (fromFilePath name) (name, before, after) | (name, before, after) <- files]),
+                  (return files),
                 defaultContext
               ]
           )
-        >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
 
   match "messages/*/index.md" $
@@ -102,7 +101,9 @@ main = hakyll $ do
       examples <- getExamples
       bread <- breadcrumbField ["index.html", "messages/index.md"]
       pandocCompiler
-        >>= loadAndApplyTemplate "templates/message.html" (flagSetFields <> listField "examples" defaultContext (pure examples) <> defaultContext)
+        >>= loadAndApplyTemplate "templates/message.html" 
+              (listField "examples" defaultContext (pure examples)
+              <> flagSetFields <> defaultContext)
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
 
@@ -201,7 +202,7 @@ getExamples = do
     other -> fail $ "Not processing a message: " ++ show other
   loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
 
-getExampleFiles :: Compiler [(FilePath, Maybe (Item String), Maybe (Item String))]
+getExampleFiles :: Compiler [Item (FilePath, Maybe (Item String), Maybe (Item String))]
 getExampleFiles = do
   me <- getUnderlying
   (id, exampleName) <- case splitDirectories $ toFilePath me of
@@ -211,13 +212,14 @@ getExampleFiles = do
   before <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
   after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
-  pure
-    [ ( name,
-        find ((== name) . takeFileName . toFilePath . itemIdentifier) before,
-        find ((== name) . takeFileName . toFilePath . itemIdentifier) after
-      )
-      | name <- allNames
-    ]
+  pure $ 
+      [ Item (fromFilePath name) 
+        ( name,
+          find ((== name) . takeFileName . toFilePath . itemIdentifier) before,
+          find ((== name) . takeFileName . toFilePath . itemIdentifier) after
+        )
+        | name <- allNames
+      ]
 
 lookupBy :: (a -> Maybe b) -> [a] -> Maybe b
 lookupBy f = listToMaybe . mapMaybe f
