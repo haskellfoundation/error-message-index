@@ -109,11 +109,22 @@ article .header {
     display: inline;
     margin: 0 0.6rem;
   }
+
+  footer .HF {
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-image: url('../images/hf-logo.png');
+    background-size: 50px;
+    background-position: left center;
+    padding-left: 60px;
+  }
 }
 
 @media (min-width: 640px) {
   body {
-    width: 120rem;
+    max-width: 120rem;
     margin: 0 auto;
     padding: 0;
   }
@@ -130,26 +141,16 @@ article .header {
     display: inline;
   }
 
-  footer .foot {
+  footer .shoutout {
     height: 50px;
     line-height: 50px;
-  }
-
-  footer .shoutout {
-    display: inline-block;
     float: right;
     text-align: right;
   }
 
   footer .HF {
-    display: inline-block;
     float: left;
     text-align: left;
-    background-repeat: no-repeat;
-    background-image: url('../images/hf-logo.png');
-    background-size: 50px;
-    background-position: left center;
-    padding-left: 60px;
   }
 
   .logo {
