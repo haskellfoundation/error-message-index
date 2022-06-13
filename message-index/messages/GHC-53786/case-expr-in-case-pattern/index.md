@@ -1,8 +1,8 @@
 ---
-title: Case expression in function argument pattern
+title: Case expression in case pattern
 ---
 
-The pattern in the case expression `case x of ...` contains a `case ... of ...` expression.
+The pattern in the case expression `case x of ...` contains a case expression.
 
 ## Error Message
 
