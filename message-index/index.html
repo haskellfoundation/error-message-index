@@ -30,13 +30,17 @@ $partial("templates/message-list.html")$
 var filtersConfig = {
     base_path: '/wrong-on-purpose/',
     auto_filter: {
-        delay: 1100 //milliseconds
+        delay: 500 //milliseconds
     },
     single_filter: true
 };
 var tf = new TableFilter(document.querySelector('.message-list'), filtersConfig);
 tf.init();
 
-document.querySelector('.single_flt').setAttribute("placeholder", "🔍 type here to filter");
-document.querySelector('.single_flt').focus();
+var input = document.querySelector('.single_flt');
+
+if (input) {
+  input.setAttribute("placeholder", "🔍 Type here to filter ...");
+  input.focus();
+}
 </script>

@@ -1,5 +1,12 @@
 html {
   font-size: 62.5%;
+  font-family: Helvetica, sans-serif;
+}
+
+*:focus-visible {
+  outline-offset: 4px;
+  outline-width: 1px;
+  outline-color: #DB83ED;
 }
 
 body {
@@ -52,6 +59,8 @@ article .header {
   color: #000;
   text-decoration: none;
 }
+
+/* Responsive */
 
 @media (max-width: 319px) {
   body {
@@ -164,7 +173,7 @@ article .header {
 }
 
 main pre code {
-  background-color: #fafafa;
+  background-color: #FAFAFA;
   padding: 10px;
 }
 
@@ -176,11 +185,11 @@ main code {
   padding-right: 2px;
 }
 
-nav#breadcrumb {
+nav.breadcrumb {
   text-align: right;
 }
 
-nav#breadcrumb a {
+nav.breadcrumb a {
   font-weight: normal;
   color: black;
   text-decoration: underline;
@@ -196,7 +205,7 @@ nav#breadcrumb a {
 }
 
 .filename {
-  background-color: #eaeaea;
+  background-color: #EAEAEA;
   padding-left: 5px;
 }
 
@@ -206,6 +215,10 @@ nav#breadcrumb a {
 
 table pre {
   margin: 0;
+}
+
+table tbody td {
+  padding: 5px;
 }
 
 details {
@@ -228,7 +241,18 @@ summary {
   font-size: small;
 }
 
+/* Filter input */
+
 .single_flt {
   width: 100%;
   margin-bottom: 10px;
+  padding: 10px;
+  appearance: none;
+  border-radius: 0;
+  border: 2px solid #DB83ED;
+}
+
+/* Utilities */
+.nowrap {
+  white-space: nowrap;
 }

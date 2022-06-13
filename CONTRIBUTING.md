@@ -83,9 +83,11 @@ The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
 
 You can also use the `makeFolder.sh` templating script. Usage is as follows:
+
 ```bash
 ./makeFolder.sh <NUMERIC-ERROR-CODE> <HaskellModuleName>
 ```
+
 ### Message Descriptions
 
 Message descriptions (in `index.md` in the message directory) are
@@ -120,6 +122,7 @@ The fields in the metadata block should be:
  * `extension` - the language extension which has to be enabled in order for this message to be emitted (optional)
 
 ### Example Descriptions
+
 Example descriptions are written in Markdown with Pandoc-style
 metadata, just like message descriptions. They have only the `title`
 field. All `.hs` files are shown in the list of files for the
