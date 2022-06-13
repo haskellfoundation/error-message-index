@@ -5,4 +5,4 @@ introduced: 9.6.1
 severity: error
 ---
 
-In Haskell, top-level bindings must be represented by thunks because the evaluation time of things that can fail is hard to understand when they're part of a module. This rules out strict bindings as well as unlifted bindings.
+In Haskell, top-level bindings must be represented by [thunks](https://wiki.haskell.org/Thunk) because the evaluation time of things that can fail is hard to understand when they're part of a module. This rules out strict bindings as well as unlifted bindings.
