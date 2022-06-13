@@ -1,0 +1,4 @@
+module Example where
+
+f = "
+"
