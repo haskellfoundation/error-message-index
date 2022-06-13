@@ -3,6 +3,7 @@ title: Type application without space
 summary:  Parsing error of type application.
 introduced: 9.6.1
 severity: error
+extension: TypeApplications
 ---
 
 
