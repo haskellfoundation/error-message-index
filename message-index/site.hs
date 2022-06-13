@@ -1,15 +1,15 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE LambdaCase #-}
 
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Functor ((<&>))
-import Data.List (find, nub, sort, lookup)
+import Data.List (find, lookup, nub, sort)
 import qualified Data.Map.Strict as Map
 import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
@@ -101,9 +101,12 @@ main = hakyll $ do
       examples <- getExamples
       bread <- breadcrumbField ["index.html", "messages/index.md"]
       pandocCompiler
-        >>= loadAndApplyTemplate "templates/message.html" 
-              (listField "examples" defaultContext (pure examples)
-              <> flagSetFields <> defaultContext)
+        >>= loadAndApplyTemplate
+          "templates/message.html"
+          ( listField "examples" defaultContext (pure examples)
+              <> flagSetFields
+              <> defaultContext
+          )
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
 
@@ -212,14 +215,15 @@ getExampleFiles = do
   before <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
   after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
-  pure $ 
-      [ Item (fromFilePath name) 
+  pure $
+    [ Item
+        (fromFilePath name)
         ( name,
           find ((== name) . takeFileName . toFilePath . itemIdentifier) before,
           find ((== name) . takeFileName . toFilePath . itemIdentifier) after
         )
-        | name <- allNames
-      ]
+      | name <- allNames
+    ]
 
 lookupBy :: (a -> Maybe b) -> [a] -> Maybe b
 lookupBy f = listToMaybe . mapMaybe f
@@ -238,24 +242,24 @@ type WarningFlagInfo = [(String, (Bool, [String]))]
 
 flagInfo :: Compiler (Maybe (Bool, [String]))
 flagInfo = do
-    me <- getUnderlying
-    f <- getMetadataField me "flag"
-    case f of
-        Nothing -> return Nothing
-        Just f -> do
-            -- TODO: Can we parse (and turn into a Data.Map) only once?
-            lookup f . read @WarningFlagInfo <$> loadBody "warning-sets/warning-sets-9.5.txt"
+  me <- getUnderlying
+  f <- getMetadataField me "flag"
+  case f of
+    Nothing -> return Nothing
+    Just f -> do
+      -- TODO: Can we parse (and turn into a Data.Map) only once?
+      lookup f . read @WarningFlagInfo <$> loadBody "warning-sets/warning-sets-9.5.txt"
 
 flagSetFields :: Context String
-flagSetFields = mconcat
-  [ field "on_by_default" $ \_me -> do
-    -- Boolean field; so return or fail
-    flagInfo >>= \case
-        Just (True, _) -> return ""
-        _ -> noResult ""
-
-  , field "flag_group" $ \_me -> do
-    flagInfo >>= \case
-        Just (_, g) -> return $ unwords g
-        Nothing -> return ""
-  ]
+flagSetFields =
+  mconcat
+    [ field "on_by_default" $ \_me -> do
+        -- Boolean field; so return or fail
+        flagInfo >>= \case
+          Just (True, _) -> return ""
+          _ -> noResult "",
+      field "flag_group" $ \_me -> do
+        flagInfo >>= \case
+          Just (_, g) -> return $ unwords g
+          Nothing -> return ""
+    ]

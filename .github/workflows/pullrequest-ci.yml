@@ -30,6 +30,12 @@ jobs:
     - name: Update the Cabal index
       run: cabal update
 
+    - name: Check if site.hs is formatted using ormolu
+      uses: mrkkrp/ormolu-action@v6
+      with:
+        pattern: |
+          **/site.hs
+
     - name: Build with Hakyll
       working-directory: message-index
       run: cabal run site build
