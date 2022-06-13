@@ -100,9 +100,11 @@ main = hakyll $ do
       examples <- getExamples
       bread <- breadcrumbField ["index.html", "messages/index.md"]
       pandocCompiler
-        >>= loadAndApplyTemplate "templates/message.html" 
-              (listField "examples" defaultContext (pure examples)
-              <> defaultContext)
+        >>= loadAndApplyTemplate
+          "templates/message.html"
+          ( listField "examples" defaultContext (pure examples)
+              <> defaultContext
+          )
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
 
@@ -207,14 +209,15 @@ getExampleFiles = do
   before <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
   after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
-  pure $ 
-      [ Item (fromFilePath name) 
+  pure $
+    [ Item
+        (fromFilePath name)
         ( name,
           find ((== name) . takeFileName . toFilePath . itemIdentifier) before,
           find ((== name) . takeFileName . toFilePath . itemIdentifier) after
         )
-        | name <- allNames
-      ]
+      | name <- allNames
+    ]
 
 lookupBy :: (a -> Maybe b) -> [a] -> Maybe b
 lookupBy f = listToMaybe . mapMaybe f
