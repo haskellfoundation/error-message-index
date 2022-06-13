@@ -1,8 +1,10 @@
 ---
-title: TITLE HERE
+title: Incorrect syntax of ($) operator usage
 ---
 
-BODY HERE
+When TemplateHaskell is **not** enabled, then `$` denotes functrion application, but must be followed with a space character: `"$ "`.
+
+When TemplateHaskell is enabled, `$` denotes a [splice operator](https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html). Used in this context, there must be no space between the “$” and the expression. 
 
 ## Error Message
 ```
