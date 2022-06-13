@@ -1,6 +1,6 @@
 ---
 title: Underscores not allowed in float and integer literals
-summary: Float and integer literals cannot contain underscores
+summary: Float and integer literals cannot contain underscores.
 severity: error
 introduced: 9.6.1
 ---

@@ -1,6 +1,6 @@
 ---
 title: No explicit import list
-summary: Items brought into scope are not listed explicitly
+summary: Items brought into scope are not listed explicitly.
 severity: warning
 flag: "-Wmissing-import-lists"
 introduced: 9.6.1

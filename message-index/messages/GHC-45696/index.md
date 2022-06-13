@@ -1,6 +1,6 @@
 ---
 title: If-Then-Else in pattern match
-summary: If-Then-Else in pattern match
+summary: If-Then-Else expression in pattern match.
 severity: error
 introduced: 9.6.1
 ---

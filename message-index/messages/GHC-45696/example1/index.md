@@ -2,7 +2,7 @@
 title: If-Then-Else in pattern match
 ---
 
-When pattern matching, `(if .. then .. else)` blocks are not allowed as expressions to be pattern matched against.
+When pattern matching, `(if .. then .. else)` expressions are not allowed as patterns to be matched against.
 
 In this example, if `a` is `True` then we want to pattern match `b` to `"something"`; if `a` is `False`, we want to pattern match `b` with `"something else"` instead. For instance, `f True "something else"` is `False` and `f False "something else"` is `True`.
 

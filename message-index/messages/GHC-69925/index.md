@@ -1,6 +1,6 @@
 ---
 title: Illegal unboxed string literal in pattern
-summary: Illegal unboxed string literal in pattern
+summary: Illegal unboxed string literal in pattern.
 severity: error
 introduced: 9.6.1
 ---
