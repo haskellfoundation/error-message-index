@@ -1,6 +1,6 @@
 ---
 title: Conflicting exports
-summary: Different identifiers with the same name are (re-)exported from the same module
+summary: Different identifiers with the same name are (re-)exported from the same module.
 introduced: 9.6.1
 severity: error
 ---

@@ -1,6 +1,5 @@
 ---
-title: Empty character literals
-summary: Incorrect TemplateHaskell syntax
+title: Incorrect TemplateHaskell syntax using ''
 introduced: 9.6.1
 severity: error
 ---

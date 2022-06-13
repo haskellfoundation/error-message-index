@@ -1,6 +1,6 @@
 ---
 title: Type application without space
-summary:  Parsing error of type application.
+summary: A type application with @ does not have a space before.
 introduced: 9.6.1
 severity: error
 extension: TypeApplications

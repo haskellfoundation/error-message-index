@@ -1,6 +1,6 @@
 ---
 title: Instance head is not headed by a class
-summary: A type class instance declaration is declared for something that is not a type class
+summary: A type class instance declaration is declared for something that is not a type class.
 introduced: 9.6.1
 severity: error
 ---
