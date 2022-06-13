@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Haskell
-      uses: haskell/actions/setup@v2
-
     - name: Check out repo
       uses: actions/checkout@v3
       
@@ -25,9 +22,9 @@ jobs:
         path: |
           ~/.cabal/store
           message-index/dist-newstyle
-        key: cabal-cache-${{ github.sha }}
+        key: cabal-cache-0-${{ hashFiles('message-index/message-index.cabal') }}
         restore-keys: |
-          cabal-cache
+          cabal-cache-0
 
     - name: Update the Cabal index
       run: cabal update
