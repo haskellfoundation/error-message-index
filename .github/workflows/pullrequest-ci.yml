@@ -33,7 +33,8 @@ jobs:
     - name: Check if site.hs is formatted using ormolu
       uses: mrkkrp/ormolu-action@v6
       with:
-        pattern: "site.hs"
+        pattern: |
+          **/site.hs
 
     - name: Build with Hakyll
       working-directory: message-index
