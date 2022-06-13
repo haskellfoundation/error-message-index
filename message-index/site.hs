@@ -1,27 +1,33 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DeriveFunctor #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
 
+import Control.Applicative (Alternative (..))
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
+import Data.Align (padZipWith)
+import Data.Bifunctor (second)
 import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Either (fromRight)
 import Data.Functor ((<&>))
 import Data.List (find, lookup, nub, sort)
 import qualified Data.Map.Strict as Map
-import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
+import Data.Maybe (fromJust, fromMaybe, isJust, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
 import qualified Data.Text as T
+import qualified Data.Text.Lazy as LT
 import Data.Traversable
 import Hakyll
 import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
+import qualified Patience as Patience
+import qualified Skylighting as Skylighting
 import System.FilePath
-import qualified Text.Pandoc as Pandoc
-import qualified Text.Pandoc.Definition as Pandoc
+import qualified Text.Blaze.Renderer.Text as Blaze
 
 main :: IO ()
 main = hakyll $ do
@@ -68,9 +74,7 @@ main = hakyll $ do
                   "files"
                   ( mconcat
                       [ urlField "url",
-                        field "name" (pure . view _1 . itemBody),
-                        field "before" (maybe (pure "<not present>") (fmap (T.unpack . highlightHaskell . T.pack) . fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
-                        field "after" (maybe (pure "<not present>") (fmap (T.unpack . highlightHaskell . T.pack) . fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
+                        field "diff" $ fmap itemBody . renderDiff
                       ]
                   )
                   (return files),
@@ -175,7 +179,7 @@ getExamples = do
     other -> fail $ "Not processing a message: " ++ show other
   loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
 
-getExampleFiles :: Compiler [Item (FilePath, Maybe (Item String), Maybe (Item String))]
+getExampleFiles :: Compiler [Item (FilePath, [DiffRow String])]
 getExampleFiles = do
   me <- getUnderlying
   (id, exampleName) <- case splitDirectories $ toFilePath me of
@@ -186,14 +190,14 @@ getExampleFiles = do
   after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
   pure $
-    [ Item
-        (fromFilePath name)
-        ( name,
-          find ((== name) . takeFileName . toFilePath . itemIdentifier) before,
-          find ((== name) . takeFileName . toFilePath . itemIdentifier) after
-        )
-      | name <- allNames
+    [ Item (fromFilePath name) (name, diffTable)
+      | name <- allNames,
+        let beforeTokens = fromMaybe [] $ tokenizeHaskell . itemBody <$> findByName name before,
+        let afterTokens = fromMaybe [] $ tokenizeHaskell . itemBody <$> findByName name after,
+        let diffTable = map (fmap renderSourceLine) $ diffTabular beforeTokens afterTokens
     ]
+  where
+    findByName name = find $ (== name) . takeFileName . toFilePath . itemIdentifier
 
 lookupBy :: (a -> Maybe b) -> [a] -> Maybe b
 lookupBy f = listToMaybe . mapMaybe f
@@ -234,12 +238,109 @@ flagSetFields =
           Nothing -> return ""
     ]
 
-highlightHaskell :: T.Text -> T.Text
-highlightHaskell code =
-  let writerOptions = Pandoc.def
-      -- We make a fake Pandoc document that's just the code embedded in a code block.
-      document =
-        Pandoc.Pandoc mempty [Pandoc.CodeBlock ("", ["haskell"], []) code]
-   in case Pandoc.runPure $ Pandoc.writeHtml5String writerOptions document of
-        Left err -> error $ "Unexpected Pandoc error: " ++ show err
-        Right html -> html
+-- | Break Haskell code into tokenized lines
+tokenizeHaskell :: String -> [Skylighting.SourceLine]
+tokenizeHaskell code =
+  let haskellSyntax =
+        fromJust $ Skylighting.lookupSyntax "haskell" Skylighting.defaultSyntaxMap
+      tokenizerConfig =
+        Skylighting.TokenizerConfig
+          { Skylighting.syntaxMap = Skylighting.defaultSyntaxMap,
+            Skylighting.traceOutput = False
+          }
+      code' = T.pack code
+   in case Skylighting.tokenize tokenizerConfig haskellSyntax code' of
+        Left err -> error $ "Syntax highlighting error: " ++ err
+        Right srcLines -> srcLines
+
+-- | Render a single line of syntax highlighting tokens as HTMl text
+renderSourceLine :: Skylighting.SourceLine -> String
+renderSourceLine line =
+  LT.unpack $ Blaze.renderMarkup $ Skylighting.formatHtmlInline Skylighting.defaultFormatOpts [line]
+
+-- let writerOptions = Pandoc.def
+--     -- We make a fake Pandoc document that's just the code embedded in a code block.
+--     document =
+--       Pandoc.Pandoc mempty [Pandoc.CodeBlock ("", ["haskell"], []) (T.pack code)]
+--  in case Pandoc.runPure $ Pandoc.writeHtml5String writerOptions document of
+--       Left err -> error $ "Unexpected Pandoc error: " ++ show err
+--       Right html -> T.unpack html
+
+-- TODO: This approach is too stupid for diffing, we need to have just the lines
+-- with the spans, not the enclosing code blocks.
+
+data DiffSection a
+  = -- | A stretch of text that was unchanged between the two files
+    --
+    -- The two arguments will likely be exactly equal, but this depends on the
+    -- 'Eq' instance for 'a' used when diffing.
+    Unchanged [a] [a]
+  | -- | A stretch of contiguous changes between files, represented the lines that
+    -- were removed and those that were added.
+    Replace [a] [a]
+  deriving (Show)
+
+lineDiffToSections :: [Patience.Item a] -> [DiffSection a]
+lineDiffToSections = foldr go []
+  where
+    go item sections@(Replace from to : rest) =
+      case item of
+        Patience.Old x ->
+          Replace (x : from) to : rest
+        Patience.New x ->
+          Replace from (x : to) : rest
+        otherItem ->
+          newSection otherItem : sections
+    go item sections@(Unchanged ls rs : rest) =
+      case item of
+        Patience.Both l r ->
+          Unchanged (l : ls) (r : rs) : rest
+        otherItem ->
+          newSection otherItem : sections
+    go item [] =
+      [newSection item]
+
+    newSection (Patience.Old x) = Replace [x] []
+    newSection (Patience.New x) = Replace [] [x]
+    newSection (Patience.Both l r) = Unchanged [l] [r]
+
+-- diffLines :: String -> String -> [DiffSection String]
+-- diffLines old new = lineDiffToSections $ Patience.diff (lines old) (lines new)
+
+-- | A format for diffs that's easier to use in Hakyll templates.
+data DiffRow a = DiffRow
+  { rowChanged :: Bool,
+    rowOld :: Maybe a,
+    rowNew :: Maybe a
+  }
+  deriving (Show, Functor)
+
+sectionsToRows :: [DiffSection a] -> [DiffRow a]
+sectionsToRows =
+  concatMap $ \case
+    Unchanged ls rs ->
+      zipWith (\l r -> DiffRow False (Just l) (Just r)) ls rs
+    Replace from to ->
+      padZipWith (\l r -> DiffRow True l r) from to
+
+diffTabular :: Ord a => [a] -> [a] -> [DiffRow a]
+diffTabular old new = sectionsToRows $ lineDiffToSections $ Patience.diff old new
+
+renderDiff :: Item (FilePath, [DiffRow String]) -> Compiler (Item String)
+renderDiff item@(Item ident (name, rows)) =
+  loadAndApplyTemplate
+    "templates/diff.html"
+    ( mconcat
+        [ field "name" (pure . takeFileName . toFilePath . itemIdentifier),
+          listField
+            "rows"
+            ( mconcat
+                [ boolField "changed" $ rowChanged . itemBody,
+                  field "left" $ maybe empty pure . rowOld . itemBody,
+                  field "right" $ maybe empty pure . rowNew . itemBody
+                ]
+            )
+            (pure $ map (Item (setVersion (Just "diff") ident)) rows)
+        ]
+    )
+    item

@@ -2,18 +2,6 @@ $body$
 
 <table width="100%">
   $for(files)$
-  <tr><td colspan="2" class="filename"><pre>$name$</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      $before$
-    </td>
-    <td>
-      $after$
-    </td>
-  </tr>
+    $diff$
   $endfor$
 </table>
