@@ -70,7 +70,7 @@ main = hakyll $ do
         getUnderlying
           <&> \ident ->
             fromFilePath $ takeDirectory (takeDirectory (toFilePath ident)) </> "index.md"
-      bread <- breadcrumbField ["index.html", "messages/index.md", thisMessage]
+      bread <- breadcrumbField ["index.html", thisMessage]
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/example.html"
@@ -99,7 +99,7 @@ main = hakyll $ do
     route $ setExtension "html"
     compile $ do
       examples <- getExamples
-      bread <- breadcrumbField ["index.html", "messages/index.md"]
+      bread <- breadcrumbField ["index.html"]
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/message.html"
@@ -110,29 +110,9 @@ main = hakyll $ do
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
 
-  match "messages/index.md" $
-    version "nav" $ do
-      route $ setExtension "html"
-      compile pandocCompiler
-
   match "messages/index.md" $ do
     route $ setExtension "html"
-    compile $ do
-      messages <- loadAll ("messages/*/index.md" .&&. hasNoVersion)
-      bread <- breadcrumbField ["index.html"]
-      let indexCtx =
-            mconcat
-              [ constField "title" "Messages",
-                listField "messages" (messageCtx <> defaultContext) (pure messages),
-                bread,
-                messageTitleField,
-                defaultContext
-              ]
-
-      pandocCompiler
-        >>= loadAndApplyTemplate "templates/messages.html" indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
-        >>= relativizeUrls
+    compile $ makeItem $ Redirect "/"
 
   match "index.html" $
     version "nav" $ do
