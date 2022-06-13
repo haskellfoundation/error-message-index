@@ -5,7 +5,6 @@ $for(files)$
 <li>
   <code>$name$</code>:
   <p>
-    $if(after)$
     <div class="example before">
       <p>Before:</p>
       <pre>$before$</pre>
@@ -14,11 +13,6 @@ $for(files)$
       <p>After:</p>
       <pre>$after$</pre>
     </div>
-    $else$
-    <div class="example">
-      <pre>$before$</pre>
-    </div>
-    $endif$
   </p>
 </li>
 $endfor$

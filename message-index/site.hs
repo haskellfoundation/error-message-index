@@ -3,7 +3,6 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
 
-import Control.Applicative (empty)
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
@@ -77,7 +76,7 @@ main = hakyll $ do
                       [ urlField "url",
                         field "name" (pure . view _1 . itemBody),
                         field "before" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
-                        field "after" (maybe empty (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
+                        field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
                       ]
                   )
                   (return [Item (fromFilePath name) (name, before, after) | (name, before, after) <- files]),
