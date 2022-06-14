@@ -1,7 +1,5 @@
-{-# LANGUAGE TemplateHaskell, GADTs #-}
+{-# LANGUAGE GADTs, TemplateHaskell #-}
 
 module Main where
 
-main = undefined
-
-
+main = print "Please look at the LANGUAGE pragmas!"
