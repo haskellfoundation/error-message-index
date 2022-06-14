@@ -5,4 +5,4 @@ severity: error
 introduced: 9.6.1
 ---
 
-The LANGUAGE pragma expects a comma separated list of existing language extensions, each start with a capital letter.
+The LANGUAGE pragma expects a comma separated list of existing language extension. Each start with a capital letter.
