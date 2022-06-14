@@ -128,6 +128,7 @@ main = hakyll $ do
             mconcat
               [ listField "messages" (messageCtx <> defaultContext) (pure messages),
                 bread,
+                constField "messageCount" (show (length messages)),
                 defaultContext
               ]
 
