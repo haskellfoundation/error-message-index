@@ -3,8 +3,6 @@
 
 module Main where
 
-import Prelude
-
 main = pure ()
 
 foo :: forall a. a -> a
