@@ -14,7 +14,7 @@ a!b     -- a tight infix occurrence
 a !b    -- a prefix occurrence
 a! b    -- a suffix occurrence
 ```
-A loose infix occurrence will always be treated as an operator wheres any of the remaining cases can be redefined by some future language extension.
+A loose infix occurrence will always be treated as an operator, whereas any of the remaining cases may be redefined by a future language extension.
 
 Consider `-XBangPatterns`
 
