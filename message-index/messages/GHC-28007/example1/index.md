@@ -3,7 +3,7 @@ title: Misplaced language pragma
 ---
 
 LANGUAGE pragmas need to come before the `module` keyword.
-In the example below the `RecursiveDo` pragma is used after the module keyword and therefore there's an additional error on line 10 suggesting that the `RecursiveDo` extension should be enabled.
+In the example below, the `RecursiveDo` pragma is placed after the module keyword. Therefore, there's an additional error on line 10 suggesting that the `RecursiveDo` extension should be enabled. This is because language pragmas placed below the module header are ignored.
 
 ## Error Message
 ```
