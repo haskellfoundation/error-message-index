@@ -5,7 +5,7 @@ severity: error
 introduced: 9.6.1
 ---
 
-This is a generic error, indicating that GHC could not parse the input code. 
+This is a generic error, indicating that GHC could not parse the code. 
 
 GHC contains many more explicit parsing errors with more verbose descriptions of the problem. However if the error is not separately defined there, a problem with parsing is reported with error code 58481.
 
