@@ -1,6 +1,6 @@
 ---
 title: operator-whitespace
-summary: An optional warning for detecting usage of infix, suffix or prefix operators that could be parsed differently in the future due to whitespace, this warning is disabled by default.
+summary: A warning for detecting usage of infix, suffix or prefix operators that could be parsed differently in the future due to whitespace.
 severity: warning
 flag: -Wall, -Wcompat, or -Woperator-whitespace
 introduced: 9.6.1
