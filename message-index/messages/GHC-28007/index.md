@@ -1,6 +1,6 @@
 ---
-title: Misplaced language pragma
-summary: language pragmas should come before the module declaration.
+title: Misplaced LANGUAGE pragma
+summary: LANGUAGE pragmas should come before the module declaration.
 severity: error
 introduced: 9.6.1
 ---
