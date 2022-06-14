@@ -25,15 +25,17 @@ ghci> 1 + "foo"
       In an equation for 'it': it = 1 + "foo"
 ```
 
+This is not strictly necessary to contribute, but is a very useful way to ensure your example code *does* provide the error you are documenting.
+
 ## How to Document a GHC Error Code
 
 To document a new error code, the following workflow can be convenient.
  1. Choose a code that you'd like to document, say `GHC-123`
  2. One of the following modules in the `compiler` directory of the GHC source tree will have a method called `diagnosticCode` in the instance of `Diagnostic`:
-   * `GHC.Tc.Errors.Ppr`
-   * `GHC.Driver.Errors.Ppr`
-   * `GHC.Parser.Errors.Ppr`
-   * `GHC.HsToCore.Errors.Ppr`
+   * `GHC.Tc.Errors.Ppr` (error constructors starting `Tc`)
+   * `GHC.Driver.Errors.Ppr` (error constructors starting `Driver`)
+   * `GHC.Parser.Errors.Ppr` (error constructors starting `Pc`)
+   * `GHC.HsToCore.Errors.Ppr` (error constructors starting `Ds`)
  3. Once the code has been found, identify the error datatype constructor that produces it.
  4. The documentation for the constructor will be in one of the following modules. Read the Haddock for an explanation of the error's meaning:
    * `GHC.Tc.Errors.Types`
@@ -49,10 +51,10 @@ To document a new error code, the following workflow can be convenient.
 We keep track of which errors are being worked on, and which still require documentation,
 using a bunch of issues:
 
-- [Type checker errors](https://github.com/haskell/error-messages/issues/66)
-- [Driver errors](https://github.com/haskell/error-messages/issues/67)
-- [Parser errors](https://github.com/haskell/error-messages/issues/68)
-- [Desugarer errors](https://github.com/haskell/error-messages/issues/69)
+- [All error codes that still need documenting are collected here](https://github.com/haskell/error-messages/issues/162). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
+- There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskell/error-messages/labels/good%20first%20issue
+- Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskell/error-messages/labels/error-message-index-site
+- Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskell/error-messages/labels/error-message-index-improvements
 
 ## Contributing New Messages
 
@@ -87,6 +89,8 @@ You can also use the `makeFolder.sh` templating script. Usage is as follows:
 ```bash
 ./makeFolder.sh <NUMERIC-ERROR-CODE> <HaskellModuleName>
 ```
+
+This will generate a folder called `GHC-NUMERIC_ERROR_CODE` containing an empty `index.md` file, a subfolder called `example1` with a corresponding `index.md`, and two blank `before`/`after` Haskell source files.
 
 ### Message Descriptions
 
