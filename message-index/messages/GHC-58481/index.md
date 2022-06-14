@@ -1,6 +1,6 @@
 ---
 title: Parse error on input
-summary: Generic parsing error of the input 
+summary: Generic parsing error.
 severity: error
 introduced: 9.6.1
 ---
