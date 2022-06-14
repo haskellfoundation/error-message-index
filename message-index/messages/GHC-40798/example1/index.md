@@ -8,28 +8,28 @@ introduced: 9.6.1
 
 ## Error Message
 ```
-Main.hs:7:10: warning: [-Woperator-whitespace] [GHC-40798]
+
+Main.hs:9:10: warning: [-Woperator-whitespace] [GHC-40798]
     The suffix use of a ‘+’ might be repurposed as special syntax
       by a future language extension.
     Suggested fix: Add whitespace around ‘+’.
   |
-7 | f a b = a+ b
+9 | f a b = a+ b -- this one is a warning
   |          ^
 
-Main.hs:9:11: warning: [-Woperator-whitespace] [GHC-40798]
+Main.hs:12:11: warning: [-Woperator-whitespace] [GHC-40798]
     The prefix use of a ‘+’ might be repurposed as special syntax
       by a future language extension.
     Suggested fix: Add whitespace around ‘+’.
-  |
-9 | g a b = a +b
-  |           ^
+   |
+12 | g a b = a +b -- this one is also a warning
+   |           ^
 
-Main.hs:11:10: warning: [-Woperator-whitespace] [GHC-40798]
+Main.hs:15:10: warning: [-Woperator-whitespace] [GHC-40798]
     The tight infix use of a ‘+’ might be repurposed as special syntax
       by a future language extension.
     Suggested fix: Add whitespace around ‘+’.
    |
-11 | h a b = a+b
+15 | h a b = a+b -- this one as well
    |          ^
-
 ```
