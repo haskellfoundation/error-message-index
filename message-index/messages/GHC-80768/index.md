@@ -5,4 +5,4 @@ severity: error
 introduced: 9.6.1
 ---
 
-Similarly to how type families are not allowed in data type return kinds, type families are not allowed in class return kinds. Usually GHC allows for type equalities considering type family reductions but not in these two cases.
+Similarly to how type families are not allowed in data type return kinds, type families are not allowed in class return kinds. Usually, GHC compares types and kinds up to type family reductions, but not in these two cases.
