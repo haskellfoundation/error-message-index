@@ -35,19 +35,6 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
-  match "contact.markdown" $
-    version "nav" $ do
-      route $ setExtension "html"
-      compile getResourceBody
-
-  match (fromList ["contact.markdown"]) $ do
-    route $ setExtension "html"
-    compile $ do
-      bread <- breadcrumbField ["index.html"]
-      pandocCompiler
-        >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
-        >>= relativizeUrls
-
   match "messages/*/*/**.hs" $
     version "raw" $ do
       route idRoute
