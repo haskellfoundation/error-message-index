@@ -2,7 +2,7 @@
 title: Kind signatures on classes must end with Constraint unobscured by type families
 ---
 
-The problem here is the usage of the type family `Id` in the Stand alone kind signature for the typeclass `C`. It's an error for kind signatures on classes to not end in a "naked" Constraint.
+The problem here is the usage of the type family `Id` in the standalone kind signature for the typeclass `C`. Kind signatures for classes must literally end in `Constraint` rather than in a kind that is equivalent to it.
 
 ## Error Message
 ```
