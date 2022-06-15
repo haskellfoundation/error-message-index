@@ -231,6 +231,10 @@ summary {
   font-weight: bold;
 }
 
+details > summary {
+  cursor: pointer;
+}
+
 .example-container {
   margin-left: 15px;
   margin-top: 10px;
