@@ -187,6 +187,7 @@ main code {
 
 nav.breadcrumb {
   text-align: right;
+  margin-top: 1em;
 }
 
 nav.breadcrumb a {
