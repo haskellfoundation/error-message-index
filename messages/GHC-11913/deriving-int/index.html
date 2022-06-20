@@ -1,0 +1,35 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>DerivingInt.hs:4:12: error: [GHC-11913]
+    • Illegal deriving item ‘Int’
+    • In the data declaration for ‘Example’
+  |
+4 |   deriving Int
+  |            ^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this example, the programmer attempts to deriving <code>Int</code>, which is not a type class.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>DerivingInt.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module DerivingInt where
+
+data Example = Example
+  deriving Int
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module DerivingInt where
+
+data Example = Example
+  deriving Eq
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

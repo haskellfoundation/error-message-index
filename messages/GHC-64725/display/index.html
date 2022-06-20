@@ -1,0 +1,143 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main2.hs:12:23: error: [GHC-64725]
+    • Cannot display functions.
+      Perhaps there are missing arguments?
+    • In the expression: display myFunction
+      In an equation for ‘myDisplayedFunction’:
+          myDisplayedFunction = display myFunction
+   |
+12 | myDisplayedFunction = display myFunction
+   |                       ^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Here, the module <code>SomeDisplayLibrary</code> stands in for a pretty-printing library,
+used to produce human readable text from Haskell values. The library provides a
+type class <code>Display</code> with instances for different types with a function
+<code>display :: Display a =&gt; a -&gt; String</code> to perform the conversion. In this case
+the result is of type <code>String</code> but some libraries use their own data type to
+structure the output.</p>
+<p>A problem common to these libraries is that of function typed values, since
+there’s no general way to represent them as strings. Perhaps for <em>some</em>
+functions one could simply write the mapping from inputs to outputs - if the input space is enumerable and small enough - but it becomes impractical for larger types, and unfeasible for non-enumerable types. Usually these libraries don’t provide an instance for functions. In this case, the library
+authors did provide an instance, but one that gives a compile time error with more information than just “<code>No instance for (Display (Bool -&gt; Int))</code>.”</p>
+<p>Depending on context, the solution could be to follow the error message and
+display the result of applying the function to enough arguments, see
+<code>myDisplayedAppliedFunction</code>.</p>
+<p>If the intention was to actually display the function when the input space is small enough (e.g. just the two <code>Bool</code> constructors), one could define a newtype for functions of type <code>Bool -&gt; a</code> and provide a <code>Display</code> instance for it. Then, the user can call <code>display</code> with the function wrapped in this newtype, see <code>myDisplayedNewtypedFunction</code>.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main2.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main2 where
+
+import SomeDisplayLibrary (Display (..))
+
+myFunction :: Bool -> Int
+myFunction x =
+  if x
+    then 42
+    else 54
+
+myDisplayedFunction :: String
+myDisplayedFunction = display myFunction
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main2 where
+
+import SomeDisplayLibrary (Display (..))
+
+myFunction :: Bool -> Int
+myFunction x =
+  if x
+    then 42
+    else 54
+
+myDisplayedAppliedFunction :: String
+myDisplayedAppliedFunction = display (myFunction True)
+
+newtype BoolFun a = BoolFun (Bool -> a)
+
+instance Display a => Display (BoolFun a) where
+  display (BoolFun f) =
+    "(\\x -> if x then " <> display (f True) <>
+    " else " <> display (f False) <> ")"
+
+myDisplayedNewtypedFunction :: String
+myDisplayedNewtypedFunction = display (BoolFun myFunction)
+</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>SomeDisplayLibrary.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE UndecidableInstances #-}
+
+module SomeDisplayLibrary where
+
+import GHC.TypeLits
+
+class Display a where
+  display :: a -> String
+
+instance Display () where
+  display () = "()"
+
+instance Display Bool where
+  display b = if b then "True" else "False"
+
+instance Display Int where
+  display = show
+
+instance (Display a, Display b) => Display (a, b) where
+  display (a, b) = "(" <> display a <> ", " <> display b <> ")"
+
+instance TypeError (Text "Cannot display functions." :$$:
+                    Text "Perhaps there are missing arguments?")
+    => Display (a -> b) where
+  display = error "unreachable: instance Display (a -> b)"
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE UndecidableInstances #-}
+
+module SomeDisplayLibrary where
+
+import GHC.TypeLits
+
+class Display a where
+  display :: a -> String
+
+instance Display () where
+  display () = "()"
+
+instance Display Bool where
+  display b = if b then "True" else "False"
+
+instance Display Int where
+  display = show
+
+instance (Display a, Display b) => Display (a, b) where
+  display (a, b) = "(" <> display a <> ", " <> display b <> ")"
+
+instance TypeError (Text "Cannot display functions." :$$:
+                    Text "Perhaps there are missing arguments?")
+    => Display (a -> b) where
+  display = error "unreachable: instance Display (a -> b)"
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

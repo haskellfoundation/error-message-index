@@ -1,0 +1,36 @@
+<p>When pattern matching, <code>do</code> expressions are not allowed as patterns to be matched against.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>DoNotationInPattern.hs:4:4: error: [GHC-06446]
+    do-notation in pattern
+  |
+4 | f (do a; b; c;) = do
+  |    ^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>DoNotationInPattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module DoNotationInPattern where
+
+f :: Monad m => m Int -> m Bool
+f (do a; b; c) = do
+    v <- c
+    return $ v == 2
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module DoNotationInPattern where
+
+f :: Monad m => m Int -> m Bool
+f m = do
+    v <- m
+    return $ v == 2</code></pre>
+    </td>
+  </tr>
+  
+</table>

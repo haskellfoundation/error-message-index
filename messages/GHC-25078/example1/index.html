@@ -1,0 +1,39 @@
+<p>An operator’s precedence must be <code>1 &lt;= x &lt;= 9</code>.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>InvalidPrecedence.hs:6:8: error: [ghc-25078]
+    Precedence out of range: 1000
+  |
+6 | infixl 1000 ⊚‿⊚
+  |        ^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>InvalidPrecedence.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module InvalidPrecedence where
+
+(⊚‿⊚) :: Int -> Int -> Int
+(⊚‿⊚) = (+)
+
+infixl 1000 ⊚‿⊚
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module InvalidPrecedence where
+
+module InvalidPrecedence where
+
+(⊚‿⊚) :: Int -> Int -> Int
+(⊚‿⊚) = (+)
+
+infixl 9 ⊚‿⊚
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

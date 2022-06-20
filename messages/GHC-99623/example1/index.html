@@ -1,0 +1,65 @@
+<p>When importing <code>TypeWithoutVisibleCtrs</code> from <code>module HiddenConstructors</code>, the import list item in <code>module DodgyImports</code> suggests that this type has associated in-scope constructor(s). However it does not (the constructors are out of scope). The same is true of <code>TypeWithNoCtrs</code>; the import item suggests it has constructors whereas it has none (either in or out of scope).</p>
+<p>The solution is to import the type abstractly (without <code>(..)</code>) to match its exporting.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>DodgyImports.hs:3:1: warning: [-Wdodgy-imports] [GHC-99623]
+    The import item ‘TypeWithoutVisibleCtrs(..)’ suggests that
+    ‘TypeWithoutVisibleCtrs’ has (in-scope) constructors or class methods,
+    but it has none
+  |
+3 | import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+DodgyImports.hs:3:1: warning: [-Wdodgy-imports] [GHC-99623]
+    The import item ‘TypeWithNoCtrs(..)’ suggests that
+    ‘TypeWithNoCtrs’ has (in-scope) constructors or class methods,
+    but it has none
+  |
+3 | import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>DodgyImports.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module DodgyImports where
+
+import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )
+
+
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module DodgyImports where
+
+import HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs )
+</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>HiddenConstructors.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+
+data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
+
+data TypeWithNoCtrs</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+
+data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
+
+data TypeWithNoCtrs</code></pre>
+    </td>
+  </tr>
+  
+</table>

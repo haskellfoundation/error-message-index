@@ -1,0 +1,60 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:9:49: error: [GHC-46956]
+    • Expected kind ‘k’, but ‘b’ has kind ‘k0’
+    • because kind variable ‘k’ would escape its scope
+    This (rigid, skolem) kind variable is bound by
+      an explicit forall k (a :: k)
+      at Main.hs:9:26-35
+    • In the second argument of ‘SameKind’, namely ‘b’
+      In the type signature:
+        foo :: forall b. (forall k (a :: k). SameKind a b) -&gt; ()
+  |
+9 | foo :: forall b. (forall k (a :: k). SameKind a b) -&gt; ()
+  |                                                 ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this context, the <code>SameKind</code> type requires that both of its arguments are types, and that those types have the same kind. In <code>foo</code>’s type signature, the type <code>b</code> does not have an explicitly-provided kind, which means that GHC creates a fresh kind metavariable for it. The type <code>a</code> does have an explicit kind, which is the variable <code>k</code>. Because <code>SameKind</code> is applied to both <code>a</code> and <code>b</code>, it causes <code>b</code>’s kind metavariable to be unified with <code>k</code>, but <code>k</code> comes from an inner scope and is thus not available for unification.</p>
+<p>The error can be fixed by extending <code>k</code>’s scope to encompass <code>b</code>’s binding site.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
+
+module Main where
+
+import Data.Kind
+
+data SameKind :: k -> k -> *
+
+foo :: forall b. (forall k (a :: k). SameKind a b) -> ()
+foo = undefined
+
+main :: IO ()
+main = pure ()
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
+
+module Main where
+
+import Data.Kind
+
+data SameKind :: k -> k -> *
+
+foo :: forall k b. (forall (a :: k). SameKind a b) -> ()
+foo = undefined
+
+main :: IO ()
+main = pure ()
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,37 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>IntInstance.hs:5:10: error: [GHC-56538]
+    • Instance head is not headed by a class: someClass Int
+    • In the instance declaration for ‘someClass Int’
+  |
+5 | instance someClass Int where
+  |          ^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example shows a typo in which a type class name is written in lower case in an instance declaration. This results in GHC treating it as a type variable, and failing when it is not a concrete class.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IntInstance.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module IntInstance where
+
+class SomeClass a where
+
+instance someClass Int where
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module IntInstance where
+
+class SomeClass a where
+
+instance SomeClass Int where
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

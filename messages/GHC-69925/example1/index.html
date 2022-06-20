@@ -1,0 +1,44 @@
+<p>When pattern matching, unboxed string literals (with the <code>MagicHash</code> postfix) are not allowed.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>IllegalUnboxedString.hs:6:5: error: [GHC-69925]
+    Illegal unboxed string literal in pattern:
+    &quot;a&quot;#
+  |
+6 |     &quot;a&quot;# -&gt; True
+  |     ^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IllegalUnboxedString.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+
+module IllegalUnboxedString where
+
+import GHC.Prim
+
+g :: Addr# -> Bool
+g y = case y of
+    "a"# -> True
+    _    -> False</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module IllegalUnboxedString where
+
+g :: String -> Bool
+g y = case y of
+    "a" -> True
+    _ -> False
+
+
+
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,36 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:5:7: error: [GHC-88464]
+    Variable not in scope: x
+  |
+5 | g y = x
+  |       ^</code></pre>
+<h2 id="description">Description</h2>
+<p>In this example, the body of <code>g</code> attempts to refer to <code>x</code>, which is an argument to <code>f</code> and thus not available. The updated version renames <code>g</code>’s argument so that the <code>x</code> in the body can refer to it.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+f x = 5
+
+g y = x
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+f x = 5
+
+g x = x
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

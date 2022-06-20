@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex">
+        <title>Lambda syntax in pattern [GHC-00482] — Haskell Error Index</title>
+        <link rel="stylesheet" href="../../css/default.css" />
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <script src="../../js/highlight.min.js"></script>
+    </head>
+    <body>
+
+        <main role="main">
+            <nav class="breadcrumb">
+              
+                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+              
+              Lambda syntax in pattern [GHC-00482]
+            </nav>
+            <h1>Lambda syntax in pattern [GHC-00482]</h1>
+            
+
+
+<p>When pattern matching, lambda expressions are not allowed as patterns to be matched against.</p>
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Lambda syntax in `case` expression</summary>
+  <div class="example-container">
+    <p>When pattern matching with a <code>case</code> expression, backslash (<code>\</code>) is not required before the pattern.</p>
+<h2 id="error-message">Error Message</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>LambdaInCase.hs<span class="op">:</span><span class="dv">6</span><span class="op">:</span><span class="dv">5</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">00482</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Lambda</span><span class="op">-</span>syntax <span class="kw">in</span> <span class="kw">pattern</span><span class="op">.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Pattern</span> matching on functions is <span class="fu">not</span> possible<span class="op">.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">|</span>     \a <span class="ot">-&gt;</span> a</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>     <span class="op">^^^^^^^</span></span></code></pre></div>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>LambdaInCase.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module LambdaInCase where
+
+f :: Int -> Int
+f x =
+  case x of
+    \a -> a
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module LambdaInCase where
+
+f :: Int -> Int
+f x =
+  case x of
+    a -> a
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Lambda syntax in pattern match</summary>
+  <div class="example-container">
+    <p>Pattern matching on functions is not possible.</p>
+<h2 id="error-message">Error Message</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>LambdaInPattern.hs<span class="op">:</span><span class="dv">4</span><span class="op">:</span><span class="dv">4</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">00482</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Lambda</span><span class="op">-</span>syntax <span class="kw">in</span> <span class="kw">pattern</span><span class="op">.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Pattern</span> matching on functions is <span class="fu">not</span> possible<span class="op">.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="op">|</span> f (\a <span class="ot">-&gt;</span> a) <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>    <span class="op">^^^^^^^</span></span></code></pre></div>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>LambdaInPattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module LambdaInPattern where
+
+f :: (Int -> Int) -> Int
+f (\a -> a) = 0
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module LambdaInPattern where
+
+f :: (Int -> Int) -> Int
+f a = a 0
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+
+        </main>
+
+        <footer>
+          <p class="HF foot">
+            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
+          </p>
+          <p class="shoutout foot">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+          </p>
+        </footer>
+
+        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+          hljs.highlightElement(el);
+        });</script>
+    </body>
+</html>

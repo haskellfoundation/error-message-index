@@ -1,0 +1,36 @@
+<p>Type role annotations should be one of <code>representational</code>, <code>nominal</code>, or <code>phantom</code>. Fortunately as the choices are limited, GHC is smart enough to suggest which role you intended if a mistake is made.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>IllegalRole.hs:5:13: error:
+    Illegal role name ‘pantom’
+    Perhaps you meant ‘phantom’
+  |
+5 | type role A pantom
+  |             ^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IllegalRole.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE RoleAnnotations #-}
+
+module IllegalRole where
+
+type role A pantom
+data A a = A</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE RoleAnnotations #-}
+
+module IllegalRole where
+
+type role A phantom
+data A a = A</code></pre>
+    </td>
+  </tr>
+  
+</table>

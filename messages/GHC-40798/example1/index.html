@@ -1,0 +1,67 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>
+Main.hs:9:10: warning: [-Woperator-whitespace] [GHC-40798]
+    The suffix use of a ‘+’ might be repurposed as special syntax
+      by a future language extension.
+    Suggested fix: Add whitespace around ‘+’.
+  |
+9 | f a b = a+ b -- this one is a warning
+  |          ^
+
+Main.hs:12:11: warning: [-Woperator-whitespace] [GHC-40798]
+    The prefix use of a ‘+’ might be repurposed as special syntax
+      by a future language extension.
+    Suggested fix: Add whitespace around ‘+’.
+   |
+12 | g a b = a +b -- this one is also a warning
+   |           ^
+
+Main.hs:15:10: warning: [-Woperator-whitespace] [GHC-40798]
+    The tight infix use of a ‘+’ might be repurposed as special syntax
+      by a future language extension.
+    Suggested fix: Add whitespace around ‘+’.
+   |
+15 | h a b = a+b -- this one as well
+   |          ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
+
+module Main where
+
+main :: IO ()
+main = print "notice the usage of whitespace below"
+
+f :: Num a => a -> a -> a
+f a b = a+ b -- this one is a warning
+
+g :: Num a => a -> a -> a
+g a b = a +b -- this one is also a warning
+
+h :: Num a => a -> a -> a
+h a b = a+b -- this one as well
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
+
+module Main where
+
+main :: IO ()
+main = print "notice the usage of whitespace below"
+
+f :: Num a => a -> a -> a
+f a b = a + b
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,67 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:5:1: error: [GHC-05989]
+    • Not a function kind: *
+      but extra binders found: y
+    • In the data type declaration for ‘A’
+  |
+5 | data A x y
+  | ^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example declares <code>A</code> to have kind <code>* -&gt; *</code>, meaning it is a type
+constructor that takes one argument. However, the <code>data</code> declaration for <code>A</code> has
+two arguments (<code>x</code> and <code>y</code>), so it does not match the kind signature.</p>
+<p>This can be fixed by either updating the <code>data</code> declaration to match the kind
+signature (by removing the argument <code>y</code>) or updating the kind signature to match
+the <code>data</code> declaration (by adding an argument of kind <code>*</code>).</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main1.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main1 where
+
+type A :: * -> *
+
+data A x y
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main1 where
+
+type A :: * -> *
+
+data A x = A x
+</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>Main2.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main2 where
+
+type A :: * -> *
+
+data A x y
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main2 where
+
+type A :: * -> * -> *
+
+data A x y = A x y
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

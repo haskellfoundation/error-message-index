@@ -1,0 +1,37 @@
+<h2 id="message">Message</h2>
+<pre><code>Ident.hs:3:10: error: [GHC-24180]
+    Operator applied to too few arguments: ∀
+  |
+3 | ident :: ∀ α.α → α
+  |          ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The <code>UnicodeSyntax</code> language extension causes GHC’s parser to recognize a variety of non-ASCII mathematical symbols as representing their Haskell equivalents. The complete list is available in <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/unicode_syntax.html">the documentation</a>.</p>
+<p>When this extension is not enabled, <code>∀</code> is instead recognized as an infix operator character that has no argument on its left side.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Ident.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">
+module Ident where
+
+ident :: ∀ α.α → α
+ident = λ x → x
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE UnicodeSyntax #-}
+module Ident where
+
+ident :: ∀ α.α → α
+ident = λ x → x
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,40 @@
+<h2 id="message">Message</h2>
+<pre><code>NoFields.hs:7:6: error: [GHC-20825]
+    Empty record update
+  |
+7 | r2 = r1 {}
+  |      ^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>No fields were provided in the update to <code>r1</code>. Provide a field to fix the error.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>NoFields.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NoFields where
+
+data Record = Record {a :: Int}
+
+r1 = Record {a = 5}
+
+r2 = r1 {}
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module NoFields where
+
+data Record = Record {a :: Int}
+
+r1 = Record {a = 5}
+
+r2 = r1 {a = 7}
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex">
+        <title>Parse error on input [GHC-58481] — Haskell Error Index</title>
+        <link rel="stylesheet" href="../../css/default.css" />
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <script src="../../js/highlight.min.js"></script>
+    </head>
+    <body>
+
+        <main role="main">
+            <nav class="breadcrumb">
+              
+                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+              
+              Parse error on input [GHC-58481]
+            </nav>
+            <h1>Parse error on input [GHC-58481]</h1>
+            
+
+
+<p>This is a generic error, indicating that GHC could not parse the code.</p>
+<p>GHC contains many more explicit parsing errors with more verbose descriptions of the problem. However if the error is not separately defined there, a problem with parsing is reported with error code 58481.</p>
+<p>There may be many different reasons why error 58481 was given, ranging from an incorrect syntax that needs additional Haskell Language Extensions, to a expression mistakenly put in the same line as other.</p>
+<p>Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via <a href="https://github.com/haskell/error-messages">error-messages github</a>.</p>
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Parse error expression</summary>
+  <div class="example-container">
+    <p>Error in expression - <code>module</code> keyword should not be used in the same line as an expression declaration.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>error: [GHC-58481]
+    parse error on input ‘module’
+  |
+5 | foo = 123456                    module
+  |                                 ^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Example where
+
+
+foo = 123456                    module
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Example where
+
+
+foo = 123456 
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Parse error in OPAQUE pragma</summary>
+  <div class="example-container">
+    <p>OPAQUE pragma is incorectly parsed.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>error: [GHC-58481]
+    parse error on input ‘[’
+  |
+4 | {-# OPAQUE[1] f #-}
+  |           ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>OpaqueParseFail1.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module OpaqueParseFail1 where
+
+f = id
+{-# OPAQUE[1] f #-}</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module OpaqueParseFail1 where
+
+f = id
+{-# OPAQUE f #-}</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Incorrect syntax of ($) operator usage</summary>
+  <div class="example-container">
+    <p>When TemplateHaskell is <strong>not</strong> enabled, then <code>$</code> denotes function application, but must be followed with a space character: <code>"$ "</code>.</p>
+<p>When TemplateHaskell is enabled, <code>$</code> denotes a <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html">splice operator</a>. Used in this context, there must be no space between the “$” and the expression.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code> warning: [-Woperator-whitespace-ext-conflict] [GHC-47082]
+    The prefix use of a ‘$’ would denote an untyped splice
+      were the TemplateHaskell extension enabled.
+    Suggested fix: Add whitespace after the ‘$’.
+  |
+3 | f = $(x)
+  |     ^
+
+error: [GHC-58481]
+    parse error on input ‘$’
+    Suggested fix: Perhaps you intended to use TemplateHaskell
+  |
+3 | f = $(x)
+  |     ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Data.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell"><not present></code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+module Data where
+import Language.Haskell.TH
+
+x :: Int
+x = 42
+
+static :: Q Exp
+static = [| x |]</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>NoHeader.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NoHeader where
+    
+f = $(static)</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+module NoHeader where 
+import Data (static)
+
+f = $(static)
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+
+        </main>
+
+        <footer>
+          <p class="HF foot">
+            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
+          </p>
+          <p class="shoutout foot">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+          </p>
+        </footer>
+
+        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+          hljs.highlightElement(el);
+        });</script>
+    </body>
+</html>

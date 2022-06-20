@@ -1,0 +1,41 @@
+<p>When pattern matching, <code>(if .. then .. else)</code> expressions are not allowed as patterns to be matched against.</p>
+<p>In this example, if <code>a</code> is <code>True</code> then we want to pattern match <code>b</code> to <code>"something"</code>; if <code>a</code> is <code>False</code>, we want to pattern match <code>b</code> with <code>"something else"</code> instead. For instance, <code>f True "something else"</code> is <code>False</code> and <code>f False "something else"</code> is <code>True</code>.</p>
+<p>However we cannot use an <code>if</code> expression within a pattern match; the solution can be to either to match on a tuple of <code>(a, b)</code> or to move the <code>if</code> expression outside of the pattern.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>IfThenElseInPattern.hs:5:6: error: [GHC-45696]
+    (if ... then ... else ...)-syntax in pattern
+  |
+5 |     (if a then b == &quot;something&quot; else b == &quot;something else&quot;) -&gt; True
+  |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IfThenElseInPattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module IfThenElseInPattern where
+
+f :: Bool -> String -> Bool
+f a b = case a of
+    (if a then b == "something" else b == "something else") -> True
+    _ -> False</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module IfThenElseInPattern where
+
+f :: Bool -> String -> Bool
+f a b = case (a, b) of
+    (True, "something") -> True
+    (False, "something else") -> True
+    _ -> False
+
+f' :: Bool -> String -> Bool
+f' a b = (a && b == "something") || (not a && b == "something else")</code></pre>
+    </td>
+  </tr>
+  
+</table>

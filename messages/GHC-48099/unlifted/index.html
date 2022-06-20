@@ -1,0 +1,34 @@
+<h2 id="message">Message</h2>
+<pre><code>Unlifted.hs:4:1: error: [GHC-48099]
+    Top-level bindings for unlifted types aren't allowed: x = 4#
+  |
+4 | x = 4#
+  | ^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Top-level bindings are not allowed to be unlifted types, because they always need to be a <a href="https://wiki.haskell.org/Thunk">thunk</a>. To fix the issue, use a lifted type.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Unlifted.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+module Unlifted where
+
+x = 4#
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">
+module Unlifted where
+
+x = 4
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,33 @@
+<p>In this example, we wish to constrain the type <code>a</code> which can parameterise the type <code>D</code> to a type that implements the <code>Show</code> and <code>Read</code> typeclasses. Whilst this can be solved currently by <code>-XDatatypeContexts</code>, this extension is deprecated.</p>
+<p>Instead, a solution is to use a GADT to provide a constructor with the given constraints.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>IllegalDatatypeContext.hs:5:6: error: [GHC-87429]
+    Illegal datatype context (use DatatypeContexts): (Show a,
+                                                      Read a) =&gt;
+  |
+5 | data (Show a, Read a) =&gt; D a = D a
+  |      ^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IllegalDatatypeContext.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module IllegalDatatypeContext where
+
+data (Show a, Read a) => D a = D a</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE GADTs #-}
+module IllegalDatatypeContext where
+
+data D a where
+    ShowReadD :: (Show a, Read a) => a -> D a</code></pre>
+    </td>
+  </tr>
+  
+</table>

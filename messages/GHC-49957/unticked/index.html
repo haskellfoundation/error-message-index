@@ -1,0 +1,37 @@
+<h2 id="warning">Warning</h2>
+<pre><code>Unticked.hs:5:10: warning: [-Wunticked-promoted-constructors] [GHC-49957]
+    Unticked promoted constructor: True.
+    Suggested fix: Use 'True instead of True.
+  |
+5 | type A = True
+  |          ^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p><code>True</code> is a data constructor for type <code>Bool</code>. Here, it is used in a type synonym, which implicitly promotes it to a type constructor of kind <code>Bool</code>. The warning can be resolved by adding the tick mark.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Unticked.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# OPTIONS_GHC -Wunticked-promoted-constructors #-}
+module Unticked where
+
+type A = True
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# OPTIONS_GHC -Wunticked-promoted-constructors #-}
+module Unticked where
+
+type A = 'True
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

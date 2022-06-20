@@ -1,0 +1,44 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Example.hs:5:6: warning: [-Wredundant-constraints] [GHC-30606]
+    Redundant constraint: b ~ a
+    In the type signature for:
+         f :: forall a b. (a ~ b, b ~ a) =&gt; a -&gt; b
+  |
+5 | f :: (a ~ b, b ~ a) =&gt; a -&gt; b
+  |      ^^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example declares <code>f</code> with the constraints <code>(a ~ b, b ~ a)</code> (<code>a</code> is
+equal to <code>b</code> and <code>b</code> is equal to <code>a</code>), but <code>a ~ b</code> already implies
+that <code>b ~ a</code> (in other words, <code>~</code> is a <a href="https://en.wikipedia.org/wiki/Symmetric_relation">symmetric relation</a>).</p>
+<p>We fix this by removing the constraint which is marked as redundant in the error
+message, namely <code>b ~ a</code>.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+
+module Example where
+
+f :: (a ~ b, b ~ a) => a -> b
+f x = x
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+
+module Example where
+
+f :: (a ~ b) => a -> b
+f x = x
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

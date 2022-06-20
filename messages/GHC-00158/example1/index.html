@@ -1,0 +1,42 @@
+<p>GHC cannot derive an instance for <code>MyClass</code>, as it is not stock deriveable. Enabling the <code>DeriveAnyClass</code> language extension allows the example to compile.</p>
+<h2 id="error-message">Error Message</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>NotStockDeriveable.hs<span class="op">:</span><span class="dv">6</span><span class="op">:</span><span class="dv">12</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">00158</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">Can't</span> make a derived <span class="kw">instance</span> <span class="kw">of</span> ‘<span class="dt">MyClass</span> <span class="dt">MyType</span>’<span class="op">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        ‘<span class="dt">MyClass</span>’ is <span class="fu">not</span> a stock derivable <span class="kw">class</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>, etc<span class="op">.</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the <span class="kw">data</span> declaration for ‘<span class="dt">MyType</span>’</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Suggested</span> fix<span class="op">:</span> <span class="dt">Perhaps</span> you intended to use <span class="dt">DeriveAnyClass</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">|</span>   <span class="kw">deriving</span> <span class="dt">MyClass</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>            <span class="op">^^^^^^^</span></span></code></pre></div>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>NotStockDeriveable.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NotStockDeriveable where
+
+class MyClass a
+
+data MyType = MyType
+  deriving MyClass
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
+
+module NotStockDeriveable where
+
+class MyClass a
+
+data MyType = MyType
+  deriving MyClass
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

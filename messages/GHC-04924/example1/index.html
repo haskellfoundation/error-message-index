@@ -1,0 +1,29 @@
+<p>A flag was found in the <code>OPTIONS_GHC</code> pragma that was not known.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>UnknownOptionsFlag.hs:1:16: error: [GHC-04924]
+    unknown flag in  {-# OPTIONS_GHC #-} pragma: -flat-specialise
+  |
+1 | {-# OPTIONS_GHC -flat-specialise #-}
+  |                ^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>UnknownOptionsFlag.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -flat-specialise #-}
+
+module UnknownOptionsFlag where</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -flate-specialise #-}
+
+module UnknownOptionsFlag where</code></pre>
+    </td>
+  </tr>
+  
+</table>

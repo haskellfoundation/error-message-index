@@ -1,0 +1,42 @@
+<p>Float literals may not contain underscores if the <code>NoNumericUnderscores</code> language extension is enabled.
+Here, the float literal <code>1_000.0_1</code> contains underscores, but the extension is enabled.
+The error can be fixed by removing the underscores or disabling the extension.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>UnderscoreInFloatLiteral.hs:6:3: error: [GHC-62330]
+    Illegal underscores in floating literals
+    Suggested fix: Perhaps you intended to use NumericUnderscores
+  |
+6 | f 1_000.0_1 = ()
+  |   ^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>UnderscoreInFloatLiteral.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+
+module UnderscoreInFloatLiteral where
+
+f :: Float -> ()
+f 1_000.0_1 = ()
+f _   = ()
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+
+module UnderscoreInFloatLiteral where
+
+f :: Float -> ()
+f 1000.01 = ()
+f _   = ()
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

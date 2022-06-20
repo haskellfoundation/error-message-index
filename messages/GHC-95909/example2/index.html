@@ -1,0 +1,63 @@
+<p>When using the language extension <code>{-# LANGUAGE Strict #-}</code> or <code>{-# LANGUAGE StrictData #-}</code>, all fields are strict, even if we do not explicitly use the strictness flag <code>!</code>. Thus, we must instantiate all fields on construction.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>StrictExtension.hs:9:8: error:  [GHC-95909]
+    • Constructor ‘A’ does not have the required strict field(s): b
+    • In the expression: A {a = True}
+      In an equation for ‘aBad’: aBad = A {a = True}
+  |
+9 | aBad = A { a = True }
+  |        ^^^^^^^^^^^^^^
+
+StrictExtension.hs:12:12: error: [GHC-95909]
+    • Constructor ‘A’ does not have the required strict field(s): a
+    • In the expression: A {b = 5}
+      In an equation for ‘aAlsoBad’: aAlsoBad = A {b = 5}
+   |
+12 | aAlsoBad = A { b = 5 }
+   |            ^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>StrictExtension.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+
+module StrictExtension where
+
+data A = A
+    { a :: Bool
+    , b :: Int
+    }
+
+aBad :: A
+aBad = A { a = True }
+
+aAlsoBad :: A
+aAlsoBad = A { b = 5 }
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+
+module StrictExtension where
+
+data A = A
+    { a :: Bool
+    , b :: Int
+    }
+
+aFixed :: A
+aFixed = A { a = True, b = 5 }
+
+aAlsoFixed :: A
+aAlsoFixed = A { a = True, b = 5 }
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

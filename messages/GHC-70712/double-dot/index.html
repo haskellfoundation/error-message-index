@@ -1,0 +1,38 @@
+<h2 id="message">Message</h2>
+<pre><code>DoubleDot.hs:6:17: error: [GHC-70712]
+    You cannot use `..' in a record update
+  |
+6 | y = x {field=8, ..}
+  |                 ^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The double-dot syntax is not allowed as part of a record update. To fix the issue, remove the <code>..</code> from the record update.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>DoubleDot.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module DoubleDot where
+
+data Record = Record {field :: Integer}
+
+x = Record {field = 5}
+y = x {field=8, ..}
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module DoubleDot where
+
+data Record = Record {field :: Integer}
+
+x = Record {field = 5}
+y = x {field=8}
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,32 @@
+<p>The pattern on the left-hand side of the function definition contains a <code>case ... of ...</code> expression.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>CaseExprInFunctionDef.hs:3:4: error: [GHC-53786]
+    (case ... of ...)-syntax in pattern
+  |
+3 | f (case x of { Nothing -&gt; 0; Just a -&gt; a }) = a
+  |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>CaseExprInFunctionDef.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module CaseExprInFunctionDef where
+
+f (case x of { Nothing -> 0; Just a -> a }) = a
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module CaseExprInFunctionDef where
+
+f Nothing = 0
+f (Just a) = a
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

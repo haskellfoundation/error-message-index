@@ -1,0 +1,43 @@
+<p>An empty pair of single quotes is not a Haskell character literal.</p>
+<p>When Template Haskell is enabled, <code>''T</code> is syntax that refers to a quoted name of the type <code>T</code>. In this case, <code>''</code> is not an empty character literal, but rather part of the quotation syntax for type names. Read more at <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html#extension-TemplateHaskellQuotes">TemplateHaskellQuotes</a>.</p>
+<p>In this context, GHC chooses to interpret <code>''</code> as an empty character literal rather than as an incomplete quoted type name, which results in this message.</p>
+<h2 id="example-error-text">Example error text</h2>
+<pre><code>error: [GHC-11861]
+    Parser error on `''`
+    Character literals may not be empty
+    Suggested fix:
+      Perhaps you intended to use quotation syntax of TemplateHaskell,
+      but the type variable or constructor is missing
+  |
+6 |   where foo = ''
+  |               ^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+
+module Example where
+
+example = foo
+  where foo = ''
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+
+module Example where
+
+example = foo
+  where foo = ''Int
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

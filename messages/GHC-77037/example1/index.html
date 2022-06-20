@@ -1,0 +1,34 @@
+<p>In the example, the import statement brings all the constructors of the <code>Maybe</code> data type into scope, without mentioning them explicitly.
+The warning can be fixed by explicitly importing the constructors of the <code>Maybe</code> data type.</p>
+<h2 id="warning-message">Warning Message</h2>
+<pre><code>example1/before/Example.hs:4:1: warning: [-Wmissing-import-lists] [GHC-77037]
+    The import item ‘Maybe(..)’ does not have an explicit import list
+  |
+4 | import Data.Maybe (Maybe(..))
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wmissing-import-lists #-}
+module Example where
+
+import Data.Maybe (Maybe(..))
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wmissing-import-lists #-}
+module Example where
+
+import Data.Maybe (Maybe(Just, Nothing))
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

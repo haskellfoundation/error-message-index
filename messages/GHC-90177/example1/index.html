@@ -1,0 +1,63 @@
+<p>In this example, the implementation for <code>IsAFoo Foo</code> is in a different module than both the definition for <code>class IsAFoo</code> and the datatype <code>Foo</code>. Thus, it would be possible for a user to write <code>import Foo</code> and expect to have <code>instance IsAFoo Foo</code> in scope; however, the user would need to additionally import <code>module OrphanInstance</code>.</p>
+<p>In this case, where the definitions for both the typeclass and the type are available, the solution is to move the instance definition into the <code>Foo</code> module.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>OrphanInstance.hs:5:1: warning: [-Worphans] [GHC-90177]
+    Orphan instance: instance IsAFoo Foo
+    To avoid this
+        move the instance declaration to the module of the class or of the type, or
+        wrap the type with a newtype and declare the instance on the new type.
+  |
+5 | instance IsAFoo Foo where
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^...</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Foo.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Foo where
+
+data Foo = Foo
+
+class IsAFoo x where
+    convertToFoo :: x -> Foo</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Foo where
+
+data Foo = Foo
+
+class IsAFoo x where
+    convertToFoo :: x -> Foo
+
+instance IsAFoo Foo where
+    convertToFoo = id</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>OrphanInstance.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module OrphanInstance where
+
+import Foo
+
+instance IsAFoo Foo where
+    convertToFoo = id</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module OrphanInstance where
+
+import Foo</code></pre>
+    </td>
+  </tr>
+  
+</table>

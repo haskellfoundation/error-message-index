@@ -1,0 +1,40 @@
+<p>In this example, the <code>stock</code> strategy is incorrectly specified when deriving the <code>Num</code> class (which is not stock deriveable). The solution is to specify the <code>newtype</code> deriving strategy.</p>
+<h2 id="error-message">Error Message</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>IncorrectDerivingStrategy.hs<span class="op">:</span><span class="dv">6</span><span class="op">:</span><span class="dv">18</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">00158</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">Can't</span> make a derived <span class="kw">instance</span> <span class="kw">of</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        ‘<span class="dt">Num</span> <span class="dt">IntWrapper</span>’ with the stock strategy<span class="op">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        ‘<span class="dt">Num</span>’ is <span class="fu">not</span> a stock derivable <span class="kw">class</span> (<span class="dt">Eq</span>, <span class="dt">Show</span>, etc<span class="op">.</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    • <span class="dt">In</span> the <span class="kw">newtype</span> declaration for ‘<span class="dt">IntWrapper</span>’</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">|</span>   <span class="kw">deriving</span> stock <span class="dt">Num</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>                  <span class="op">^^^</span></span></code></pre></div>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>IncorrectDerivingStrategy.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DerivingStrategies #-}
+
+module IncorrectDerivingStrategy where
+
+newtype IntWrapper = Wrap { unwrap :: Int }
+  deriving stock Num
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DerivingStrategies #-}
+
+module IncorrectDerivingStrategy where
+
+newtype IntWrapper = Wrap { unwrap :: Int }
+  deriving newtype Num
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,39 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Example.hs:7:5: error:
+    @-pattern in expression context: g@Int
+    Type application syntax requires a space before '@'
+  |
+7 | f = g@Int
+  |     ^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>A space is missing before the type application. The expression cannot be correctly parsed.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+module Example where
+
+g :: (Num a) => a -> a
+g x = x * 2
+
+f = g@Int</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+module Example where
+
+g :: (Num a) => a -> a
+g x = x * 2
+
+f = g @Int</code></pre>
+    </td>
+  </tr>
+  
+</table>

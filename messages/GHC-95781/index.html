@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex">
+        <title>Invalid type application [GHC-95781] — Haskell Error Index</title>
+        <link rel="stylesheet" href="../../css/default.css" />
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <script src="../../js/highlight.min.js"></script>
+    </head>
+    <body>
+
+        <main role="main">
+            <nav class="breadcrumb">
+              
+                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+              
+              Invalid type application [GHC-95781]
+            </nav>
+            <h1>Invalid type application [GHC-95781]</h1>
+            
+
+
+<p>Type application can only be performed for <em>specified</em> type variables (see <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/type_applications.html#inferred-vs-specified-type-variables">documentation on inferred vs. specified type variables</a>).
+If a type variables is instead inferred, i.e. the type is not annotated or the type variable is marked as inferred with braces, performing a type application for the corresponding type variable leads to this error.</p>
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Type application with type variable marked as inferred</summary>
+  <div class="example-container">
+    <p>The type annotation <code>forall {k} ...</code> of <code>C</code> marks the type variable <code>k</code> as inferred with the surrounding braces.
+In the type application <code>C @Type @Int Proxy</code>, the type/kind argument <code>@Type</code> is therefore bound to <code>a</code> rather than <code>k</code>, causing the application to the second type argument <code>@Int</code> to throw an error.</p>
+<p>Removing the braces around <code>k</code> allows <code>C</code> to be applied to both type arguments.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>InferredTypeVarApplication.hs:11:15: error: [GHC-95781]
+    • Cannot apply expression of type ‘Proxy (*) -&gt; T (*)’
+      to a visible type argument ‘Int’
+    • In the expression: C @Type @Int Proxy
+      In an equation for ‘x’: x = C @Type @Int Proxy
+      In the expression: let x = C @Type @Int Proxy in ()
+   |
+11 | bar = let x = C @Type @Int Proxy
+   |               ^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>InferredTypeVarApplication.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+
+module InferredTypeVarApplication where
+
+import Data.Proxy
+import Data.Kind
+
+data T a where C :: forall {k} (a::k). Proxy a -> T a
+
+bar :: ()
+bar = let x = C @Type @Int Proxy
+      in ()
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+
+module InferredTypeVarApplication where
+
+import Data.Proxy
+import Data.Kind
+
+data T a where C :: forall k (a::k). Proxy a -> T a
+
+bar :: ()
+bar = let x = C @Type @Int Proxy
+      in ()
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type application with no type variable</summary>
+  <div class="example-container">
+    <p>The function <code>plus</code> is applied to the type argument <code>Int</code>, but its annotated type <code>Int -&gt; Int -&gt; Int</code> contains no type variable.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>TypeAppNoTypeVar.hs:8:5: error: [GHC-95781]
+    • Cannot apply expression of type ‘Int -&gt; Int -&gt; Int’
+      to a visible type argument ‘Int’
+    • In the expression: plus @Int 5 7
+      In an equation for ‘x’: x = plus @Int 5 7
+  |
+8 | x = plus @Int 5 7
+  |     ^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>TypeAppNoTypeVar.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+module TypeAppNoTypeVar where
+
+plus :: Int -> Int -> Int
+plus = (+)
+
+x = plus @Int 5 7
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications #-}
+
+module TypeAppNoTypeVar where
+
+plus :: Int -> Int -> Int
+plus = (+)
+
+x = plus 5 7
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type application with non-annotated expression</summary>
+  <div class="example-container">
+    <p>The lambda expression <code>(\x -&gt; x)</code> has no type annotation, thus the application to the type argument <code>Int</code> is forbidden.
+To fix the error, one can remove the type application or add a type annotation.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>TypeForTermArg.hs:5:10: error: [GHC-95781]
+    • Cannot apply expression of type ‘p1 -&gt; p1’
+      to a visible type argument ‘Int’
+    • In the expression: (\ x -&gt; x) @Int 12
+      In an equation for ‘lamApp’: lamApp = (\ x -&gt; x) @Int 12
+  |
+5 | lamApp = (\x -&gt; x) @Int 12
+  |          ^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>TypeForTermArg.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, PolyKinds #-}
+
+module TypeForTermArg where
+
+lamApp = (\x -> x) @Int 12
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, PolyKinds #-}
+
+module TypeForTermArg where
+
+lamApp1 = (\x -> x) 12
+lamApp2 = ((\x -> x) :: forall a. a -> a) @Int 12
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
+
+  </div>
+</details>
+
+
+        </main>
+
+        <footer>
+          <p class="HF foot">
+            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
+          </p>
+          <p class="shoutout foot">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+          </p>
+        </footer>
+
+        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+          hljs.highlightElement(el);
+        });</script>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<p>When TemplateHaskell is <strong>not</strong> enabled, then <code>$</code> denotes function application, but must be followed with a space character: <code>"$ "</code>.</p>
+<p>When TemplateHaskell is enabled, <code>$</code> denotes a <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/template_haskell.html">splice operator</a>. Used in this context, there must be no space between the “$” and the expression.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code> warning: [-Woperator-whitespace-ext-conflict] [GHC-47082]
+    The prefix use of a ‘$’ would denote an untyped splice
+      were the TemplateHaskell extension enabled.
+    Suggested fix: Add whitespace after the ‘$’.
+  |
+3 | f = $(x)
+  |     ^
+
+error: [GHC-58481]
+    parse error on input ‘$’
+    Suggested fix: Perhaps you intended to use TemplateHaskell
+  |
+3 | f = $(x)
+  |     ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Data.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell"><not present></code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+module Data where
+import Language.Haskell.TH
+
+x :: Int
+x = 42
+
+static :: Q Exp
+static = [| x |]</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>NoHeader.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NoHeader where
+    
+f = $(static)</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TemplateHaskell #-}
+module NoHeader where 
+import Data (static)
+
+f = $(static)
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

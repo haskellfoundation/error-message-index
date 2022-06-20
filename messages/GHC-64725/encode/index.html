@@ -1,0 +1,129 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main1.hs:9:18: error: [GHC-64725]
+    • Cannot encode arbitrary precision integers.
+      Consider using a fixed size representation.
+    • In the expression: encode myValue
+      In an equation for ‘myEncodedValue’:
+          myEncodedValue = encode myValue
+  |
+9 | myEncodedValue = encode myValue
+  |                  ^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Here, the module <code>SomeEncodingLibrary</code> stands in for a library used to encode
+Haskell values into some encoding, represented by the data type <code>Encoded</code>. The
+library also provides a type class <code>Encode</code> with instances for different types,
+and the function <code>encode :: Encode a =&gt; a -&gt; Encoded</code> to perform the encoding.</p>
+<p>There are many such Haskell libraries depending on the target encoding.
+It’s also common to find data types that don’t work for a particular encoding;
+in this example, the encoding library only works with types where the size of
+values is statically-known. Since, in this case, we know <code>myValue</code> fits in an
+<code>Int</code>, the solution is to use that as the type of <code>myValue</code> instead of
+<code>Integer</code>. However, for a program that needs to work with <code>Integer</code>s, a
+different solution would be needed, likely using a different encoding
+(and encoding library) altogether.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main1.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main1 where
+
+import SomeEncodingLibrary (Encoded, encode)
+
+myValue :: Integer
+myValue = 42
+
+myEncodedValue :: Encoded
+myEncodedValue = encode myValue
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main1 where
+
+import SomeEncodingLibrary (Encoded, encode)
+
+myValue :: Int
+myValue = 42
+
+myEncodedValue :: Encoded
+myEncodedValue = encode myValue
+</code></pre>
+    </td>
+  </tr>
+  
+  <tr><td colspan="2" class="filename"><pre>SomeEncodingLibrary.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module SomeEncodingLibrary where
+
+import GHC.TypeLits
+
+class Encode a
+
+data Encoded = Encoded
+
+encode :: Encode a => a -> Encoded
+encode _ = Encoded
+
+instance Encode ()
+
+instance Encode Bool
+
+instance Encode Int
+
+instance Encode Word
+
+instance (Encode a, Encode b) => Encode (a, b)
+
+instance TypeError (Text "Cannot encode arbitrary precision integers." :$$:
+                    Text "Consider using a fixed size representation.")
+    => Encode Integer
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module SomeEncodingLibrary where
+
+import GHC.TypeLits
+
+class Encode a
+
+data Encoded = Encoded
+
+encode :: Encode a => a -> Encoded
+encode _ = Encoded
+
+instance Encode ()
+
+instance Encode Bool
+
+instance Encode Int
+
+instance Encode Word
+
+instance (Encode a, Encode b) => Encode (a, b)
+
+instance TypeError (Text "Cannot encode arbitrary precision integers." :$$:
+                    Text "Consider using a fixed size representation.")
+    => Encode Integer
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

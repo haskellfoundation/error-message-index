@@ -1,0 +1,38 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:9:12: warning: [-Wderiving-typeable] [GHC-90584]
+    • Deriving ‘Typeable’ has no effect: all types now auto-derive Typeable
+    • In the data declaration for ‘Foo’
+  |
+9 |   deriving Typeable
+  |            ^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wderiving-typeable #-}
+module Example where
+
+import Data.Typeable
+
+data Foo = Foo Int | Bar Char
+  deriving Typeable
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wderiving-typeable #-}
+module Example where
+
+import Data.Typeable
+
+data Foo = Foo Int | Bar Char
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

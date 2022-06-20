@@ -1,0 +1,45 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Example.hs:5:6: warning: [-Wredundant-constraints] [GHC-30606]
+    Redundant constraint: Eq a
+    In the type signature for:
+         f :: forall a. (Eq a, Ord a) =&gt; a -&gt; a -&gt; Bool
+  |
+5 | f :: (Eq a, Ord a) =&gt; a -&gt; a -&gt; Bool
+  |      ^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example declares <code>f</code> with the constraints <code>(Eq a, Ord a)</code>, but an <code>Ord a</code>
+instance already implies an <code>Eq a</code> instance, because <code>Eq</code> is a superclass of
+<code>Ord</code>.</p>
+<p>We fix this by removing the constraint which is marked as redundant in the error
+message, namely <code>Eq a</code>. Note that we can still use the <code>(==)</code> method of <code>Eq</code> in
+the body of <code>f</code> because of the aforementioned superclass constraint.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+
+module Example where
+
+f :: (Eq a, Ord a) => a -> a -> Bool
+f x y = (x < y) || x == y
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+
+module Example where
+
+f :: Ord a => a -> a -> Bool
+f x y = (x < y) || x == y
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

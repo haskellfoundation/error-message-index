@@ -1,0 +1,55 @@
+<p>The type annotation <code>forall {k} ...</code> of <code>C</code> marks the type variable <code>k</code> as inferred with the surrounding braces.
+In the type application <code>C @Type @Int Proxy</code>, the type/kind argument <code>@Type</code> is therefore bound to <code>a</code> rather than <code>k</code>, causing the application to the second type argument <code>@Int</code> to throw an error.</p>
+<p>Removing the braces around <code>k</code> allows <code>C</code> to be applied to both type arguments.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>InferredTypeVarApplication.hs:11:15: error: [GHC-95781]
+    • Cannot apply expression of type ‘Proxy (*) -&gt; T (*)’
+      to a visible type argument ‘Int’
+    • In the expression: C @Type @Int Proxy
+      In an equation for ‘x’: x = C @Type @Int Proxy
+      In the expression: let x = C @Type @Int Proxy in ()
+   |
+11 | bar = let x = C @Type @Int Proxy
+   |               ^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>InferredTypeVarApplication.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+
+module InferredTypeVarApplication where
+
+import Data.Proxy
+import Data.Kind
+
+data T a where C :: forall {k} (a::k). Proxy a -> T a
+
+bar :: ()
+bar = let x = C @Type @Int Proxy
+      in ()
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+
+module InferredTypeVarApplication where
+
+import Data.Proxy
+import Data.Kind
+
+data T a where C :: forall k (a::k). Proxy a -> T a
+
+bar :: ()
+bar = let x = C @Type @Int Proxy
+      in ()
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,51 @@
+<p>The instantiation of a strict field in a record is missing. In <code>aFine</code>, we can leave one field uninstantiated as it is not strict, and therefore is not evaluated until needed, due to lazy evaluation. However in <code>aBad</code> we cannot, as the field <code>a</code> is strict.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingStrictField.hs:12:8: error: [GHC-95909]
+    • Constructor ‘A’ does not have the required strict field(s): a
+    • In the expression: A {b = 5}
+      In an equation for ‘aBad’: aBad = A {b = 5}
+   |
+12 | aBad = A { b = 5 }
+   |        ^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>MissingStrictField.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module MissingStrictField where
+
+data A = A
+    { a :: !Bool
+    , b :: Int
+    }
+
+aFine :: A
+aFine = A { a = True }
+
+aBad :: A
+aBad = A { b = 5 }
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module MissingStrictField where
+
+data A = A
+    { a :: !Bool
+    , b :: Int
+    }
+
+aFine :: A
+aFine = A { a = True }
+
+aFixed :: A
+aFixed = A { a = True, b = 5 }
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

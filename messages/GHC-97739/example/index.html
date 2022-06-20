@@ -1,0 +1,47 @@
+<h2 id="message">Message</h2>
+<pre><code>DependencyOrder.hs:8:15: error: [GHC-97739]
+    • These kind and type variables: a k (b :: k)
+      are out of dependency order. Perhaps try this ordering:
+        k (a :: k) (b :: k)
+    • In the type signature: foo :: forall a k (b :: k). SameKind a b
+  |
+8 | foo :: forall a k (b :: k). SameKind a b
+  |               ^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The type <code>SameKind a b</code> forces types <code>a</code> and <code>b</code> to have the same kind, because the kind variable <code>k</code> is used for both in its declaration. Thus, <code>a</code>’s kind is forced to be <code>k</code>, based on <code>b</code>’s kind annotation. However, this would result in <code>a</code>’s kind not being in scope when <code>a</code> is declared. The error can be fixed by reversing the arguments <code>a</code> and <code>k</code> so that <code>a</code> is in <code>k</code>’s scope.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>DependencyOrder.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
+module DependencyOrder where
+
+import Data.Kind
+
+data SameKind :: k -> k -> *
+
+foo :: forall a k (b :: k). SameKind a b
+foo = undefined
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
+module DependencyOrder where
+
+import Data.Kind
+
+data SameKind :: k -> k -> *
+
+foo :: forall k a (b :: k). SameKind a b
+foo = undefined
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

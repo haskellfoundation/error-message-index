@@ -1,0 +1,36 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>Main.hs:2:11: error: [GHC-39999]
+    • No instance for (Num a) arising from a use of ‘+’
+      Possible fix:
+        add (Num a) to the context of
+          the type signature for:
+            add :: forall a. a -&gt; a -&gt; a
+    • In the expression: x + y
+      In an equation for ‘add’: add x y = x + y
+  |
+2 | add x y = x + y
+  |           ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The operator <code>+</code> is only defined on types which have an instance of the <code>Num</code> type class. If the function has the signature <code>a -&gt; a -&gt; a</code> someone could e.g. pass in a <code>String</code> for <code>a</code> and GHC wouldn‘t know how to add two Strings. Too fix it, like the compiler suggests, we add the <code>Num a =&gt;</code> constraint to the type signature to make sure that all users of <code>add</code> provide a suitable <code>Num</code> instance.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">add :: a -> a -> a
+add x y = x + y
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">add :: Num a => a -> a -> a
+add x y = x + y
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

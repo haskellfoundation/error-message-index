@@ -1,0 +1,38 @@
+<h2 id="warning-message">Warning message</h2>
+<pre><code>Main.hs:5:14: warning: [-Wempty-enumerations] [GHC-10190]
+    Enumeration is empty
+  |
+5 |   let enum = [5 .. 1]
+  |              ^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p><code>5</code> is greater than <code>1</code>, so the resulting list would be empty. This probably indicates a bug, because the most straightforward way to write the empty list is <code>[]</code>. One solution to this is to provide the second step in the enumeration so that the code will count down rather than up.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+main :: IO ()
+main = do
+  let enum = [5 .. 1]
+  print enum
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+main :: IO ()
+main = do
+  let enum = [5, 4 .. 1]
+  print enum
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

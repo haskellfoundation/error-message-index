@@ -1,0 +1,37 @@
+<p>The pattern being matched upon in the case expression <code>case x of ...</code> contains another case expression.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>CaseExprInCasePattern.hs:5:3: error: [GHC-53786]
+    (case ... of ...)-syntax in pattern
+  |
+5 |   case y of
+  |   ^^^^^^^^^...</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>CaseExprInCasePattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module CaseExprInFunctionDef where
+
+f :: a -> b -> Int
+f x y = case x of
+  case y of
+    _ -> 1
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module CaseExprInFunctionDef where
+
+f :: a -> b -> Int
+f x y = case x of
+  _ -> case y of
+    _ -> 1
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

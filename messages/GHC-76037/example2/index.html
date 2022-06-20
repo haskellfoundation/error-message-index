@@ -1,0 +1,36 @@
+<p>The class name <code>B</code> referenced in the definition of class <code>C</code> is not in scope.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>NotInScopeClass.hs:3:8: error: [GHC-76037]
+    Not in scope: type constructor or class ‘B’
+  |
+3 | class (B a) =&gt; C a where
+  |        ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>NotInScopeClass.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NotInScopeClass where
+
+class (B a) => C a where
+ op1 :: a -> Int
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module NotInScopeClass where
+
+class B a where
+  op :: a -> a
+
+class (B a) => C a where
+ op1 :: a -> Int
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

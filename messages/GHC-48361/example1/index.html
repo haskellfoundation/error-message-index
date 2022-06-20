@@ -1,0 +1,34 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Error.hs:4:1: error: [GHC-48361]
+    • Binding type variables is not allowed in pattern bindings
+    • In the pattern: Just @a x
+      In a pattern binding: Just @a x = Just (5 :: Integer)
+  |
+4 | Just @a x = Just (5 :: Integer)
+  | ^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Error.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+x :: Integer
+Just @a x = Just (5 :: Integer)
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Main where
+
+x :: Integer
+Just x = Just (5 :: Integer)
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

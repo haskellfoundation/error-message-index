@@ -1,0 +1,50 @@
+<p>The problem here is the usage of the type family <code>Id</code> in the standalone kind signature for the typeclass <code>C</code>. Kind signatures for classes must literally end in <code>Constraint</code> rather than in a kind that is equivalent to it.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>ClassKindNotConstraint.hs:14:1: error: [GHC-80768]
+    • Kind signature on a class must end with Constraint
+      unobscured by type families
+    • In the class declaration for ‘C’
+   |
+14 | class C a
+   | ^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>ClassKindNotConstraint.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE StandaloneKindSignatures #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module ClassKindNotConstraint where
+
+import Data.Kind
+
+type family Id (x :: Type) :: Type where
+  Id x = x
+
+type C :: Type -> Id Constraint
+class C a
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE ConstraintKinds #-}
+{-# LANGUAGE StandaloneKindSignatures #-}
+
+module ClassKindNotConstraint where
+
+import Data.Kind
+
+type C :: Type -> Constraint
+class C a
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,36 @@
+<p>The case for the empty list is missing, and for a safe version of head, the return type has to be changed.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:4:1: warning: [-Wincomplete-patterns]
+    Pattern match(es) are non-exhaustive
+    In an equation for ‘safeHead’:
+        Patterns of type ‘[a]’ not matched: []
+  |
+3 | safeHead (x : xs) = x
+  | ^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wincomplete-patterns #-}
+
+safeHead :: [a] -> a
+safeHead (x : xs) = x
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wincomplete-patterns #-}
+
+safeHead :: [a] -> Maybe a
+safeHead (x : xs) = Just x
+safeHead [] = Nothing
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

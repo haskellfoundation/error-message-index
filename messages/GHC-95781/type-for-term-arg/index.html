@@ -1,0 +1,40 @@
+<p>The lambda expression <code>(\x -&gt; x)</code> has no type annotation, thus the application to the type argument <code>Int</code> is forbidden.
+To fix the error, one can remove the type application or add a type annotation.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>TypeForTermArg.hs:5:10: error: [GHC-95781]
+    • Cannot apply expression of type ‘p1 -&gt; p1’
+      to a visible type argument ‘Int’
+    • In the expression: (\ x -&gt; x) @Int 12
+      In an equation for ‘lamApp’: lamApp = (\ x -&gt; x) @Int 12
+  |
+5 | lamApp = (\x -&gt; x) @Int 12
+  |          ^^^^^^^^^^^^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>TypeForTermArg.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, PolyKinds #-}
+
+module TypeForTermArg where
+
+lamApp = (\x -> x) @Int 12
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, PolyKinds #-}
+
+module TypeForTermArg where
+
+lamApp1 = (\x -> x) 12
+lamApp2 = ((\x -> x) :: forall a. a -> a) @Int 12
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

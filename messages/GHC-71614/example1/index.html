@@ -1,0 +1,31 @@
+<p>The parameter list of a lambda expression must contain at least one parameter, but here it is empty.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>LambdaNoParams.hs:3:7: error: [GHC-71614]
+    A lambda requires at least one parameter
+  |
+3 | lam = \ -&gt; 0
+  |       ^^^^^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>LambdaNoParams.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module LambdaNoParams where
+
+lam = \ -> 0
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module LambdaNoParams where
+
+lam = \x -> 0
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

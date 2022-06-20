@@ -1,0 +1,31 @@
+<p>OPAQUE pragma is incorectly parsed.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>error: [GHC-58481]
+    parse error on input ‘[’
+  |
+4 | {-# OPAQUE[1] f #-}
+  |           ^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>OpaqueParseFail1.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module OpaqueParseFail1 where
+
+f = id
+{-# OPAQUE[1] f #-}</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module OpaqueParseFail1 where
+
+f = id
+{-# OPAQUE f #-}</code></pre>
+    </td>
+  </tr>
+  
+</table>

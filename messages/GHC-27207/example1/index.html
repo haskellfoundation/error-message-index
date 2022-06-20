@@ -1,0 +1,44 @@
+<p>There is no space after the tilde character <code>~</code>.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingSpaceLazyPattern.hs:11:9: error:
+    Lazy pattern in expression context: ~1
+    Did you mean to add a space after the '~'?
+   |
+11 | f x = x ~1
+   |         ^^</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>MissingSpaceLazyPattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module MissingSpaceLazyPattern where
+
+(~) :: Int -> Int -> Bool
+(~) a b = a == b
+
+infixl 5 ~
+
+f :: Int -> Bool
+f x = x ~1
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module MissingSpaceLazyPattern where
+
+(~) :: Int -> Int -> Bool
+(~) a b = a == b
+
+infixl 5 ~
+
+f :: Int -> Bool
+f x = x ~ 1
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,41 @@
+<p>The field <code>c</code> of the record Rec is not initialized.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>GHC-20125/example1/before/Error.hs:7:5: warning: [-Wmissing-fields] [GHC-20125]
+    • Fields of ‘Rec’ not initialised:
+        c :: Bool
+    • In the expression: Rec {a = 1, b = &quot;two&quot;}
+      In an equation for ‘x’: x = Rec {a = 1, b = &quot;two&quot;}
+  |
+7 | x = Rec { a = 1, b = &quot;two&quot; }</code></pre>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Error.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wmissing-fields #-}
+module Error where
+
+data Rec = Rec { a :: Int, b :: String, c :: Bool }
+
+x :: Rec
+x = Rec { a = 1, b = "two" }
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wmissing-fields #-}
+module Error where
+
+data Rec = Rec { a :: Int, b :: String, c :: Bool }
+
+x :: Rec
+x = Rec { a = 1, b = "two", c = True }
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

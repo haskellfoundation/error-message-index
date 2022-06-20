@@ -1,0 +1,33 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>Main.hs:5:12: error: [GHC-62016]
+    • Cannot derive well-kinded instance of form ‘Functor (Pet ...)’
+        Class ‘Functor’ expects an argument of kind ‘* -&gt; *’
+    • In the data declaration for ‘Pet’</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The <code>Functor</code> type class applies to type constructors; that is,
+data types which take one other type as a parameter. The <code>Pet</code> data type
+defined in the code does <em>not</em> take any type parameters.
+As a result, GHC cannot write the <code>Functor</code> instance for you.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# language DeriveFunctor #-}
+module Main where
+
+data Pet = Cat | Dog 
+  deriving Functor
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell"><not present></code></pre>
+    </td>
+  </tr>
+  
+</table>
