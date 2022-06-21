@@ -22,7 +22,8 @@ import Hakyll
 import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
 import System.FilePath
-import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
+import qualified Text.Pandoc as Pandoc
+import qualified Text.Pandoc.Definition as Pandoc
 
 main :: IO ()
 main = hakyll $ do
@@ -76,13 +77,9 @@ main = hakyll $ do
                   ( mconcat
                       [ indexlessUrlField "url",
                         field "name" (pure . view _1 . itemBody),
-                        -- Set the language that highlight.js should use for syntax highlighting
-                        field "language" $ \(itemBody -> (filename, _, _)) ->
-                          pure $ case dropWhile (== '.') $ takeExtension filename of
-                            "hs" -> "haskell"
-                            other -> other,
-                        field "before" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
-                        field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
+                        -- TODO: pick the right language
+                        field "beforeHighlighted" (maybe (pure "<not present>") (fmap (T.unpack . highlight "haskell" . T.pack) . fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
+                        field "afterHighlighted" (maybe (pure "<not present>") (fmap (T.unpack . highlight "haskell" . T.pack) . fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
                       ]
                   )
                   (return files),
@@ -287,3 +284,13 @@ indexless url
   where
     lru = reverse url
     toDrop = "index.html"
+
+highlight :: T.Text -> T.Text -> T.Text
+highlight language code =
+  let writerOptions = Pandoc.def
+      -- We make a fake Pandoc document that's just the code embedded in a code block.
+      document =
+        Pandoc.Pandoc mempty [Pandoc.CodeBlock ("", [language], []) code]
+   in case Pandoc.runPure $ Pandoc.writeHtml5String writerOptions document of
+        Left err -> error $ "Unexpected Pandoc error: " ++ show err
+        Right html -> html
