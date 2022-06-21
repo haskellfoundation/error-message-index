@@ -1,0 +1,35 @@
+<h2 id="message">Message</h2>
+<pre><code>CommandPattern.hs:4:4: error: [GHC-98980]
+    Command syntax in pattern: y -&lt; x
+  |
+4 | f (y -&lt; x) = 5
+  |    ^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this example, the command <code>y -&lt; x</code> is used where a pattern is expected.
+To fix the error, replace the command with a pattern.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>CommandPattern.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE Arrows #-}
+module CommandPattern where
+
+f (y -< x) = 5
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE Arrows #-}
+module CommandPattern where
+
+f _ = 5
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

@@ -1,0 +1,41 @@
+<h2 id="message">Message</h2>
+<pre><code>TupleConstraint.hs:4:18: error: [GHC-77539]
+    • Illegal tuple constraint: (Read a, Show a)
+    • In the type signature:
+        addFromString :: ((Read a, Show a), Num a) =&gt; String -&gt; a -&gt; String
+    Suggested fix: Perhaps you intended to use ConstraintKinds
+  |
+4 | addFromString :: ((Read a, Show a), Num a) =&gt; String -&gt; a -&gt; String
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This file is written in Haskell 2010, which does not have <code>ConstraintKinds</code>.
+This means that a syntactic check is used to ensure that type class constraints form a single-level tuple, and this file does not satisfy that requirement.
+Either de-nesting the tuple or enabling <code>ConstraintKinds</code> fixes the issue.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>TupleConstraint.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+module TupleConstraint where
+
+addFromString :: ((Read a, Show a), Num a) => String -> a -> String
+addFromString x y = show (read x + y)
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE ConstraintKinds #-}
+module TupleConstraint where
+
+addFromString :: ((Read a, Show a), Num a) => String -> a -> String
+addFromString x y = show (read x + y)
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
