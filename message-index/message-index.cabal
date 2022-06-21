@@ -6,7 +6,7 @@ cabal-version:      2.0
 executable site
   main-is:          site.hs
   build-depends:    base == 4.*
-                  , hakyll == 4.15.*
+                  , hakyll ^>= 4.16.0.0
                   , commonmark >= 0.2.2
                   , filepath ^>= 1.4
                   , microlens ^>= 0.4.12
