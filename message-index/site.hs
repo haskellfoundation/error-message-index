@@ -8,6 +8,7 @@ import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
+import Data.Either (fromRight)
 import Data.Functor ((<&>))
 import Data.List (find, lookup, nub, sort)
 import qualified Data.Map.Strict as Map
@@ -19,7 +20,8 @@ import Hakyll
 import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
 import System.FilePath
-import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
+import qualified Text.Pandoc as Pandoc
+import qualified Text.Pandoc.Definition as Pandoc
 
 main :: IO ()
 main = hakyll $ do
@@ -67,8 +69,8 @@ main = hakyll $ do
                   ( mconcat
                       [ urlField "url",
                         field "name" (pure . view _1 . itemBody),
-                        field "before" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
-                        field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
+                        field "before" (maybe (pure "<not present>") (fmap (T.unpack . highlightHaskell . T.pack) . fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
+                        field "after" (maybe (pure "<not present>") (fmap (T.unpack . highlightHaskell . T.pack) . fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
                       ]
                   )
                   (return files),
@@ -231,3 +233,13 @@ flagSetFields =
           Just (_, g) -> return $ unwords g
           Nothing -> return ""
     ]
+
+highlightHaskell :: T.Text -> T.Text
+highlightHaskell code =
+  let writerOptions = Pandoc.def
+      -- We make a fake Pandoc document that's just the code embedded in a code block.
+      document =
+        Pandoc.Pandoc mempty [Pandoc.CodeBlock ("", ["haskell"], []) code]
+   in case Pandoc.runPure $ Pandoc.writeHtml5String writerOptions document of
+        Left err -> error $ "Unexpected Pandoc error: " ++ show err
+        Right html -> html
