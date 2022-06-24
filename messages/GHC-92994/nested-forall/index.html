@@ -1,0 +1,38 @@
+<h2 id="message">Message</h2>
+<pre><code>NestedForall.hs:4:1: error: [GHC-92994]
+    • Unacceptable result type in foreign declaration:
+        Unexpected nested forall
+    • When checking declaration:
+        foreign import capi safe &quot;foo.h fun&quot; fun
+          :: Int -&gt; (forall a. a -&gt; a)
+  |
+4 | foreign import capi &quot;foo.h fun&quot; fun :: Int -&gt; (forall a . a -&gt; a)
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This type contains a <code>forall</code> that does not scope over the entire type signature, which is not allowed in the FFI.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>NestedForall.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE CApiFFI, RankNTypes #-}
+module NestedForall where
+
+foreign import capi "foo.h fun" fun :: Int -> (forall a . a -> a)
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">{-# LANGUAGE CApiFFI, RankNTypes #-}
+module NestedForall where
+
+foreign import capi "foo.h fun" fun :: forall a . Int -> a -> a
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
