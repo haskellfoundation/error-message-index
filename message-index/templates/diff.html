@@ -1,0 +1,40 @@
+<table width="100%">
+  <tbody>
+    <tr><td colspan="4" class="filename"><pre>$name$</pre></td></tr>
+
+    $for(rows)$
+      <tr>
+      $if(changed)$
+        $if(left)$
+        <td class="gutter removed">-</td>
+        <td class="removed">
+          <pre><code></code>$left$</code></pre>
+        </td>
+        $else$
+        <td class="gutter"></td>
+        <td class="blank"></td>
+        $endif$
+
+        $if(right)$
+        <td class="gutter added">+</td>
+        <td class="added">
+          <pre><code>$right$</code></pre>
+        </td>
+        $else$
+        <td class="gutter"></td>
+        <td class="blank"></td>
+        $endif$
+      $else$
+        <td class="gutter"></td>
+        <td>
+          <pre><code>$left$</code></pre>
+        </td>
+        <td class="gutter"></td>
+        <td>
+          <pre><code>$right$</code></pre>
+        </td>
+      $endif$
+      </tr>
+    $endfor$
+  </tbody>
+</table>

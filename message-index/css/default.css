@@ -261,3 +261,11 @@ details > summary {
 .nowrap {
   white-space: nowrap;
 }
+
+.removed {
+  color: red
+}
+
+.added {
+  color: green
+}
