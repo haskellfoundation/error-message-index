@@ -9,7 +9,7 @@ The program was fixed by moving the lambda's argument to the left of the `=`.
 ## Error Message
 
 ```
-Main.hs:2:1: error: [GHC-91938]
+Main.hs:1:1: error: [GHC-91938]
     Equations for ‘f’ have different numbers of arguments
       Prog.hs:2:1-19
       Prog.hs:3:1-20
