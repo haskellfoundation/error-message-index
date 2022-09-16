@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Select GHC 9.2.4
+      run: ghcup set 9.2.4
+
     - name: Check out repo
       uses: actions/checkout@v3
       
