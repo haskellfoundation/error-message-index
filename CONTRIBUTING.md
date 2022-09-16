@@ -9,20 +9,19 @@ The message index is in the directory `message-index`.
 
 ## Building GHC with Error Codes
 
-Please follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian),
-switching to the `wip/T21684` branch before compilation.
+Please follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian), using a version of the `master` branch from after 13 September, 2022 or a release of version 9.6.1 or higher.
 Your error messages would then contain an ID.
 
 ```
 $ _build/stage1/bin/ghc --interactive
-GHCi, version 9.5.20220609: https://www.haskell.org/ghc/  :? for help
+GHCi, version 9.5.20220915: https://www.haskell.org/ghc/  :? for help
 ghci> 1 + "foo"
 
 <interactive>:1:1: error: [GHC-39999]
-    • No instance for (Num String) arising from the literal '1'
-    • In the first argument of '(+)', namely '1'
+    • No instance for ‘Num String’ arising from the literal ‘1’
+    • In the first argument of ‘(+)’, namely ‘1’
       In the expression: 1 + "foo"
-      In an equation for 'it': it = 1 + "foo"
+      In an equation for ‘it’: it = 1 + "foo"
 ```
 
 This is not strictly necessary to contribute, but is a very useful way to ensure your example code *does* provide the error you are documenting.
