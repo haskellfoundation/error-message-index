@@ -1,7 +1,7 @@
 # The Haskell Message Index
 [![.github/workflows/deploy.yml](https://github.com/haskellfoundation/error-message-index/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/haskellfoundation/error-message-index/actions/workflows/deploy.yml)
 
-Haskell tooling emits a variety of errors, warnings, and other messages. In an unreleased branch, GHC emits a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
+Haskell tooling emits a variety of errors, warnings, and other messages. In the latest development versions that are leading to the release of version 9.6.1, GHC emits a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving the site. Thanks!
 

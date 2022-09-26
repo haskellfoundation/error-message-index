@@ -9,8 +9,9 @@ The message index is in the directory `message-index`.
 
 ## Building GHC with Error Codes
 
-Please follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian), using a version of the `master` branch from after 13 September, 2022 or a release of version 9.6.1 or higher.
-Your error messages would then contain an ID.
+Until the release of GHC 9.6.1, error and warning IDs are only available using a development version of GHC. Please
+follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian),
+using a version of the `master` branch from after 13 September, 2022. Your error messages would then contain an ID:
 
 ```
 $ _build/stage1/bin/ghc --interactive
