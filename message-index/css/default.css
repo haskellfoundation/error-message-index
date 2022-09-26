@@ -60,6 +60,10 @@ article .header {
   text-decoration: none;
 }
 
+.message-list td, .message-list th {
+  vertical-align: top;
+}
+
 /* Responsive */
 
 @media (max-width: 319px) {
