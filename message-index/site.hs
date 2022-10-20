@@ -23,6 +23,7 @@ import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
 
 main :: IO ()
 main = hakyll $ do
+  -- Necessary to have GitHub Pages point at the right domain
   match "CNAME" $ do
     route idRoute
     compile copyFileCompiler
