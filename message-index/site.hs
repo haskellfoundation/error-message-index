@@ -23,6 +23,10 @@ import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
 
 main :: IO ()
 main = hakyll $ do
+  match "CNAME" $ do
+    route idRoute
+    compile copyFileCompiler
+
   match "images/*" $ do
     route idRoute
     compile copyFileCompiler
