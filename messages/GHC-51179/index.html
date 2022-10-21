@@ -28,7 +28,7 @@
 <p>The <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lambda_case.html">Lambda Case extension</a>
 enables a syntactic sugar for a lambda function that pattern matches its argument immediately.
 Using <code>LambdaCase</code>,</p>
-<pre><code>\case {&quot;1&quot; -&gt; 1, &quot;2&quot; -&gt; 2}</code></pre>
+<pre><code>\case {&quot;1&quot; -&gt; 1; &quot;2&quot; -&gt; 2}</code></pre>
 <p>is equivalent to</p>
 <pre><code>\x -&gt; case x of {&quot;1&quot; -&gt; 1; &quot;2&quot; -&gt; 2}</code></pre>
 <p>When the extension is missing, the expression is interpreted as a regular lambda expression that is incorrectly formatted.</p>
