@@ -10,7 +10,7 @@ The [Lambda Case extension](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/e
 enables a syntactic sugar for a lambda function that pattern matches its argument immediately.
 Using `LambdaCase`,
 ```
-\case {"1" -> 1, "2" -> 2}
+\case {"1" -> 1; "2" -> 2}
 ```
 is equivalent to
 ```
