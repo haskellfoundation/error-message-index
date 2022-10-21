@@ -5,6 +5,8 @@ Haskell tooling emits a variety of errors, warnings, and other messages. In the 
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving the site. Thanks!
 
+If you're a Haskell tool developer who would like to integrate your project with the site, please refer to [tool-developers.md](./tool-developers.md) for recommendations regarding the error codes themselves.
+
 ## Running Locally
 
 The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, enter the `message-index` directory and run:
