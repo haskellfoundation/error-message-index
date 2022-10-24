@@ -35,11 +35,10 @@ Like most forms of communication, this is a matter for human judgment that can't
 The Haskell Foundation administers the error code namespaces - please open an issue here or have a chat with the HF executive team to get a namespace assignment.
 The currently assigned namespaces are:
 
-|-----------|--------------------------------------|
 | Namespace | Tool                                 |
 |-----------|--------------------------------------|
 | `GHC`     | [GHC](https://www.haskell.org/ghc/)  |
-|-----------|--------------------------------------|
+
 
 ### Code Assignment Recommendations
 
