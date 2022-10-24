@@ -1,0 +1,33 @@
+<h2 id="message">Message</h2>
+<pre><code>NotLambda.hs:3:9: error: [GHC-66228]
+    View pattern in expression context: x -&gt; x
+  |
+3 | five = (x -&gt; x) 5
+  |         ^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this example, the programmer forgot the <code>\</code> at the beginning of their anonymous function.
+This caused the parser to recognize the function as a view pattern instead of a lambda.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>NotLambda.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module NotLambda where
+
+five = (x -> x) 5
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module NotLambda where
+
+five = (\x -> x) 5
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
