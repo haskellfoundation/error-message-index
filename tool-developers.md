@@ -19,9 +19,9 @@ The most important principle of error codes is that they exist primarily as a me
 The code links the output in the user's IDE or terminal to text that describes the error or warning.
 Codes should follow these principles:
  * A code should always have the same meaning forever
- * Codes may be retired and introduced
+ * Codes may be retired or introduced in new releases
 
-Aside from that, tools may assign codes however they wish.
+Aside from that, tools may assign codes however they wish, and need not do anything but begin emitting them.
 There is an optional, recommended code assignment strategy later in this document.
 
 Error codes are associated with the _meaning_ of a message, rather than its text.
@@ -29,6 +29,16 @@ As a tool evolves over time, codes should change if and only if the meaning of t
 That is, rephrasing a message or modifying its presentation should not result in a new code.
 Splitting one message into two should result in at least one new code: if one of the new messages is a natural continuation of the prior one and one is a specific special case, then the special case should get a new code, but if neither is clearly the successor, then the prior code should be retired and fresh codes should be assigned to each of the new messages.
 Like most forms of communication, this is a matter for human judgment that can't be automatically enforced.
+
+### Error Code Lifecycle
+
+Because error codes exist in a project-administered namespace, there is no need to check in with anyone else to start emitting a new error code.
+A new release may add or remove as many codes as the developers wish, so long as a code is never used with two completely different meanings.
+There is no obligation to document every error code prior to a release.
+The codes are an opportunity for community members to help out, not a new obligation for busy tool developers.
+
+Once a project has committed to the meaning of a code (typically by merging a PR that emits it into their `main` or `master` branch, but the specifics are up to each project), the message index will accept documentation.
+Users and develoeprs need not wait for a release to begin documenting error codes.
 
 ### Namespaces
 
