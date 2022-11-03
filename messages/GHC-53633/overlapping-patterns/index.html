@@ -1,0 +1,39 @@
+<h2 id="message">Message</h2>
+<pre><code>Overlapping.hs:5:1: warning: [GHC-53633] [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ‘f’: f (Just _) = ...
+  |
+5 | f (Just _) = False
+  | ^^^^^^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The definition of <code>f</code> contains two separate patterns that both match <code>(Just _)</code>. This usually indicates a bug, because the second one would be unreachable. This can be fixed by removing the redundant case, but it usually indicates that a change to the program was made quickly and demands more thought.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Overlapping.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Overlapping where
+
+f :: Maybe a -> Bool
+f (Just _) = True
+f (Just _) = False
+f _ = False
+
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Overlapping where
+
+f :: Maybe a -> Bool
+f (Just _) = True
+f _ = False
+</code></pre>
+    </td>
+  </tr>
+  
+</table>

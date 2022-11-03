@@ -1,0 +1,38 @@
+<h2 id="message">Message</h2>
+<pre><code>Overlapping.hs:6:1: warning: [GHC-53633] [-Woverlapping-patterns]
+    Pattern match is redundant
+    In an equation for ‘f’: f _ = ...
+  |
+6 | f _ = False
+  | ^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>In this case, all the patterns that can match a list were matched in the prior patterns, so the catch-all pattern in the last case will never be matched and is dead code.</p>
+
+<table width="100%">
+  
+  <tr><td colspan="2" class="filename"><pre>Overlapping.hs</pre></td></tr>
+  <tr>
+    <td width="50%" class="beforeafter">Before</td>
+    <td width="50%" class="beforeafter">After</td>
+  </tr>
+  <tr>
+    <td>
+      <pre><code class="language-haskell">module Overlapping where
+
+f [] = True
+f (_:_:xs) = f xs
+f [_] = False
+f _ = False
+</code></pre>
+    </td>
+    <td>
+      <pre><code class="language-haskell">module Overlapping where
+
+f [] = True
+f (_:_:xs) = f xs
+f [_] = False
+</code></pre>
+    </td>
+  </tr>
+  
+</table>
