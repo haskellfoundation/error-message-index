@@ -1,1 +1,2 @@
 resolver: lts-19.10
+# system-ghc: true
