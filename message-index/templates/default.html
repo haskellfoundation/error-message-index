@@ -7,8 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>$title$ — Haskell Error Index</title>
-  <script src="/js/highlight.min.js"></script>
   <link rel="stylesheet" href="/css/highlight.css">
+  <script src="/js/highlight.min.js"></script>
   <link rel="stylesheet" href="/css/default.css" />
 </head>
 
@@ -35,7 +35,9 @@
     </p>
   </footer>
 
-  <script>document.querySelectorAll('code.language-haskell').forEach(el => hljs.highlightElement(el)          });</script>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
 </body>
 
 </html>
