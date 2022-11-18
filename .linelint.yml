@@ -9,6 +9,10 @@ rules:
 
     # will be ignored only by this rule
     ignore:
+      - message-index/CNAME
+      - message-index/css/highlight.css
+      - message-index/js/highlight.min.js
+      - message-index/js/tablefilter.js
 
     # if true also checks if file ends in a single newline character
     single-new-line: true

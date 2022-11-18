@@ -11,4 +11,3 @@ Generally speaking, we choose technology for this site based on the following cr
  * CSS and Javascript code should be straightforward to maintain by someone who has only rudimentary front-end development skills
  * The generated site should consist only of static files that can be hosted anywhere
  * URLs should be predictable, and easy for external tools to generate (e.g. so IDEs can link to error documentation)
-

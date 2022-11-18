@@ -47,4 +47,3 @@ All contributors are expected to follow the [Haskell Foundation's Code of Conduc
 ## Maintenance
 
 The Message Index is a project of the [Haskell Foundation](http://haskell.foundation). Please get in touch if you have ideas, requests, or any other feedback!
-
