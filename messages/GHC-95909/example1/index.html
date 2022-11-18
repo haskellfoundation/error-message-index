@@ -8,16 +8,13 @@
 12 | aBad = A { b = 5 }
    |        ^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>MissingStrictField.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module MissingStrictField where
+<pre class="filename">MissingStrictField.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingStrictField where
 
 data A = A
     { a :: !Bool
@@ -30,9 +27,13 @@ aFine = A { a = True }
 aBad :: A
 aBad = A { b = 5 }
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module MissingStrictField where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingStrictField where
 
 data A = A
     { a :: !Bool
@@ -45,7 +46,7 @@ aFine = A { a = True }
 aFixed :: A
 aFixed = A { a = True, b = 5 }
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

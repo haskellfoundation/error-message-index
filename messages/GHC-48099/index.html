@@ -1,35 +1,36 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Top-level strict or unlifted binds not allowed [GHC-48099] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Top-level strict or unlifted binds not allowed [GHC-48099]
-            </nav>
-            <h1>Top-level strict or unlifted binds not allowed [GHC-48099]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Top-level strict or unlifted binds not allowed [GHC-48099] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Top-level strict or unlifted binds not allowed [GHC-48099]
+    </nav>
+    <h1>Top-level strict or unlifted binds not allowed [GHC-48099]</h1>
+    
 
 <p>In Haskell, top-level bindings must be represented by <a href="https://wiki.haskell.org/Thunk">thunks</a> because the evaluation time of things that can fail is hard to understand when they’re part of a module. This rules out strict bindings as well as unlifted bindings.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Top-level strict bindings</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>Strict.hs:3:1: error: [GHC-48099]
     Top-level strict bindings aren't allowed: !x = 5
@@ -39,36 +40,37 @@
 <h2 id="explanation">Explanation</h2>
 <p>The top-level binding of <code>x</code> is a strict pattern, which is not allowed. This can be fixed by not having a strict pattern for a top-level binding.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Strict.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Strict where
+<pre class="filename">Strict.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Strict where
 
 !x = 5
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Strict where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Strict where
 
 x = 5
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Unlifted top-level binding</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>Unlifted.hs:4:1: error: [GHC-48099]
     Top-level bindings for unlifted types aren't allowed: x = 4#
@@ -78,50 +80,53 @@ x = 5
 <h2 id="explanation">Explanation</h2>
 <p>Top-level bindings are not allowed to be unlifted types, because they always need to be a <a href="https://wiki.haskell.org/Thunk">thunk</a>. To fix the issue, use a lifted type.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Unlifted.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+<pre class="filename">Unlifted.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE MagicHash #-}
 module Unlifted where
 
 x = 4#
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">
 module Unlifted where
 
 x = 4
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

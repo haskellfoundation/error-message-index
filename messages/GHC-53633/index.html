@@ -1,26 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Redundant patterns [GHC-53633] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Redundant patterns [GHC-53633]
-            </nav>
-            <h1>Redundant patterns [GHC-53633]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Redundant patterns [GHC-53633] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Redundant patterns [GHC-53633]
+    </nav>
+    <h1>Redundant patterns [GHC-53633]</h1>
+    
 <p>
   <i>Flag: <code>-Woverlapping-patterns</code></i><br />
   
@@ -29,16 +30,16 @@
 </p>
 
 
-
 <p>In multi-equation definitions and case expressions, patterns are matched from top to bottom.
 This means that earlier patterns are tested before later patterns.
 If every value that a pattern could match has already been ruled out by earlier patterns, then it is unreachable, which typically indicates a bug or misunderstanding.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Redundant catchall pattern</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>Overlapping.hs:6:1: warning: [GHC-53633] [-Woverlapping-patterns]
     Pattern match is redundant
@@ -49,41 +50,42 @@ If every value that a pattern could match has already been ruled out by earlier 
 <h2 id="explanation">Explanation</h2>
 <p>In this case, all the patterns that can match a list were matched in the prior patterns, so the catch-all pattern in the last case will never be matched and is dead code.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Overlapping.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Overlapping where
+<pre class="filename">Overlapping.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
 
 f [] = True
 f (_:_:xs) = f xs
 f [_] = False
 f _ = False
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Overlapping where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
 
 f [] = True
 f (_:_:xs) = f xs
 f [_] = False
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Redundant constructor pattern</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>Overlapping.hs:5:1: warning: [GHC-53633] [-Woverlapping-patterns]
     Pattern match is redundant
@@ -94,16 +96,13 @@ f [_] = False
 <h2 id="explanation">Explanation</h2>
 <p>The definition of <code>f</code> contains two separate patterns that both match <code>(Just _)</code>. This usually indicates a bug, because the second one would be unreachable. This can be fixed by removing the redundant case, but it usually indicates that a change to the program was made quickly and demands more thought.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Overlapping.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Overlapping where
+<pre class="filename">Overlapping.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
 
 f :: Maybe a -> Bool
 f (Just _) = True
@@ -111,37 +110,43 @@ f (Just _) = False
 f _ = False
 
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Overlapping where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
 
 f :: Maybe a -> Bool
 f (Just _) = True
 f _ = False
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

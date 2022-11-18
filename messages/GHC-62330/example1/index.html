@@ -9,16 +9,13 @@ The error can be fixed by removing the underscores or disabling the extension.</
 6 | f 1_000.0_1 = ()
   |   ^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>UnderscoreInFloatLiteral.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+<pre class="filename">UnderscoreInFloatLiteral.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
 
 module UnderscoreInFloatLiteral where
 
@@ -26,9 +23,13 @@ f :: Float -> ()
 f 1_000.0_1 = ()
 f _   = ()
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
 
 module UnderscoreInFloatLiteral where
 
@@ -36,7 +37,7 @@ f :: Float -> ()
 f 1000.01 = ()
 f _   = ()
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

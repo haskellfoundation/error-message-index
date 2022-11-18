@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Cannot derive well-kinded instance [GHC-62016] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Cannot derive well-kinded instance [GHC-62016]
-            </nav>
-            <h1>Cannot derive well-kinded instance [GHC-62016]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Cannot derive well-kinded instance [GHC-62016] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Cannot derive well-kinded instance [GHC-62016]
+    </nav>
+    <h1>Cannot derive well-kinded instance [GHC-62016]</h1>
+    
 
 <p>This error means that the mentioned type class in the <code>deriving</code>
 clause does not accept the data type you are defining as argument.</p>
@@ -32,11 +32,12 @@ clause does not accept the data type you are defining as argument.</p>
 from <code>T</code> until it matches the kind expected by <code>Klass</code>.
 If this procedure fails, the error message appears.</p>
 
+
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Deriving Functor for a type with an argument of non-Type kind</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error message</h2>
 <pre><code>Main.hs:5:12: error: [GHC-62016]
     • Cannot derive well-kinded instance of form ‘Functor (AppliedToInt ...)’
@@ -48,35 +49,36 @@ exactly the kind <code>Type -&gt; Type</code>. However, the kind of <code>Applie
 is <code>(Type -&gt; Type) -&gt; Type</code> instead. There is thus a mismatch
 between the expected and given kinds.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# language DeriveFunctor #-}
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# language DeriveFunctor #-}
 module Main where
 
 data AppliedToInt f = AppliedToInt (f Int) 
   deriving Functor
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell"><not present></code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell"><not present></code></pre>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Deriving Functor for a ground type</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error message</h2>
 <pre><code>Main.hs:5:12: error: [GHC-62016]
     • Cannot derive well-kinded instance of form ‘Functor (Pet ...)’
@@ -88,47 +90,50 @@ data types which take one other type as a parameter. The <code>Pet</code> data t
 defined in the code does <em>not</em> take any type parameters.
 As a result, GHC cannot write the <code>Functor</code> instance for you.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# language DeriveFunctor #-}
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# language DeriveFunctor #-}
 module Main where
 
 data Pet = Cat | Dog 
   deriving Functor
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell"><not present></code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell"><not present></code></pre>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

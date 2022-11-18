@@ -8,24 +8,25 @@
 5 |     (if a then b == &quot;something&quot; else b == &quot;something else&quot;) -&gt; True
   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>IfThenElseInPattern.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module IfThenElseInPattern where
+<pre class="filename">IfThenElseInPattern.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IfThenElseInPattern where
 
 f :: Bool -> String -> Bool
 f a b = case a of
     (if a then b == "something" else b == "something else") -> True
     _ -> False</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module IfThenElseInPattern where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module IfThenElseInPattern where
 
 f :: Bool -> String -> Bool
 f a b = case (a, b) of
@@ -35,7 +36,7 @@ f a b = case (a, b) of
 
 f' :: Bool -> String -> Bool
 f' a b = (a && b == "something") || (not a && b == "something else")</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

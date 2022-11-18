@@ -12,16 +12,13 @@
 <p>The class <code>ThisClassHasNoParameters</code> is a nullary class, which means that it takes no type parameters. Ordinarily, <code>deriving</code> only works for classes with a single parameter, and that check is carried out by a different part of the compiler that emits a different message. However, <code>StandaloneDeriving</code> allows the specification of type class derivation tasks that take an arbitrary number of arguments.</p>
 <p>Ordinarily, the derived instance of <code>ThisClassHasNoParameters</code> would be performed using <code>DeriveAnyClass</code>, which fills in the instance body with zero method definitions. The <a href="https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/compiler/deriving-strategies">deriving strategy</a> <code>stock</code> pushes GHC to use a different method for instance derivation that requires non-nullary classes, resulting in this error.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>NullaryClass.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
+<pre class="filename">NullaryClass.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE StandaloneDeriving #-}
 module NullaryClass where
@@ -29,9 +26,13 @@ module NullaryClass where
 class ThisClassHasNoParameters
 deriving stock instance ThisClassHasNoParameters
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE StandaloneDeriving #-}
 module NullaryClass where
@@ -39,7 +40,7 @@ module NullaryClass where
 class ThisClassHasAParameter a
 deriving instance ThisClassHasAParameter Int
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

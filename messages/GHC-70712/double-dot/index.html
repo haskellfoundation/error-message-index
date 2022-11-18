@@ -7,32 +7,33 @@
 <h2 id="explanation">Explanation</h2>
 <p>The double-dot syntax is not allowed as part of a record update. To fix the issue, remove the <code>..</code> from the record update.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DoubleDot.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module DoubleDot where
+<pre class="filename">DoubleDot.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DoubleDot where
 
 data Record = Record {field :: Integer}
 
 x = Record {field = 5}
 y = x {field=8, ..}
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module DoubleDot where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DoubleDot where
 
 data Record = Record {field :: Integer}
 
 x = Record {field = 5}
 y = x {field=8}
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

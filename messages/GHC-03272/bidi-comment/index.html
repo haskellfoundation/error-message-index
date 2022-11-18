@@ -12,26 +12,27 @@
 In software with good support for bidirectional text, the resulting comment reads “This comment contains tamrof lanoitceridib chars”.
 When bidirectional layout is intended, the warning should be disabled; if bidirectional layout is not intended, the control characters should be removed.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>BiDi.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module BiDi where
+<pre class="filename">BiDi.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module BiDi where
 
 -- This comment contains ‮bidirectional format‬ chars
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module BiDi where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module BiDi where
 
 -- This comment no longer contains bidirectional format chars
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

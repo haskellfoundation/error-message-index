@@ -14,32 +14,33 @@ instance already implies an <code>Eq a</code> instance, because <code>Eq</code> 
 message, namely <code>Eq a</code>. Note that we can still use the <code>(==)</code> method of <code>Eq</code> in
 the body of <code>f</code> because of the aforementioned superclass constraint.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Example.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+<pre class="filename">Example.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
 
 module Example where
 
 f :: (Eq a, Ord a) => a -> a -> Bool
 f x y = (x < y) || x == y
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS_GHC -Wredundant-constraints #-}
 
 module Example where
 
 f :: Ord a => a -> a -> Bool
 f x y = (x < y) || x == y
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

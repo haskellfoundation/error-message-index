@@ -1,26 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Import item suggests constructors/methods [GHC-99623] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Import item suggests constructors/methods [GHC-99623]
-            </nav>
-            <h1>Import item suggests constructors/methods [GHC-99623]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Import item suggests constructors/methods [GHC-99623] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Import item suggests constructors/methods [GHC-99623]
+    </nav>
+    <h1>Import item suggests constructors/methods [GHC-99623]</h1>
+    
 <p>
   <i>Flag: <code>-Wdodgy-imports</code></i><br />
   
@@ -29,14 +30,14 @@
 </p>
 
 
-
 <p>When importing identifiers from a module, all in-scope constructors (for a type) or the in-scope methods (for a typeclass) can also be imported with the <code>T(..)</code> syntax. However, if <code>T</code> was <em>exported</em> abstractly as only <code>T</code> - either its constructors/methods are not exported, or it lacks any - then this import item suggests that T has in-scope constructors/methods when it has none.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Import item suggests constructors/methods</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>When importing <code>TypeWithoutVisibleCtrs</code> from <code>module HiddenConstructors</code>, the import list item in <code>module DodgyImports</code> suggests that this type has associated in-scope constructor(s). However it does not (the constructors are out of scope). The same is true of <code>TypeWithNoCtrs</code>; the import item suggests it has constructors whereas it has none (either in or out of scope).</p>
 <p>The solution is to import the type abstractly (without <code>(..)</code>) to match its exporting.</p>
 <h2 id="error-message">Error Message</h2>
@@ -55,72 +56,79 @@ DodgyImports.hs:3:1: warning: [-Wdodgy-imports] [GHC-99623]
   |
 3 | import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DodgyImports.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module DodgyImports where
+<pre class="filename">DodgyImports.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DodgyImports where
 
 import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )
 
 
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module DodgyImports where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DodgyImports where
 
 import HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs )
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>HiddenConstructors.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+    </div>
+  </div>
+</div>
+
+<pre class="filename">HiddenConstructors.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
 
 data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
 
 data TypeWithNoCtrs</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
 
 data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
 
 data TypeWithNoCtrs</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

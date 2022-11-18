@@ -9,25 +9,26 @@
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">|</span>   <span class="kw">deriving</span> <span class="dt">MyClass</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>            <span class="op">^^^^^^^</span></span></code></pre></div>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>NotStockDeriveable.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module NotStockDeriveable where
+<pre class="filename">NotStockDeriveable.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module NotStockDeriveable where
 
 class MyClass a
 
 data MyType = MyType
   deriving MyClass
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DeriveAnyClass #-}
 
 module NotStockDeriveable where
 
@@ -36,7 +37,7 @@ class MyClass a
 data MyType = MyType
   deriving MyClass
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

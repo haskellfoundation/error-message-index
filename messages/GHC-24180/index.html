@@ -1,37 +1,38 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Too few arguments to infix type operator [GHC-24180] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Too few arguments to infix type operator [GHC-24180]
-            </nav>
-            <h1>Too few arguments to infix type operator [GHC-24180]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Too few arguments to infix type operator [GHC-24180] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Too few arguments to infix type operator [GHC-24180]
+    </nav>
+    <h1>Too few arguments to infix type operator [GHC-24180]</h1>
+    
 
 <p><i>Language extension: <code>TypeOperators</code></i></p>
 
-
 <p>This error occurs when an infix operator in a type is used as a prefix or postfix operator. That is, if one writes <code>T1 OP</code> or <code>OP T2</code> instead of <code>T1 OP T2</code>, for types <code>T1</code> and <code>T2</code> and infix operator <code>OP</code>.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Type operator missing an argument</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>missing-argument/before/MissingArgument.hs:6:12: error: [GHC-24180]
     Operator applied to too few arguments: +
@@ -41,16 +42,13 @@
 <h2 id="explanation">Explanation</h2>
 <p>Infix type operators require arguments on both sides.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>MissingArgument.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
+<pre class="filename">MissingArgument.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
 module MissingArgument where
 
 type a + b = Either a b
@@ -58,9 +56,13 @@ type a + b = Either a b
 example :: + Int
 example = Right 5
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeOperators #-}
 module MissingArgument where
 
 type a + b = Either a b
@@ -68,17 +70,17 @@ type a + b = Either a b
 example :: String + Int
 example = Right 5
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Use of ∀ without UnicodeSyntax being enabled</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>Ident.hs:3:10: error: [GHC-24180]
     Operator applied to too few arguments: ∀
@@ -89,52 +91,55 @@ example = Right 5
 <p>The <code>UnicodeSyntax</code> language extension causes GHC’s parser to recognize a variety of non-ASCII mathematical symbols as representing their Haskell equivalents. The complete list is available in <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/unicode_syntax.html">the documentation</a>.</p>
 <p>When this extension is not enabled, <code>∀</code> is instead recognized as an infix operator character that has no argument on its left side.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Ident.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">
+<pre class="filename">Ident.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">
 module Ident where
 
 ident :: ∀ α.α → α
 ident = λ x → x
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE UnicodeSyntax #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE UnicodeSyntax #-}
 module Ident where
 
 ident :: ∀ α.α → α
 ident = λ x → x
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

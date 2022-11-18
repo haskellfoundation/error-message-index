@@ -1,36 +1,37 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>No instance arising [GHC-39999] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              No instance arising [GHC-39999]
-            </nav>
-            <h1>No instance arising [GHC-39999]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>No instance arising [GHC-39999] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      No instance arising [GHC-39999]
+    </nav>
+    <h1>No instance arising [GHC-39999]</h1>
+    
 
 <p>This error happens when an expression in the code has a type constraint (e.g. <code>Eq a =&gt; a -&gt; a</code>) requiring an instance of a type class but GHC can‘t find it.
 This most commonly happens for two reasons: Either the type is to polymorphic (i.e. general) e.g. <code>forall a. a</code> and there is no type signature declaring that the type should have the instance. Or the type is specific e.g. <code>Bool</code>, but there is no instance for the desired type class defined for this type.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>A usage of (==) on a data type which doesn‘t have an instance for Eq.</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error message</h2>
 <pre><code>Main.hs:4:15: error: [GHC-39999]
     • No instance for (Eq Foo) arising from a use of ‘==’
@@ -43,38 +44,39 @@ This most commonly happens for two reasons: Either the type is to polymorphic (i
 <p>The operator <code>==</code> is only defined on types which have an instance for the <code>Eq</code> type class. The data type Foo does not have an instance. So GHC doesn‘t know how to compare values of <code>Foo</code>.
 To make this example compile we can create an <code>Eq</code> instance by using a <code>derive</code> statement.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">data Foo = A | B
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">data Foo = A | B
 
 isA :: Foo -> Bool
 isA foo = foo == A
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">data Foo = A | B deriving Eq
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">data Foo = A | B deriving Eq
 
 isA :: Foo -> Bool
 isA foo = foo == A
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>A usage of `+` on a too polymorphic variable.</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error message</h2>
 <pre><code>Main.hs:2:11: error: [GHC-39999]
     • No instance for (Num a) arising from a use of ‘+’
@@ -90,46 +92,49 @@ isA foo = foo == A
 <h2 id="explanation">Explanation</h2>
 <p>The operator <code>+</code> is only defined on types which have an instance of the <code>Num</code> type class. If the function has the signature <code>a -&gt; a -&gt; a</code> someone could e.g. pass in a <code>String</code> for <code>a</code> and GHC wouldn‘t know how to add two Strings. Too fix it, like the compiler suggests, we add the <code>Num a =&gt;</code> constraint to the type signature to make sure that all users of <code>add</code> provide a suitable <code>Num</code> instance.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">add :: a -> a -> a
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">add :: a -> a -> a
 add x y = x + y
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">add :: Num a => a -> a -> a
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">add :: Num a => a -> a -> a
 add x y = x + y
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

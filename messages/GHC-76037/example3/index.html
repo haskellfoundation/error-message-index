@@ -7,32 +7,33 @@ As such, the constructor is not in scope.</p>
 6 | barAddOne (MkBar n) = MkBar (n + 1)
   |            ^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>IncorrectImport.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module IncorrectImport where
+<pre class="filename">IncorrectImport.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IncorrectImport where
 
 import Foo (Bar)
 
 barAddOne :: Bar -> Bar
 barAddOne (MkBar n) = MkBar (n + 1)
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module IncorrectImport where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module IncorrectImport where
 
 import Foo (Bar(..))
 
 barAddOne :: Bar -> Bar
 barAddOne (MkBar n) = MkBar (n + 1)
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

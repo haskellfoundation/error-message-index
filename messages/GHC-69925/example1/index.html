@@ -7,16 +7,13 @@
 6 |     &quot;a&quot;# -&gt; True
   |     ^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>IllegalUnboxedString.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+<pre class="filename">IllegalUnboxedString.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE MagicHash #-}
 
 module IllegalUnboxedString where
 
@@ -26,9 +23,13 @@ g :: Addr# -> Bool
 g y = case y of
     "a"# -> True
     _    -> False</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module IllegalUnboxedString where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalUnboxedString where
 
 g :: String -> Bool
 g y = case y of
@@ -38,7 +39,7 @@ g y = case y of
 
 
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

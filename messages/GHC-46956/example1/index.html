@@ -15,16 +15,13 @@
 <p>In this context, the <code>SameKind</code> type requires that both of its arguments are types, and that those types have the same kind. In <code>foo</code>’s type signature, the type <code>b</code> does not have an explicitly-provided kind, which means that GHC creates a fresh kind metavariable for it. The type <code>a</code> does have an explicit kind, which is the variable <code>k</code>. Because <code>SameKind</code> is applied to both <code>a</code> and <code>b</code>, it causes <code>b</code>’s kind metavariable to be unified with <code>k</code>, but <code>k</code> comes from an inner scope and is thus not available for unification.</p>
 <p>The error can be fixed by extending <code>k</code>’s scope to encompass <code>b</code>’s binding site.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
 
 module Main where
 
@@ -38,9 +35,13 @@ foo = undefined
 main :: IO ()
 main = pure ()
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE PolyKinds, RankNTypes, ImpredicativeTypes #-}
 
 module Main where
 
@@ -54,7 +55,7 @@ foo = undefined
 main :: IO ()
 main = pure ()
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

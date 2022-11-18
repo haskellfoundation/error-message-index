@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Illegal datatype context [GHC-87429] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Illegal datatype context [GHC-87429]
-            </nav>
-            <h1>Illegal datatype context [GHC-87429]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Illegal datatype context [GHC-87429] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Illegal datatype context [GHC-87429]
+    </nav>
+    <h1>Illegal datatype context [GHC-87429]</h1>
+    
 
 <p>Without the language extension <code>DatatypeContexts</code> enabled, it is illegal to add constraints to the context of a datatype definition. Whilst this can be solved with enabling <code>DatatypeContexts</code>, <em>however</em> this extension is deprecated and is considered a misfeature. Other solutions to fix this can include:</p>
 <ul>
@@ -29,11 +29,12 @@
 <li>Using GADTs to place constraints on specific datatype constructors.</li>
 </ul>
 
+
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Illegal datatype context, fixed with use-site constraints</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>In this example, we wish to constrain the type <code>a</code> which can parameterise the type <code>D</code> to a type that implements the <code>Show</code> and <code>Read</code> typeclasses. Whilst this can be solved currently by <code>-XDatatypeContexts</code>, this extension is deprecated.</p>
 <p>Instead, a solution is to put the constraints on functions that <em>use</em> the datatype.</p>
 <h2 id="error-message">Error Message</h2>
@@ -43,37 +44,38 @@
 5 | data (Show a) =&gt; D a = D a
   |      ^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>IllegalDatatypeContext.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module IllegalDatatypeContext where
+<pre class="filename">IllegalDatatypeContext.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalDatatypeContext where
 
 data (Show a) => D a = D a</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module IllegalDatatypeContext where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalDatatypeContext where
 
 data D a = D a
 
 f :: (Show a) => D a -> IO ()
 f (D d) = putStrLn (show d)</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Illegal datatype context, fixed with GADTs</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>In this example, we wish to constrain the type <code>a</code> which can parameterise the type <code>D</code> to a type that implements the <code>Show</code> and <code>Read</code> typeclasses. Whilst this can be solved currently by <code>-XDatatypeContexts</code>, this extension is deprecated.</p>
 <p>Instead, a solution is to use a GADT to provide a constructor with the given constraints.</p>
 <h2 id="error-message">Error Message</h2>
@@ -84,48 +86,51 @@ f (D d) = putStrLn (show d)</code></pre>
 5 | data (Show a, Read a) =&gt; D a = D a
   |      ^^^^^^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>IllegalDatatypeContext.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module IllegalDatatypeContext where
+<pre class="filename">IllegalDatatypeContext.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalDatatypeContext where
 
 data (Show a, Read a) => D a = D a</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE GADTs #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE GADTs #-}
 module IllegalDatatypeContext where
 
 data D a where
     ShowReadD :: (Show a, Read a) => a -> D a</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

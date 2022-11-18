@@ -13,24 +13,25 @@
 <h2 id="explanation">Explanation</h2>
 <p>The operator <code>+</code> is only defined on types which have an instance of the <code>Num</code> type class. If the function has the signature <code>a -&gt; a -&gt; a</code> someone could e.g. pass in a <code>String</code> for <code>a</code> and GHC wouldn‘t know how to add two Strings. Too fix it, like the compiler suggests, we add the <code>Num a =&gt;</code> constraint to the type signature to make sure that all users of <code>add</code> provide a suitable <code>Num</code> instance.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">add :: a -> a -> a
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">add :: a -> a -> a
 add x y = x + y
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">add :: Num a => a -> a -> a
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">add :: Num a => a -> a -> a
 add x y = x + y
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

@@ -16,50 +16,55 @@ DodgyImports.hs:3:1: warning: [-Wdodgy-imports] [GHC-99623]
   |
 3 | import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DodgyImports.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module DodgyImports where
+<pre class="filename">DodgyImports.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DodgyImports where
 
 import HiddenConstructors ( TypeWithoutVisibleCtrs(..), TypeWithNoCtrs(..) )
 
 
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module DodgyImports where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DodgyImports where
 
 import HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs )
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>HiddenConstructors.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+    </div>
+  </div>
+</div>
+
+<pre class="filename">HiddenConstructors.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
 
 data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
 
 data TypeWithNoCtrs</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module HiddenConstructors ( TypeWithoutVisibleCtrs, TypeWithNoCtrs ) where
 
 data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
 
 data TypeWithNoCtrs</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

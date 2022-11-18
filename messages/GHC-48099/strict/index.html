@@ -7,26 +7,27 @@
 <h2 id="explanation">Explanation</h2>
 <p>The top-level binding of <code>x</code> is a strict pattern, which is not allowed. This can be fixed by not having a strict pattern for a top-level binding.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Strict.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Strict where
+<pre class="filename">Strict.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Strict where
 
 !x = 5
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Strict where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Strict where
 
 x = 5
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

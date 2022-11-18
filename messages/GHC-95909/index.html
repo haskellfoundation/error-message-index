@@ -1,37 +1,38 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Missing strict fields [GHC-95909] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Missing strict fields [GHC-95909]
-            </nav>
-            <h1>Missing strict fields [GHC-95909]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Missing strict fields [GHC-95909] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Missing strict fields [GHC-95909]
+    </nav>
+    <h1>Missing strict fields [GHC-95909]</h1>
+    
 
 <p>When strict fields are declared for a datatype – either per-field with a strictness flag <code>!</code>, or for an entire type using the language extensions <code>Strict</code>/<code>StrictData</code> – all strict fields are strictly evaluated by constructors. Therefore, it is not possible to leave some strict fields unassigned, because they can’t be given a suspended bottom as a placeholder.</p>
 <p>Therefore, it is required that <em>all</em> strict fields for a constructor are assigned on construction of the type.</p>
 <p>If a <em>non-strict</em> field is missing, the warning <a href="../../messages/GHC-20125/index.html">GHC-20125</a> is emitted instead.</p>
 
+
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Missing strict field in record syntax</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>The instantiation of a strict field in a record is missing. In <code>aFine</code>, we can leave one field uninstantiated as it is not strict, and therefore is not evaluated until needed, due to lazy evaluation. However in <code>aBad</code> we cannot, as the field <code>a</code> is strict.</p>
 <h2 id="error-message">Error Message</h2>
 <pre><code>MissingStrictField.hs:12:8: error: [GHC-95909]
@@ -42,16 +43,13 @@
 12 | aBad = A { b = 5 }
    |        ^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>MissingStrictField.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module MissingStrictField where
+<pre class="filename">MissingStrictField.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingStrictField where
 
 data A = A
     { a :: !Bool
@@ -64,9 +62,13 @@ aFine = A { a = True }
 aBad :: A
 aBad = A { b = 5 }
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module MissingStrictField where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingStrictField where
 
 data A = A
     { a :: !Bool
@@ -79,17 +81,17 @@ aFine = A { a = True }
 aFixed :: A
 aFixed = A { a = True, b = 5 }
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>All fields are strict if the StrictData language extension is enabled</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>When using the language extension <code>{-# LANGUAGE Strict #-}</code> or <code>{-# LANGUAGE StrictData #-}</code>, all fields are strict, even if we do not explicitly use the strictness flag <code>!</code>. Thus, we must instantiate all fields on construction.</p>
 <h2 id="error-message">Error Message</h2>
 <pre><code>StrictExtension.hs:9:8: error:  [GHC-95909]
@@ -108,16 +110,13 @@ StrictExtension.hs:12:12: error: [GHC-95909]
 12 | aAlsoBad = A { b = 5 }
    |            ^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>StrictExtension.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+<pre class="filename">StrictExtension.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Strict #-}
 
 module StrictExtension where
 
@@ -132,9 +131,13 @@ aBad = A { a = True }
 aAlsoBad :: A
 aAlsoBad = A { b = 5 }
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Strict #-}
 
 module StrictExtension where
 
@@ -149,29 +152,31 @@ aFixed = A { a = True, b = 5 }
 aAlsoFixed :: A
 aAlsoFixed = A { a = True, b = 5 }
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

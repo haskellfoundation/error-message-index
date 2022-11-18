@@ -24,16 +24,13 @@ Main.hs:15:10: warning: [-Woperator-whitespace] [GHC-40798]
 15 | h a b = a+b -- this one as well
    |          ^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
 
 module Main where
 
@@ -49,9 +46,13 @@ g a b = a +b -- this one is also a warning
 h :: Num a => a -> a -> a
 h a b = a+b -- this one as well
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS -Woperator-whitespace #-}
 
 module Main where
 
@@ -61,7 +62,7 @@ main = print "notice the usage of whitespace below"
 f :: Num a => a -> a -> a
 f a b = a + b
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

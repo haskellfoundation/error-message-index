@@ -22,16 +22,13 @@ values is statically-known. Since, in this case, we know <code>myValue</code> fi
 different solution would be needed, likely using a different encoding
 (and encoding library) altogether.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main1.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Main1 where
+<pre class="filename">Main1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main1 where
 
 import SomeEncodingLibrary (Encoded, encode)
 
@@ -41,9 +38,13 @@ myValue = 42
 myEncodedValue :: Encoded
 myEncodedValue = encode myValue
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Main1 where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main1 where
 
 import SomeEncodingLibrary (Encoded, encode)
 
@@ -53,17 +54,17 @@ myValue = 42
 myEncodedValue :: Encoded
 myEncodedValue = encode myValue
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>SomeEncodingLibrary.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+    </div>
+  </div>
+</div>
+
+<pre class="filename">SomeEncodingLibrary.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE TypeFamilies #-}
 
@@ -92,9 +93,13 @@ instance TypeError (Text "Cannot encode arbitrary precision integers." :$$:
                     Text "Consider using a fixed size representation.")
     => Encode Integer
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE TypeFamilies #-}
 
@@ -123,7 +128,7 @@ instance TypeError (Text "Cannot encode arbitrary precision integers." :$$:
                     Text "Consider using a fixed size representation.")
     => Encode Integer
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

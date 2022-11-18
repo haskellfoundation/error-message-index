@@ -1,36 +1,37 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Underscores not allowed in float and integer literals [GHC-62330] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Underscores not allowed in float and integer literals [GHC-62330]
-            </nav>
-            <h1>Underscores not allowed in float and integer literals [GHC-62330]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Underscores not allowed in float and integer literals [GHC-62330] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Underscores not allowed in float and integer literals [GHC-62330]
+    </nav>
+    <h1>Underscores not allowed in float and integer literals [GHC-62330]</h1>
+    
 
 <p>The <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/numeric_underscores.html"><code>NumericUnderscores</code> extension</a> allows underscores to be included in float and integer literals for better legibility of long numbers and is enabled by default.
 If the <code>NoNumericUnderscores</code> extension is enabled or <code>NumericUnderscores</code> is not enabled in earlier GHC versions, the inclusion of underscores in float and integer literals causes this error.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Underscore not allowed in float literal</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>Float literals may not contain underscores if the <code>NoNumericUnderscores</code> language extension is enabled.
 Here, the float literal <code>1_000.0_1</code> contains underscores, but the extension is enabled.
 The error can be fixed by removing the underscores or disabling the extension.</p>
@@ -42,16 +43,13 @@ The error can be fixed by removing the underscores or disabling the extension.</
 6 | f 1_000.0_1 = ()
   |   ^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>UnderscoreInFloatLiteral.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+<pre class="filename">UnderscoreInFloatLiteral.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
 
 module UnderscoreInFloatLiteral where
 
@@ -59,9 +57,13 @@ f :: Float -> ()
 f 1_000.0_1 = ()
 f _   = ()
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
 
 module UnderscoreInFloatLiteral where
 
@@ -69,17 +71,17 @@ f :: Float -> ()
 f 1000.01 = ()
 f _   = ()
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Underscore not allowed in integer literal</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <p>Integer literals may not contain underscores if the <code>NoNumericUnderscores</code> language extension is enabled.
 Here, the integer literal <code>1_000</code> contains underscores, but the extension is enabled.
 The error can be fixed by removing the underscores or disabling the extension.</p>
@@ -91,16 +93,13 @@ The error can be fixed by removing the underscores or disabling the extension.</
 6 | f 1_000 = ()
   |   ^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>UnderscoreInIntegerLiteral.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
+<pre class="filename">UnderscoreInIntegerLiteral.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoNumericUnderscores #-}
 
 module UnderscoreInIntegerLiteral where
 
@@ -108,37 +107,43 @@ f :: Int -> ()
 f 1_000 = ()
 f _   = ()
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module UnderscoreInIntegerLiteral where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module UnderscoreInIntegerLiteral where
 
 f :: Int -> ()
 f 1_000 = ()
 f _   = ()
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

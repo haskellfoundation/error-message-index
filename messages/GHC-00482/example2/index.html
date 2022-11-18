@@ -7,28 +7,29 @@
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="op">|</span> f (\a <span class="ot">-&gt;</span> a) <span class="ot">=</span> <span class="dv">0</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span>    <span class="op">^^^^^^^</span></span></code></pre></div>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>LambdaInPattern.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module LambdaInPattern where
+<pre class="filename">LambdaInPattern.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module LambdaInPattern where
 
 f :: (Int -> Int) -> Int
 f (\a -> a) = 0
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module LambdaInPattern where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module LambdaInPattern where
 
 f :: (Int -> Int) -> Int
 f a = a 0
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

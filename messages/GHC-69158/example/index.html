@@ -25,16 +25,13 @@ we’ll have to define a new identifier and set it equal to <code>U.greeting</co
 export that instead. For example, we could define
 <code>universalGreeting = U.greeting</code> in the body of <code>Greeting</code>.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Greeting.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Greeting
+<pre class="filename">Greeting.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Greeting
   ( W.greeting
   , U.greeting
   ) where
@@ -45,9 +42,13 @@ import qualified Universe as U
 bothGreetings :: String
 bothGreetings = unlines [W.greeting, U.greeting]
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Greeting
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Greeting
   ( W.greeting
   ) where
 
@@ -57,51 +58,59 @@ import qualified Universe as U
 bothGreetings :: String
 bothGreetings = unlines [W.greeting, U.greeting]
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>Universe.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Universe where
+    </div>
+  </div>
+</div>
+
+<pre class="filename">Universe.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Universe where
 
 greeting :: String
 greeting = "Hello, Universe!"
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Universe where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Universe where
 
 greeting :: String
 greeting = "Hello, Universe!"
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>World.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module World where
+    </div>
+  </div>
+</div>
+
+<pre class="filename">World.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module World where
 
 greeting :: String
 greeting = "Hello, World!"
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module World where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module World where
 
 greeting :: String
 greeting = "Hello, World!"
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

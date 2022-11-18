@@ -10,24 +10,25 @@
 5 | instance IsAFoo Foo where
   | ^^^^^^^^^^^^^^^^^^^^^^^^^...</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Foo.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Foo where
+<pre class="filename">Foo.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Foo where
 
 data Foo = Foo
 
 class IsAFoo x where
     convertToFoo :: x -> Foo</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Foo where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Foo where
 
 data Foo = Foo
 
@@ -36,28 +37,32 @@ class IsAFoo x where
 
 instance IsAFoo Foo where
     convertToFoo = id</code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>OrphanInstance.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module OrphanInstance where
+    </div>
+  </div>
+</div>
+
+<pre class="filename">OrphanInstance.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module OrphanInstance where
 
 import Foo
 
 instance IsAFoo Foo where
     convertToFoo = id</code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module OrphanInstance where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module OrphanInstance where
 
 import Foo</code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

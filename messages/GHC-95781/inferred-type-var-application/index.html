@@ -12,16 +12,13 @@ In the type application <code>C @Type @Int Proxy</code>, the type/kind argument 
 11 | bar = let x = C @Type @Int Proxy
    |               ^^^^^^^^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>InferredTypeVarApplication.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+<pre class="filename">InferredTypeVarApplication.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
 
 module InferredTypeVarApplication where
 
@@ -34,9 +31,13 @@ bar :: ()
 bar = let x = C @Type @Int Proxy
       in ()
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE TypeApplications, RankNTypes, GADTs, PolyKinds #-}
 
 module InferredTypeVarApplication where
 
@@ -49,7 +50,7 @@ bar :: ()
 bar = let x = C @Type @Int Proxy
       in ()
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

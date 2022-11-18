@@ -1,36 +1,37 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Illegal deriving item [GHC-11913] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Illegal deriving item [GHC-11913]
-            </nav>
-            <h1>Illegal deriving item [GHC-11913]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Illegal deriving item [GHC-11913] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
 
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Illegal deriving item [GHC-11913]
+    </nav>
+    <h1>Illegal deriving item [GHC-11913]</h1>
+    
 
 <p>After a datatype declaration, a <code>deriving</code> statement allows programmers to specify type class instances that the compiler should automatically generate. For instance, <code>deriving (Eq, Show)</code> will result in a datatype that can be compared for equality and converted to a string with no further code necessary.</p>
 <p>For this to make sense, <code>deriving</code> needs to be provided with valid type class instances. Just as it doesn’t make sense to treat a number as a function, it doesn’t make sense to treat ordinary types as instances.</p>
+
 
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Deriving Int</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error Message</h2>
 <pre><code>DerivingInt.hs:4:12: error: [GHC-11913]
     • Illegal deriving item ‘Int’
@@ -41,38 +42,39 @@
 <h2 id="explanation">Explanation</h2>
 <p>In this example, the programmer attempts to deriving <code>Int</code>, which is not a type class.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DerivingInt.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module DerivingInt where
+<pre class="filename">DerivingInt.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DerivingInt where
 
 data Example = Example
   deriving Int
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module DerivingInt where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DerivingInt where
 
 data Example = Example
   deriving Eq
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 <details open="open">
   <summary>Lowercase type class name</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="error-message">Error message</h2>
 <pre><code>LowerCase.hs:4:13: error: [GHC-11913]
     • Illegal deriving item ‘show’
@@ -83,50 +85,53 @@ data Example = Example
 <h2 id="explanation">Explanation</h2>
 <p>Type classes in Haskell begin with an uppercase letter. Writing a lowercase name results in a type variable, rather than a type class, which is not a class that can be derived. Fix the situation by capitalizing the class name.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>LowerCase.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module LowerCase where
+<pre class="filename">LowerCase.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module LowerCase where
 
 data Example = Example
   deriving (show)
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module LowerCase where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module LowerCase where
 
 data Example = Example
   deriving (Show)
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>

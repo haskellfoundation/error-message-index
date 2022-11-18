@@ -10,30 +10,31 @@
 <h2 id="explanation">Explanation</h2>
 <p><a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/newtype_deriving.html">Generalized newtype deriving</a> works only on types defined with <code>newtype</code>, but <code>Weekend</code> is defined with <code>data</code>. Ordinary deriving, however, works with types defined with <code>data</code>.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DeriveNewtypeData.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DerivingStrategies #-}
+<pre class="filename">DeriveNewtypeData.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DerivingStrategies #-}
 module DeriveNewtypeData where
 
 data Weekend = Saturday | Sunday
   deriving newtype Show
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">
 module DeriveNewtypeData where
 
 data Weekend = Saturday | Sunday
   deriving Show
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

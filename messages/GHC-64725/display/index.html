@@ -24,16 +24,13 @@ display the result of applying the function to enough arguments, see
 <code>myDisplayedAppliedFunction</code>.</p>
 <p>If the intention was to actually display the function when the input space is small enough (e.g. just the two <code>Bool</code> constructors), one could define a newtype for functions of type <code>Bool -&gt; a</code> and provide a <code>Display</code> instance for it. Then, the user can call <code>display</code> with the function wrapped in this newtype, see <code>myDisplayedNewtypedFunction</code>.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>Main2.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">module Main2 where
+<pre class="filename">Main2.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main2 where
 
 import SomeDisplayLibrary (Display (..))
 
@@ -46,9 +43,13 @@ myFunction x =
 myDisplayedFunction :: String
 myDisplayedFunction = display myFunction
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">module Main2 where
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main2 where
 
 import SomeDisplayLibrary (Display (..))
 
@@ -71,17 +72,17 @@ instance Display a => Display (BoolFun a) where
 myDisplayedNewtypedFunction :: String
 myDisplayedNewtypedFunction = display (BoolFun myFunction)
 </code></pre>
-    </td>
-  </tr>
-  
-  <tr><td colspan="2" class="filename"><pre>SomeDisplayLibrary.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+    </div>
+  </div>
+</div>
+
+<pre class="filename">SomeDisplayLibrary.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module SomeDisplayLibrary where
@@ -108,9 +109,13 @@ instance TypeError (Text "Cannot display functions." :$$:
     => Display (a -> b) where
   display = error "unreachable: instance Display (a -> b)"
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module SomeDisplayLibrary where
@@ -137,7 +142,7 @@ instance TypeError (Text "Cannot display functions." :$$:
     => Display (a -> b) where
   display = error "unreachable: instance Display (a -> b)"
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

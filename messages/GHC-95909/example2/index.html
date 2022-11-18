@@ -16,16 +16,13 @@ StrictExtension.hs:12:12: error: [GHC-95909]
 12 | aAlsoBad = A { b = 5 }
    |            ^^^^^^^^^^^</code></pre>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>StrictExtension.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+<pre class="filename">StrictExtension.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Strict #-}
 
 module StrictExtension where
 
@@ -40,9 +37,13 @@ aBad = A { a = True }
 aAlsoBad :: A
 aAlsoBad = A { b = 5 }
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE Strict #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Strict #-}
 
 module StrictExtension where
 
@@ -57,7 +58,7 @@ aFixed = A { a = True, b = 5 }
 aAlsoFixed :: A
 aAlsoFixed = A { a = True, b = 5 }
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+

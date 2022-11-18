@@ -1,40 +1,41 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex">
-        <title>Kind and type arguments out of dependency order [GHC-97739] — Haskell Error Index</title>
-        <link rel="stylesheet" href="../../css/default.css" />
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <script src="../../js/highlight.min.js"></script>
-    </head>
-    <body>
 
-        <main role="main">
-            <nav class="breadcrumb">
-              
-                <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
-              
-              Kind and type arguments out of dependency order [GHC-97739]
-            </nav>
-            <h1>Kind and type arguments out of dependency order [GHC-97739]</h1>
-            
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Kind and type arguments out of dependency order [GHC-97739] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Kind and type arguments out of dependency order [GHC-97739]
+    </nav>
+    <h1>Kind and type arguments out of dependency order [GHC-97739]</h1>
+    
 
 <p><i>Language extension: <code>PolyKinds</code></i></p>
-
 
 <p>Normally, Haskell’s lexical scoping rules suffice to ensure that arguments to functions, whether they are type arguments or value arguments, are in scope in every position where they are used.
 In particular, because type and kind arguments form <a href="https://doi.org/10.1016/0890-5401(91)90066-B">telescopes</a> in which each argument’s name is in scope for the remaining arguments, lexical scope ensures that kind arguments occur before the types that they classify.
 However, in some cases, unannotated types can have kinds that are forced through unification to be equal to kinds that occur later in the argument list.
 This would lead to a scope error in the resulting fully-annotated program, so it is not allowed.</p>
 
+
 <h2>Examples</h2>
 
 <details open="open">
   <summary>Kind and type variables out of dependency order</summary>
-  <div class="example-container">
+  <div class="details-inner">
     <h2 id="message">Message</h2>
 <pre><code>DependencyOrder.hs:8:15: error: [GHC-97739]
     • These kind and type variables: a k (b :: k)
@@ -47,16 +48,13 @@ This would lead to a scope error in the resulting fully-annotated program, so it
 <h2 id="explanation">Explanation</h2>
 <p>The type <code>SameKind a b</code> forces types <code>a</code> and <code>b</code> to have the same kind, because the kind variable <code>k</code> is used for both in its declaration. Thus, <code>a</code>’s kind is forced to be <code>k</code>, based on <code>b</code>’s kind annotation. However, this would result in <code>a</code>’s kind not being in scope when <code>a</code> is declared. The error can be fixed by reversing the arguments <code>a</code> and <code>k</code> so that <code>a</code> is in <code>k</code>’s scope.</p>
 
-<table width="100%">
-  
-  <tr><td colspan="2" class="filename"><pre>DependencyOrder.hs</pre></td></tr>
-  <tr>
-    <td width="50%" class="beforeafter">Before</td>
-    <td width="50%" class="beforeafter">After</td>
-  </tr>
-  <tr>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
+<pre class="filename">DependencyOrder.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
 module DependencyOrder where
 
 import Data.Kind
@@ -66,9 +64,13 @@ data SameKind :: k -> k -> *
 foo :: forall a k (b :: k). SameKind a b
 foo = undefined
 </code></pre>
-    </td>
-    <td>
-      <pre><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds, PolyKinds, ExplicitForAll #-}
 module DependencyOrder where
 
 import Data.Kind
@@ -78,29 +80,31 @@ data SameKind :: k -> k -> *
 foo :: forall k a (b :: k). SameKind a b
 foo = undefined
 </code></pre>
-    </td>
-  </tr>
-  
-</table>
+    </div>
+  </div>
+</div>
+
 
   </div>
 </details>
 
 
-        </main>
+  </main>
 
-        <footer>
-          <p class="HF foot">
-            This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
-          </p>
-          <p class="shoutout foot">
-            Site proudly generated by
-            <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
-          </p>
-        </footer>
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
 
-        <script>document.querySelectorAll('code.language-haskell').forEach(el => {
-          hljs.highlightElement(el);
-        });</script>
-    </body>
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
 </html>
