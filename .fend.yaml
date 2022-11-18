@@ -1,0 +1,16 @@
+skip:
+  file:
+    - message-index/CNAME
+    - message-index/css/highlight.css
+    - message-index/js/highlight.min.js
+    - message-index/js/tablefilter.js
+
+  extension:
+    - .hi
+    - .o
+    - .png
+
+  dir:
+    - message-index/dist-newstyle
+    - message-index/_cache
+    - message-index/_site
