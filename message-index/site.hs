@@ -8,8 +8,11 @@ import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
+import Data.Foldable (for_)
 import Data.Functor ((<&>))
 import Data.List (find, lookup, nub, sort)
+import Data.List.NonEmpty (NonEmpty (..))
+import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
 import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
@@ -40,14 +43,15 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
-  match "messages/*/*/**.hs" $
-    version "raw" $ do
-      route idRoute
-      compile getResourceBody
+  for_ exampleExtensions $ \ext -> do
+    match (fromGlob $ "messages/*/*/**." <> ext) $
+      version "raw" $ do
+        route idRoute
+        compile getResourceBody
 
-  match "messages/*/*/**.hs" $ do
-    route idRoute
-    compile copyFileCompiler
+    match (fromGlob $ "messages/*/*/**." <> ext) $ do
+      route idRoute
+      compile copyFileCompiler
 
   match "messages/*/*/index.md" $
     version "nav" $ do
@@ -131,11 +135,15 @@ main = hakyll $ do
 
   -- Needed for flagInfo below
   match "warning-sets/warning-sets-9.5.txt" $ do
-    compile $ getResourceBody
+    compile getResourceBody
 
   match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------
+
+-- | The file extensions to be shown in example lists
+exampleExtensions :: NonEmpty String
+exampleExtensions = "hs" :| ["yaml", "cabal"]
 
 breadcrumbField :: [Identifier] -> Compiler (Context String)
 breadcrumbField idents =
@@ -185,8 +193,13 @@ getExampleFiles = do
     ["messages", id, exampleName, _mdFile] -> pure (id, exampleName)
     _ -> fail "Not processing an example"
 
-  before <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*.hs") .&&. hasVersion "raw")
-  after <- loadAll (fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*.hs") .&&. hasVersion "raw")
+  let beforePattern = foldl1 (.||.) $ exampleExtensions <&> \ext ->
+        fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*." <> ext)
+      afterPattern = foldl1 (.||.) $ exampleExtensions <&> \ext ->
+        fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*." <> ext)
+
+  before <- loadAll (beforePattern .&&. hasVersion "raw")
+  after <- loadAll (afterPattern .&&. hasVersion "raw")
   let allNames = sort $ nub $ map (takeFileName . toFilePath . itemIdentifier) $ before ++ after
   pure $
     [ Item

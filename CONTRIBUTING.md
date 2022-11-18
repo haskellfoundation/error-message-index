@@ -48,13 +48,19 @@ To document a new error code, the following workflow can be convenient.
 
 ### Task Lists
 
-We keep track of which errors are being worked on, and which still require documentation,
+We keep track of which GHC errors are being worked on, and which still require documentation,
 using a bunch of issues:
 
 - [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/162). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
 - Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
+
+## Building Stack with Error Codes
+
+The next release of Stack will also include error codes. Until it is
+released, building a Git version (which just requires an existing
+install of Stack) is sufficient to get the codes.
 
 ## Contributing New Messages
 
@@ -64,8 +70,8 @@ disk using Hakyll. Inside the top-level of the site source, there is a
 a message whose name is the message code. This subdirectory contains a
 file `index.md` that describes the message. Additionally,
 subdirectories of the message directory may represent examples - each
-example contains a file `index.md` as well as a number of Haskell
-files that represent the example.
+example contains a file `index.md` as well as a number of Haskell,
+Cabal, or YAML files that represent the example.
 
 A message with ID `GHC-123` and two examples might have the following structure:
 
@@ -87,10 +93,10 @@ named as specified here, while the other components may vary.
 You can also use the `makeFolder.sh` templating script. Usage is as follows:
 
 ```bash
-./makeFolder.sh <NUMERIC-ERROR-CODE> <HaskellModuleName>
+./makeFolder.sh <NAMESPACE>-<NUMERIC_ERROR_CODE> <HaskellModuleName>
 ```
 
-This will generate a folder called `GHC-NUMERIC_ERROR_CODE` containing an empty `index.md` file, a subfolder called `example1` with a corresponding `index.md`, and two blank `before`/`after` Haskell source files.
+This will generate a folder called `NAMESPACE-NUMERIC_ERROR_CODE` containing an empty `index.md` file, a subfolder called `example1` with a corresponding `index.md`, and two blank `before`/`after` Haskell source files. Use `GHC` as `NAMESPACE` to document GHC error messages, and `S` as `NAMESPACE` to document Stack errors.
 
 ### Message Descriptions
 
@@ -132,7 +138,6 @@ metadata, just like message descriptions. They have only the `title`
 field. All `.hs` files are shown in the list of files for the
 example. The `index.md` file should explain how the files illustrate
 the message.
-
 
 ## Contributing to the Site
 
