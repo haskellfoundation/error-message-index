@@ -46,6 +46,10 @@ details > summary {
   margin-top: 10px;
 }
 
+.example pre {
+  background-color: #FAFAFA;
+}
+
 .example-container {
   min-height: 300px;
   display: flex;
@@ -133,7 +137,6 @@ main code {
 }
 
 main pre code {
-  background-color: #FAFAFA;
   padding: 10px;
 }
 
