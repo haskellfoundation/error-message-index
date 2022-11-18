@@ -45,9 +45,10 @@ Users and develoeprs need not wait for a release to begin documenting error code
 The Haskell Foundation administers the error code namespaces - please open an issue here or have a chat with the HF executive team to get a namespace assignment.
 The currently assigned namespaces are:
 
-| Namespace | Tool                                 |
-|-----------|--------------------------------------|
-| `GHC`     | [GHC](https://www.haskell.org/ghc/)  |
+| Namespace | Tool                                              |
+|-----------|---------------------------------------------------|
+| `GHC`     | [GHC](https://www.haskell.org/ghc/)               | 
+| `S`       | [Stack](https://docs.haskellstack.org/en/stable/) |
 
 
 ### Code Assignment Recommendations
