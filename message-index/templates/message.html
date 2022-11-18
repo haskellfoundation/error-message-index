@@ -1,6 +1,6 @@
 $if(flag)$
 <p>
-  <i>Flag: <code>$flag$</code></i><br/>
+  <i>Flag: <code>$flag$</code></i><br />
   $if(on_by_default)$
   <i>Enabled by default</i>
   $else$
@@ -11,14 +11,14 @@ $endif$
 $if(extension)$
 <p><i>Language extension: <code>$extension$</code></i></p>
 $endif$
-
 $body$
+
 
 <h2>Examples</h2>
 $for(examples)$
 <details open="open">
   <summary>$title$</summary>
-  <div class="example-container">
+  <div class="details-inner">
     $body$
   </div>
 </details>
