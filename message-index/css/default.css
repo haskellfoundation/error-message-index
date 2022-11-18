@@ -136,8 +136,13 @@ main code {
   padding-right: 2px;
 }
 
+main pre {
+  background: #fafafa;
+}
+
 main pre code {
   padding: 10px;
+  background: #fafafa;
 }
 
 nav.breadcrumb {
