@@ -76,6 +76,11 @@ main = hakyll $ do
                   ( mconcat
                       [ urlField "url",
                         field "name" (pure . view _1 . itemBody),
+                        -- Set the language that highlight.js should use for syntax highlighting
+                        field "language" $ \(itemBody -> (filename, _, _)) ->
+                          pure $ case dropWhile (== '.') $ takeExtension filename of
+                            "hs" -> "haskell"
+                            other -> other,
                         field "before" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
                         field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
                       ]
@@ -193,10 +198,14 @@ getExampleFiles = do
     ["messages", id, exampleName, _mdFile] -> pure (id, exampleName)
     _ -> fail "Not processing an example"
 
-  let beforePattern = foldl1 (.||.) $ exampleExtensions <&> \ext ->
-        fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*." <> ext)
-      afterPattern = foldl1 (.||.) $ exampleExtensions <&> \ext ->
-        fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*." <> ext)
+  let beforePattern =
+        foldl1 (.||.) $
+          exampleExtensions <&> \ext ->
+            fromGlob ("messages/" <> id <> "/" <> exampleName <> "/before/*." <> ext)
+      afterPattern =
+        foldl1 (.||.) $
+          exampleExtensions <&> \ext ->
+            fromGlob ("messages/" <> id <> "/" <> exampleName <> "/after/*." <> ext)
 
   before <- loadAll (beforePattern .&&. hasVersion "raw")
   after <- loadAll (afterPattern .&&. hasVersion "raw")
