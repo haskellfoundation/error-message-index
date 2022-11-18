@@ -37,7 +37,8 @@ x :: Int
 x = 42
 
 static :: Q Exp
-static = [| x |]</code></pre>
+static = [| x |]
+</code></pre>
     </div>
   </div>
 </div>
@@ -49,8 +50,9 @@ static = [| x |]</code></pre>
       <div class="example-title">Before</div>
       <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
       <pre class="example-pre"><code class="language-haskell">module NoHeader where
-    
-f = $(static)</code></pre>
+
+f = $(static)
+</code></pre>
     </div>
   </div>
   <div class="example">

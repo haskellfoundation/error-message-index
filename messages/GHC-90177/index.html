@@ -63,7 +63,8 @@
 data Foo = Foo
 
 class IsAFoo x where
-    convertToFoo :: x -> Foo</code></pre>
+    convertToFoo :: x -> Foo
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -78,7 +79,8 @@ class IsAFoo x where
     convertToFoo :: x -> Foo
 
 instance IsAFoo Foo where
-    convertToFoo = id</code></pre>
+    convertToFoo = id
+</code></pre>
     </div>
   </div>
 </div>
@@ -94,7 +96,8 @@ instance IsAFoo Foo where
 import Foo
 
 instance IsAFoo Foo where
-    convertToFoo = id</code></pre>
+    convertToFoo = id
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -103,7 +106,8 @@ instance IsAFoo Foo where
       <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
       <pre class="example-pre"><code class="language-haskell">module OrphanInstance where
 
-import Foo</code></pre>
+import Foo
+</code></pre>
     </div>
   </div>
 </div>

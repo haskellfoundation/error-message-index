@@ -53,7 +53,8 @@
 f :: Bool -> String -> Bool
 f a b = case a of
     (if a then b == "something" else b == "something else") -> True
-    _ -> False</code></pre>
+    _ -> False
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -69,7 +70,8 @@ f a b = case (a, b) of
     _ -> False
 
 f' :: Bool -> String -> Bool
-f' a b = (a && b == "something") || (not a && b == "something else")</code></pre>
+f' a b = (a && b == "something") || (not a && b == "something else")
+</code></pre>
     </div>
   </div>
 </div>

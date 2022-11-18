@@ -92,7 +92,8 @@ foo = 123456
       <pre class="example-pre"><code class="language-haskell">module OpaqueParseFail1 where
 
 f = id
-{-# OPAQUE[1] f #-}</code></pre>
+{-# OPAQUE[1] f #-}
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -102,7 +103,8 @@ f = id
       <pre class="example-pre"><code class="language-haskell">module OpaqueParseFail1 where
 
 f = id
-{-# OPAQUE f #-}</code></pre>
+{-# OPAQUE f #-}
+</code></pre>
     </div>
   </div>
 </div>
@@ -153,7 +155,8 @@ x :: Int
 x = 42
 
 static :: Q Exp
-static = [| x |]</code></pre>
+static = [| x |]
+</code></pre>
     </div>
   </div>
 </div>
@@ -165,8 +168,9 @@ static = [| x |]</code></pre>
       <div class="example-title">Before</div>
       <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
       <pre class="example-pre"><code class="language-haskell">module NoHeader where
-    
-f = $(static)</code></pre>
+
+f = $(static)
+</code></pre>
     </div>
   </div>
   <div class="example">

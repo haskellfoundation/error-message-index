@@ -52,7 +52,8 @@
       <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
       <pre class="example-pre"><code class="language-haskell">module IllegalDatatypeContext where
 
-data (Show a) => D a = D a</code></pre>
+data (Show a) => D a = D a
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -64,7 +65,8 @@ data (Show a) => D a = D a</code></pre>
 data D a = D a
 
 f :: (Show a) => D a -> IO ()
-f (D d) = putStrLn (show d)</code></pre>
+f (D d) = putStrLn (show d)
+</code></pre>
     </div>
   </div>
 </div>
@@ -94,7 +96,8 @@ f (D d) = putStrLn (show d)</code></pre>
       <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
       <pre class="example-pre"><code class="language-haskell">module IllegalDatatypeContext where
 
-data (Show a, Read a) => D a = D a</code></pre>
+data (Show a, Read a) => D a = D a
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -105,7 +108,8 @@ data (Show a, Read a) => D a = D a</code></pre>
 module IllegalDatatypeContext where
 
 data D a where
-    ShowReadD :: (Show a, Read a) => a -> D a</code></pre>
+    ShowReadD :: (Show a, Read a) => a -> D a
+</code></pre>
     </div>
   </div>
 </div>
