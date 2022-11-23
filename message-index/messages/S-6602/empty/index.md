@@ -17,4 +17,4 @@ Error: [S-6602]
        Stack) http://docs.haskellstack.org/en/stable/yaml_configuration/.
 ```
 
-This can be fixed by specifying a resolver, which is the minimal `stack.yaml` configuration.
+This error in a [project-level `stack.yaml` file](https://docs.haskellstack.org/en/stable/yaml_configuration/#project-specific-configuration) can be fixed by specifying a resolver, which is the minimal `stack.yaml` configuration.
