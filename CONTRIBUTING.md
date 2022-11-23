@@ -60,7 +60,10 @@ using a bunch of issues:
 
 The next release of Stack will also include error codes. Until it is
 released, building a Git version (which just requires an existing
-install of Stack) is sufficient to get the codes.
+install of Stack) is sufficient to get the codes. An unreleased version
+of Stack can be obtained with Stack by using the command
+`stack upgrade --source-only --git`. However, if you used GHCup to
+install Stack, you should also use GHCup to upgrade Stack.
 
 ## Contributing New Messages
 
