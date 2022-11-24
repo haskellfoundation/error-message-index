@@ -1,0 +1,33 @@
+<p>When run with an empty YAML file, Stack fails to parse it. For example, <code>stack --stack-yaml empty.yaml build</code> results in the error:</p>
+<pre><code>Error: [S-6602]
+       Stack could not load and parse /PATH/TO/empty.yaml as a YAML
+       configuraton file.
+       
+       While loading and parsing, Stack encountered the following exception:
+       
+       Aeson exception:
+       Error in $: parsing ProjectAndConfigMonoid failed, expected Object, but encountered Null
+       
+       For help about the content of Stack's YAML configuration files, see (for the most recent release of
+       Stack) http://docs.haskellstack.org/en/stable/yaml_configuration/.</code></pre>
+<p>This error in a <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/#project-specific-configuration">project-level <code>stack.yaml</code> file</a> can be fixed by specifying a resolver, which is the minimal <code>stack.yaml</code> configuration.</p>
+
+<pre class="filename">empty.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml"></code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">resolver: lts-19.17
+</code></pre>
+    </div>
+  </div>
+</div>
+

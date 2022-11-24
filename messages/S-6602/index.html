@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Could not parse YAML configuration file [S-6602] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Could not parse YAML configuration file [S-6602]
+    </nav>
+    <h1>Could not parse YAML configuration file [S-6602]</h1>
+    
+
+<p>This error occurs when Stack is unable to parse a YAML configuration file, which could be a project-level <code>stack.yaml</code> file or a global <code>config.yaml</code> file. The error covers the following situations:</p>
+<ul>
+<li>The specified configuration file does not exist</li>
+<li>The configuration file is not well-formed YAML</li>
+<li>The file is well-formed YAML but does not match the expected data schema</li>
+</ul>
+<p>The expected file formats are described in <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/">the Stack documentation</a>.</p>
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Stack does not accept empty YAML files</summary>
+  <div class="details-inner">
+    <p>When run with an empty YAML file, Stack fails to parse it. For example, <code>stack --stack-yaml empty.yaml build</code> results in the error:</p>
+<pre><code>Error: [S-6602]
+       Stack could not load and parse /PATH/TO/empty.yaml as a YAML
+       configuraton file.
+       
+       While loading and parsing, Stack encountered the following exception:
+       
+       Aeson exception:
+       Error in $: parsing ProjectAndConfigMonoid failed, expected Object, but encountered Null
+       
+       For help about the content of Stack's YAML configuration files, see (for the most recent release of
+       Stack) http://docs.haskellstack.org/en/stable/yaml_configuration/.</code></pre>
+<p>This error in a <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/#project-specific-configuration">project-level <code>stack.yaml</code> file</a> can be fixed by specifying a resolver, which is the minimal <code>stack.yaml</code> configuration.</p>
+
+<pre class="filename">empty.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml"></code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">resolver: lts-19.17
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Not a YAML file</summary>
+  <div class="details-inner">
+    <p>This <code>stack.yaml</code> file is not syntactically valid YAML. The error that results from <code>stack --stack-yaml not.yaml build</code> is:</p>
+<pre class="text"><code>Error: [S-6602]
+       Stack could not load and parse /PATH/TO/not.yaml as a YAML configuraton file.
+
+       While loading and parsing, Stack encountered the following exception:
+
+       YAML parse exception at line 0, column 0,
+       while parsing a block node:
+       did not find expected node content
+
+       For help about the content of Stack's YAML configuration files, see (for the most recent release of
+       Stack) http://docs.haskellstack.org/en/stable/yaml_configuration/.</code></pre>
+
+<pre class="filename">not.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">]
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">resolver: lts-19.17
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

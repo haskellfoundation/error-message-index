@@ -1,0 +1,33 @@
+<p>This <code>stack.yaml</code> file is not syntactically valid YAML. The error that results from <code>stack --stack-yaml not.yaml build</code> is:</p>
+<pre class="text"><code>Error: [S-6602]
+       Stack could not load and parse /PATH/TO/not.yaml as a YAML configuraton file.
+
+       While loading and parsing, Stack encountered the following exception:
+
+       YAML parse exception at line 0, column 0,
+       while parsing a block node:
+       did not find expected node content
+
+       For help about the content of Stack's YAML configuration files, see (for the most recent release of
+       Stack) http://docs.haskellstack.org/en/stable/yaml_configuration/.</code></pre>
+
+<pre class="filename">not.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">]
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">resolver: lts-19.17
+</code></pre>
+    </div>
+  </div>
+</div>
+
