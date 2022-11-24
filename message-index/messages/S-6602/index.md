@@ -1,6 +1,6 @@
 ---
 title: Could not parse YAML configuration file
-summary: Test summary
+summary: A YAML configuration file was either not well-formed YAML or didn't contain the expected data
 severity: error
 introduced: 2.9.3
 ---
