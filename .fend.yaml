@@ -5,6 +5,9 @@ skip:
     - message-index/js/highlight.min.js
     - message-index/js/tablefilter.js
 
+    # This one's empty and thus can't end with a newline
+    - message-index/messages/S-6602/empty/before/empty.yaml
+
   extension:
     - .hi
     - .o
