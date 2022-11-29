@@ -1,6 +1,6 @@
 ---
 title: Stack failed to construct a build plan
-summary: The package could not be found in the snapshot
+summary: The package with the given name or version could not be found in the snapshot
 severity: error
 introduced: 2.9.3
 ---
