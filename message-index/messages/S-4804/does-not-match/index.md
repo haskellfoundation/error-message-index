@@ -10,7 +10,7 @@ The specific version of the package is not provided by the snapshot. The error t
        While constructing the build plan, Stack encountered the following exceptions:
        
        In the dependencies for blah-0.1.0.0:
-           say-0.1.0.1 from Stack configuration does not match >=0.2.0.1 
+           say-0.1.0.1 from Stack configuration does not match >=100.2.0.1 
        needed since blah is a build target.
        
        Some different approaches to resolving this:

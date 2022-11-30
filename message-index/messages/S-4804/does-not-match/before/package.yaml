@@ -2,7 +2,7 @@ name:                blah
 
 dependencies:
 - base >= 4.7 && < 5
-- say >= 0.2.0.1
+- say >= 100.2.0.1
 
 library:
   source-dirs: src
