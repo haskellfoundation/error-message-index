@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Stack failed to construct a build plan [S-4804] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../index.html">The Haskell Error Index</a>&nbsp;»
+      
+      Stack failed to construct a build plan [S-4804]
+    </nav>
+    <h1>Stack failed to construct a build plan [S-4804]</h1>
+    
+
+<p>This error occurs when Stack configuration has no package with the given name or if the version number of a package does not match the one from Stack configuration. The error covers the following situations:</p>
+<ul>
+<li>The specific package does not exist</li>
+<li>The specific version of a given package does not exist</li>
+</ul>
+<p>See the list of packages provided by the snapshots <a href="https://www.stackage.org/">Stackage</a>.</p>
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Package version does not match Stack configuration</summary>
+  <div class="details-inner">
+    <p>The specific version of the package is not provided by the snapshot. The error that results from <code>stack build</code> is:</p>
+<pre class="text"><code> Error: [S-4804]
+       Stack failed to construct a build plan.
+       
+       While constructing the build plan, Stack encountered the following exceptions:
+       
+       In the dependencies for blah-0.1.0.0:
+           say-0.1.0.1 from Stack configuration does not match &gt;=100.2.0.1 
+       needed since blah is a build target.
+       
+       Some different approaches to resolving this:
+       
+         * Set 'allow-newer: true'
+           in /home/USER/.stack/config.yaml to ignore all version constraints and build anyway.</code></pre>
+
+<pre class="filename">package.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- say >= 100.2.0.1
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- say >= 0.1.0.1
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>The package does not exist in the snapshot</summary>
+  <div class="details-inner">
+    <p>The given package name is not provided by the snapshot. For example, <code>stack build</code> results in the error:</p>
+<pre><code>Error: [S-4804]
+       Stack failed to construct a build plan.
+       
+       While constructing the build plan, Stack encountered the following exceptions:
+       
+       In the dependencies for blah-0.1.0.0:
+           wrong-package must match &gt;=0.2, but the Stack configuration has no specified version (no
+                         package with that name found, perhaps there is a typo in a package's
+                         build-depends or an omission from the stack.yaml packages list?)
+       needed since blah is a build target.</code></pre>
+
+<pre class="filename">package.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- wrong-package >= 0.2
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

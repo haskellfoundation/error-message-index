@@ -1,0 +1,14 @@
+name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah

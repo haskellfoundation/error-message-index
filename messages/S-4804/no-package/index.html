@@ -1,0 +1,59 @@
+<p>The given package name is not provided by the snapshot. For example, <code>stack build</code> results in the error:</p>
+<pre><code>Error: [S-4804]
+       Stack failed to construct a build plan.
+       
+       While constructing the build plan, Stack encountered the following exceptions:
+       
+       In the dependencies for blah-0.1.0.0:
+           wrong-package must match &gt;=0.2, but the Stack configuration has no specified version (no
+                         package with that name found, perhaps there is a typo in a package's
+                         build-depends or an omission from the stack.yaml packages list?)
+       needed since blah is a build target.</code></pre>
+
+<pre class="filename">package.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- wrong-package >= 0.2
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+</div>
+

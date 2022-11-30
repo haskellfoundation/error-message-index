@@ -1,0 +1,63 @@
+<p>The specific version of the package is not provided by the snapshot. The error that results from <code>stack build</code> is:</p>
+<pre class="text"><code> Error: [S-4804]
+       Stack failed to construct a build plan.
+       
+       While constructing the build plan, Stack encountered the following exceptions:
+       
+       In the dependencies for blah-0.1.0.0:
+           say-0.1.0.1 from Stack configuration does not match &gt;=100.2.0.1 
+       needed since blah is a build target.
+       
+       Some different approaches to resolving this:
+       
+         * Set 'allow-newer: true'
+           in /home/USER/.stack/config.yaml to ignore all version constraints and build anyway.</code></pre>
+
+<pre class="filename">package.yaml</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- say >= 100.2.0.1
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-yaml">name:                blah
+
+dependencies:
+- base >= 4.7 && < 5
+- say >= 0.1.0.1
+
+library:
+  source-dirs: src
+
+executables:
+  blah-exe:
+    main:                Main.hs
+    source-dirs:         app
+    dependencies:
+    - blah
+</code></pre>
+    </div>
+  </div>
+</div>
+
