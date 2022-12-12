@@ -2,7 +2,9 @@
 title: Case expression in do-block
 ---
 
-The expression in one branch of the case expression is a do-block that's missing a `do`; the whole case-expression is interpreted as LHS of a bind in the top-level do-block. See also: https://gitlab.haskell.org/ghc/ghc/-/issues/984
+The expression in one branch of the case expression is a `do`-block that's missing a `do`. This triggers a corner case in the grammar of Haskell, and the `case`-expression is interpreted as the pattern part of a bind statement in the top-level `do`-block. 
+
+More details are available at https://gitlab.haskell.org/ghc/ghc/-/issues/984
 
 ## Error Message
 
