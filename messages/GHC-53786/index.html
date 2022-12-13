@@ -75,6 +75,57 @@ f x y = case x of
 </details>
 
 <details open="open">
+  <summary>Case expression in do-block</summary>
+  <div class="details-inner">
+    <p>The expression in one branch of the case expression is a <code>do</code>-block that’s missing a <code>do</code>. This triggers a corner case in the grammar of Haskell, and the <code>case</code>-expression is interpreted as the pattern part of a bind statement in the top-level <code>do</code>-block.</p>
+<p>More details are available at https://gitlab.haskell.org/ghc/ghc/-/issues/984</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>CaseExprInDoBlock.hs:5:3: error: [GHC-53786]
+    (case ... of ...)-syntax in pattern
+  |
+5 |   case () of
+  |   ^^^^^^^^^^...
+</code></pre>
+
+<pre class="filename">CaseExprInDoBlock.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module CaseExprInDoBlock where
+
+x :: [a]
+x = do
+  case () of
+    () ->
+      a <- []
+      pure a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module CaseExprInDoBlock where
+
+x :: [a]
+x = do
+  case () of
+    () -> do
+      a <- []
+      pure a
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
   <summary>Case expression in function argument pattern</summary>
   <div class="details-inner">
     <p>The pattern on the left-hand side of the function definition contains a <code>case ... of ...</code> expression.</p>
