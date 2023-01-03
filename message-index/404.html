@@ -6,7 +6,7 @@ title: The Haskell Error Index
 
 <script>
 const messageRe = /^\/messages\/[A-Z]+-[0-9]+/;
-if messageRe.test(window.location.pathname) {
+if (messageRe.test(window.location.pathname)) {
   document.getElementById("documentation-pointer").innerHTML = "This message is currently undocumented. You can help out by <a href=\"https://github.com/haskellfoundation/error-message-index/issues\">opening an issue</a> or <a href=\"https://github.com/haskellfoundation/error-message-index/pulls\">contributing documentation</a>."
 }
 </script>

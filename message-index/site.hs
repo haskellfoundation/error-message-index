@@ -123,7 +123,6 @@ main = hakyll $ do
       getResourceBody
         >>= applyAsTemplate ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
-        >>= relativizeUrls
 
   match "index.html" $
     version "nav" $ do
