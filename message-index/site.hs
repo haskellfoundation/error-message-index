@@ -115,6 +115,16 @@ main = hakyll $ do
     route $ setExtension "html"
     compile $ makeItem $ Redirect "/"
 
+  match "404.html" $ do
+    route idRoute
+    compile $ do
+      bread <- breadcrumbField ["index.html"]
+      let ctx = mconcat [constField "title" "Not Found", bread, defaultContext]
+      getResourceBody
+        >>= applyAsTemplate ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= relativizeUrls
+
   match "index.html" $
     version "nav" $ do
       route idRoute
