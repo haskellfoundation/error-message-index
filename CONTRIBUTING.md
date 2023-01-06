@@ -56,14 +56,13 @@ using a bunch of issues:
 - Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
 
-## Building Stack with Error Codes
+## Stack and Error Codes
 
-The next release of Stack will also include error codes. Until it is
-released, building a Git version (which just requires an existing
-install of Stack) is sufficient to get the codes. An unreleased version
-of Stack can be obtained with Stack by using the command
-`stack upgrade --source-only --git`. However, if you used GHCup to
-install Stack, you should also use GHCup to upgrade Stack.
+Since version 2.9.3, Stack has supported error codes in the `S-` namespace.
+
+## GHCup and Error Codes
+
+The development version of GHCup has had support for error codes in the `GHCup-` namespace since [pull request 717](https://github.com/haskell/ghcup-hs/pull/717), and support will be in the next release.
 
 ## Contributing New Messages
 

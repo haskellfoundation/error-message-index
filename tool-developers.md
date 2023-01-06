@@ -49,6 +49,7 @@ The currently assigned namespaces are:
 |-----------|---------------------------------------------------|
 | `GHC`     | [GHC](https://www.haskell.org/ghc/)               | 
 | `S`       | [Stack](https://docs.haskellstack.org/en/stable/) |
+| `GHCup`   | [GHCup](https://www.haskell.org/ghcup/)           |
 
 
 ### Code Assignment Recommendations
