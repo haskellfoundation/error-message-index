@@ -104,9 +104,13 @@ main = hakyll $ do
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/message.html"
-          ( listField "examples" defaultContext (pure examples)
-              <> flagSetFields
-              <> defaultContext
+          ( mconcat
+              [ if null examples
+                  then mempty
+                  else listField "examples" defaultContext (pure examples),
+                flagSetFields,
+                defaultContext
+              ]
           )
         >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
         >>= relativizeUrls
