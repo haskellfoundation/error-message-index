@@ -1,6 +1,6 @@
 ---
 title: The tool is already installed with that version
-summary: GHCup has already installed the request version of the tool
+summary: GHCup has already installed the requested version of the tool
 severity: warning
 introduced: 0.1.19.0
 ---
