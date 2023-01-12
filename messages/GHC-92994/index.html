@@ -28,6 +28,7 @@
 <p>When using the <code>CApiFFI</code> interface to C functions, there are certain restrictions placed on the Haskell types that may be assigned to foreign functions. In particular, they may not use higher-rank polymorphic types - that is, all <code>forall</code>s must be at the beginning of the type signature.</p>
 
 
+
 <h2>Examples</h2>
 
 <details open="open">
@@ -75,6 +76,7 @@ foreign import capi "foo.h fun" fun :: forall a . Int -> a -> a
 
   </div>
 </details>
+
 
 
   </main>

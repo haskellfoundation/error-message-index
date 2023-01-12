@@ -35,6 +35,7 @@
 <p>When <a href="https://downloads.haskell.org/ghc/latest/docs/html/users_guide/exts/data_kinds.html">using a datatype as a kind</a>, its constructors become types. Because Haskell has separate namespaces for data constructors and type constructors, this can lead to ambiguities. These ambiguities can be resolved by prefixing the constructor’s name with a tick mark (<code>'</code>). To avoid potential ambiguities in the future, the flag <code>-Wunticked-promoted-constructors</code> can require that <em>all</em> promoted constructors have tick marks.</p>
 
 
+
 <h2>Examples</h2>
 
 <details open="open">
@@ -81,6 +82,7 @@ type A = 'True
 
   </div>
 </details>
+
 
 
   </main>

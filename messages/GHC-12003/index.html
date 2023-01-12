@@ -33,6 +33,7 @@
 <p>In versions of GHC prior to 9.4.1, the type equality operator <code>~</code> was built-in syntax. In more recent versions, it is an ordinary operator that is part of the <code>Prelude</code> and of <code>Data.Type.Equality</code>. Restricting imports from <code>Prelude</code> can result in <code>~</code> not being imported, as can the use of a custom prelude that has not been updated to export <code>~</code>. For now, GHC has a compatibility warning to help migrate old code. In a future version of GHC, this warning will be an error.</p>
 
 
+
 <h2>Examples</h2>
 
 <details open="open">
@@ -89,6 +90,7 @@ f = id
 
   </div>
 </details>
+
 
 
   </main>

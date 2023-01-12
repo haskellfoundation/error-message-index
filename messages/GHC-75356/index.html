@@ -33,6 +33,7 @@
 <p>When exporting identifiers from a module, all in-scope constructors (for a type) or the in-scope methods (for a typeclass) can also be exported with the <code>T(..)</code> syntax. However, if <code>T</code> does not have in-scope constructors - the type is being re-exported and does not have its constructors imported) or it has no constructors - then this export item suggests that the programmer intended for <code>T</code> to have in-scope constructors/methods when it has none.</p>
 
 
+
 <h2>Examples</h2>
 
 <details open="open">
@@ -113,6 +114,7 @@ data TypeWithoutVisibleCtrs = Ctr1 Int | Ctr2 | Ctr3 Bool Bool
 
   </div>
 </details>
+
 
 
   </main>

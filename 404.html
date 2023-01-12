@@ -24,7 +24,7 @@
     <div id="documentation-pointer">Page not found.</div>
 
 <script>
-const messageRe = /^\/messages\/([A-Z]+-[0-9]+)/;
+const messageRe = /^\/messages\/([A-Za-z]+-[0-9]+)/;
 if (messageRe.test(window.location.pathname)) {
   const messageNum = window.location.pathname.match(messageRe)[1];
   document.getElementById("documentation-pointer").innerHTML = "Message <code>" + messageNum + "</code> is currently undocumented. You can help out by <a href=\"https://github.com/haskellfoundation/error-message-index/issues?q=is%3Aissue+is%3Aopen+" + messageNum + "\">opening or commenting on an issue</a> or <a href=\"https://github.com/haskellfoundation/error-message-index/blob/main/CONTRIBUTING.md\">contributing documentation</a>."
