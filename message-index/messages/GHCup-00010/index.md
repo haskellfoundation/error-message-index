@@ -64,4 +64,4 @@ Other reasons you might get this error:
 
 * The version of the tool you specified doesn't exist at all, e.g. `ghcup install ghc blah`.
 * The version of the tool you specified wasn't added to GHCup yet, but will likely be added soon. Please [raise an issue here](https://github.com/haskell/ghcup-metadata/issues) and make sure to update ghcup's internal list of available tools with `ghcup upgrade`.
-
+* The version of the tool you specified was a pre-release, like an alpha or release candidate. Add [a release channel](https://www.haskell.org/ghcup/guide/#pre-release-channels) to make it available. For example: `ghcup config add-release-channel https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-prereleases-0.0.7.yaml`.
