@@ -5,7 +5,7 @@ severity: error
 introduced: 0.1.19.0
 ---
 
-The most common cause for this error is when GHCup tries to fetch the metadata file that contains information
+This error is most common when GHCup tries to fetch the metadata file that contains information
 about available tool versions and binary distributions. This is done when GHCup starts, so basically
 any command such as `list`, `tui`, `install`, etc. can throw this.
 
