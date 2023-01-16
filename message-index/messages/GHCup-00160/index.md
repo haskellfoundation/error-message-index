@@ -9,6 +9,14 @@ The most common cause for this error is when GHCup tries to fetch the metadata f
 about available tool versions and binary distributions. This is done when GHCup starts, so basically
 any command such as `list`, `tui`, `install`, etc. can throw this.
 
+Potential underlying causes for this errors are:
+
+* No internet connection
+* Unreliable disk or Internet leading to a corrupted file
+* Malformed metadata file, indicating an issue in the [ghcup-metadata](https://github.com/haskell/ghcup-metadata) repository
+
+As an example with no internet connection, GHCup  will fail to list available tools:
+
 ```
 $ ghcup list
 [ Info  ] downloading: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml as file /home/hasufell/.ghcup/cache/ghcup-0.0.7.yaml
@@ -24,7 +32,6 @@ $ ghcup list
 [ ...   ]
 ```
 
-In the above example, this error happened because there was no internet connection. There can be other reasons, such as a corrupted download.
 The best way to debug this is to try to fetch the metadata manually:
 
 ```
