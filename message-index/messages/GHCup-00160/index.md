@@ -1,6 +1,6 @@
 ---
 title: JSON decoding failed
-summary: GHCup was unable to decode a JSON document (e.g. metadata file)
+summary: GHCup was unable to decode a JSON or YAML document (e.g. metadata file)
 severity: error
 introduced: 0.1.19.0
 ---
