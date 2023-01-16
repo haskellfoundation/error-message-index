@@ -62,7 +62,7 @@ Since version 2.9.3, Stack has supported error codes in the `S-` namespace.
 
 ## GHCup and Error Codes
 
-The development version of GHCup has had support for error codes in the `GHCup-` namespace since [pull request 717](https://github.com/haskell/ghcup-hs/pull/717), and support will be released in version 0.1.19.0.
+Since version 0.1.19.0, GHCup has supported error codes in the `GHCup-` namespace.
 
 ## Contributing New Messages
 
