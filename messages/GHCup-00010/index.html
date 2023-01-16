@@ -72,6 +72,7 @@ If you want to contribute binary distributions for existing GHC versions, <a hre
 <ul>
 <li>The version of the tool you specified doesn’t exist at all, e.g. <code>ghcup install ghc blah</code>.</li>
 <li>The version of the tool you specified wasn’t added to GHCup yet, but will likely be added soon. Please <a href="https://github.com/haskell/ghcup-metadata/issues">raise an issue here</a> and make sure to update ghcup’s internal list of available tools with <code>ghcup upgrade</code>.</li>
+<li>The version of the tool you specified was a pre-release, like an alpha or release candidate. Add <a href="https://www.haskell.org/ghcup/guide/#pre-release-channels">a release channel</a> to make it available. For example: <code>ghcup config add-release-channel https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-prereleases-0.0.7.yaml</code>.</li>
 </ul>
 
 
