@@ -1,12 +1,13 @@
 ---
 title: JSON decoding failed
-summary: GHCup tried to decode it's metadata file, but an error occured
+summary: GHCup was unable to decode a JSON document (e.g. metadata file)
 severity: error
 introduced: 0.1.19.0
 ---
 
-This error can happen on any subcommand (`list`, `tui`, `install`, etc.). GHCup downloads
-a metadata file on start that contains information about available tool versions and binary distributions.
+The most common cause for this error is when GHCup tries to fetch the metadata file that contains information
+about available tool versions and binary distributions. This is done when GHCup starts, so basically
+any command such as `list`, `tui`, `install`, etc. can throw this.
 
 ```
 $ ghcup list
@@ -23,7 +24,7 @@ $ ghcup list
 [ ...   ]
 ```
 
-In the above example, this error happened because there was no internet connection. There can be other reasons, such as corrupted download.
+In the above example, this error happened because there was no internet connection. There can be other reasons, such as a corrupted download.
 The best way to debug this is to try to fetch the metadata manually:
 
 ```
