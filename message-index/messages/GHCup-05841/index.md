@@ -24,7 +24,7 @@ This error is a combination of [GHCup-00841](https://errors.haskell.org/messages
 
 Reasons for this errors:
 
-* the URL does not point to a valid download (this could be a [ghcup-metadata](https://github.com/haskell/ghcup-metadata) issue)
+* the URL does not point to a valid download (this could be an issue with [GHCup's database of available tools](https://github.com/haskell/ghcup-metadata))
 * you have networking issues
 * your `curl` or `wget` installations are broken
 
