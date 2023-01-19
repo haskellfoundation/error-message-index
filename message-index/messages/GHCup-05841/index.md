@@ -30,7 +30,7 @@ Reasons for this errors:
 
 The best way to debug this is trying to download the URL manually:
 
-* try with curl
+* try with `curl`
 * then try with `wget`
 * also try in your browser
 
