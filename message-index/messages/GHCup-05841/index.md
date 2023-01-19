@@ -1,6 +1,6 @@
 ---
 title: A download failed
-summary: GHCup tried to download an artifact, but the download failed with a subprocess exiting prematurely
+summary: GHCup tried to download a tool, but the download failed with a subprocess exiting prematurely
 severity: error
 introduced: 0.1.19.0
 ---
