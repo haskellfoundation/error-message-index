@@ -7,7 +7,7 @@ introduced: 0.1.19.0
 
 GHCup was asked to install a given version of a tool, but the download via `curl` or `wget` failed.
 
-As an example, trying to install a GHC version via a non-existent url will throw:
+As an example, trying to install a GHC version via a non-existent URL will result in:
 ```
 $ ghcup install ghc -u https://nothing/ghc.tar.gz 9.4.3
 [ Info  ] downloading: https://nothing/ghc.tar.gz as file /home/hasufell/.ghcup/cache/ghc.tar.gz
