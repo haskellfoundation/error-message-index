@@ -35,7 +35,7 @@ The best way to debug this is trying to download the URL manually:
 * also try in your browser
 
 If you're using a proxy, make sure your shell is configured to [use the correct configuration](https://docs.cloudfoundry.org/cf-cli/http-proxy.html#:~:text=The%20https_proxy%20environment%20variable%20holds,depends%20on%20your%20operating%20system.)
-via `https_proxy`/`http_proxy` env vars.
+via the `https_proxy`/`http_proxy` environment variables.
 
 If you believe GHCup is providing faulty URLs, [open an issue here](https://github.com/haskell/ghcup-metadata/issues).
 
