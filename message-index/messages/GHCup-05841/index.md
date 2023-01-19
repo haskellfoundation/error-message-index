@@ -31,7 +31,7 @@ Reasons for this errors:
 The best way to debug this is trying to download the URL manually:
 
 * try with curl
-* then try with wget
+* then try with `wget`
 * also try in your browser
 
 If you're using a proxy, make sure your shell is configured to [use the correct configuration](https://docs.cloudfoundry.org/cf-cli/http-proxy.html#:~:text=The%20https_proxy%20environment%20variable%20holds,depends%20on%20your%20operating%20system.)
