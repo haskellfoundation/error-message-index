@@ -30,5 +30,5 @@ $ ghcup install ghc ghc-8.4.4
 [ Error ] Also check the logs in /home/hasufell/.ghcup/logs
 ```
 
-This commonly happens on macOS too if Xcode command line tools are not installed or if LLVM is not installed on Apple Silicon machines (for GHC versions that don't have a native code generator, such as 8.10.7 or 9.0.2).
-See the following [Stack Overflow answer on Xcode command line tools](https://stackoverflow.com/a/9329325) and the [Brew LLVM formula page](https://formulae.brew.sh/formula/llvm) (make sure to read the instructions after installation to adjust the `PATH` environment variable).
+For more information, see the list of [system requirements per platform](https://www.haskell.org/ghcup/install/#system-requirements).
+
