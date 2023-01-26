@@ -30,5 +30,5 @@ $ ghcup install ghc ghc-8.4.4
 [ Error ] Also check the logs in /home/hasufell/.ghcup/logs
 ```
 
-For more information, see the list of [system requirements per platform](https://www.haskell.org/ghcup/install/#system-requirements).
+For further troubleshooting information and setup and installation instructions, see the list of [system requirements per platform](https://www.haskell.org/ghcup/install/#system-requirements).
 
