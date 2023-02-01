@@ -13,6 +13,7 @@ Potential underlying causes for this errors are:
 
 * No internet connection
 * Unreliable disk or Internet leading to a corrupted file
+* broken curl or wget (e.g. installed through [snap](https://snapcraft.io/))
 * Malformed metadata file, indicating an issue in the [ghcup-metadata](https://github.com/haskell/ghcup-metadata) repository
 
 As an example with no internet connection, GHCup  will fail to list available tools:
@@ -32,22 +33,31 @@ $ ghcup list
 [ ...   ]
 ```
 
+If you use `ghcup --metadata-fetching-mode=Strict list`, then you'll likely receive error
+[GHCup-05841](https://errors.haskell.org/messages/GHCup-05841/) instead.
+
 The best way to debug this is to try to fetch the metadata manually:
 
 ```
+cd "$(ghcup whereis cachedir)"
 curl https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml
 ```
 
 Alternatively try with wget:
 
 ```
+cd "$(ghcup whereis cachedir)"
 wget -O- https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml
 ```
 
-If the download succeeds, but the error persists, try examining the file:
+If the download fails, your curl/wget installation might be broken. On linux, make sure you've installed
+these from your package manager and not via [snap](https://snapcraft.io/) or similar. On windows, make
+sure you use `curl.exe` and not `curl` (which is a cmdlet) when testing. It should be pre-installed.
+
+If the download succeeds, but the error persists, try examining the file and verify it's valid YAML:
 
 ```
-cat $(ghcup whereis cachedir)/ghcup-0.0.7.yaml
+cat "$(ghcup whereis cachedir)/ghcup-0.0.7.yaml"
 ```
 
 Fix your connection issues, make sure to delete `$(ghcup whereis cachedir)/ghcup-0.0.7.yaml` and then try again.
