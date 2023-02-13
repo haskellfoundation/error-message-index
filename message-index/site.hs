@@ -10,7 +10,7 @@ import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
-import Data.List (find, lookup, nub, sort)
+import Data.List (find, isPrefixOf, lookup, nub, sort)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
@@ -74,7 +74,7 @@ main = hakyll $ do
               [ listField
                   "files"
                   ( mconcat
-                      [ urlField "url",
+                      [ indexlessUrlField "url",
                         field "name" (pure . view _1 . itemBody),
                         -- Set the language that highlight.js should use for syntax highlighting
                         field "language" $ \(itemBody -> (filename, _, _)) ->
@@ -169,7 +169,13 @@ breadcrumbField idents =
 
 breadcrumbCtx :: [Item String] -> Context String
 breadcrumbCtx parents =
-  listField "parents" (mconcat [urlField "url", messageTitleField, defaultContext]) (pure parents)
+  listField "parents" (mconcat [indexlessUrlField "url", messageTitleField, defaultContext]) (pure parents)
+
+indexlessUrlField :: String -> Context a
+indexlessUrlField key = field key $ \i ->
+  let id = itemIdentifier i
+      empty' = fail $ "No route url found for item " ++ show id
+   in maybe empty' (indexless . toUrl) <$> getRoute id
 
 messageTitleField :: Context String
 messageTitleField = field "title" getTitle
@@ -185,7 +191,7 @@ messageTitleField = field "title" getTitle
         Nothing -> pure ""
 
 messageCtx :: Context String
-messageCtx = field "id" (pure . getId)
+messageCtx = field "id" (pure . getId) <> indexlessUrlField "url"
 
 getId :: Item a -> String
 getId item = fromMaybe "" $ getIdentId (itemIdentifier item)
@@ -271,3 +277,11 @@ flagSetFields =
           Just (_, g) -> return $ unwords g
           Nothing -> return ""
     ]
+
+indexless :: String -> String
+indexless url
+  | reverse toDrop `isPrefixOf` lru = reverse $ drop (length toDrop) lru
+  | otherwise = url
+  where
+    lru = reverse url
+    toDrop = "index.html"
