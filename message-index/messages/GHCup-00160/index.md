@@ -54,7 +54,7 @@ If the download fails, your curl/wget installation might be broken. On linux, ma
 these from your package manager and not via [snap](https://snapcraft.io/) or similar. On Windows, make
 sure you use `curl.exe` and not `curl` (which is a cmdlet) when testing. It should be pre-installed.
 
-If the download succeeds, but the error persists, try examining the file and verify it's valid YAML:
+If the download succeeds, but the error persists, try examining the file and verify that it's valid YAML:
 
 ```
 cat "$(ghcup whereis cachedir)/ghcup-0.0.7.yaml"
