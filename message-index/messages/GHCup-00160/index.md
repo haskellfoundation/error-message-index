@@ -13,7 +13,7 @@ Potential underlying causes for this errors are:
 
 * No internet connection
 * Unreliable disk or Internet leading to a corrupted file
-* broken curl or wget (e.g. installed through [snap](https://snapcraft.io/))
+* Non-functional `curl` or `wget` (users have reported difficulties when these tools are installed through [snap](https://snapcraft.io/))
 * Malformed metadata file, indicating an issue in the [ghcup-metadata](https://github.com/haskell/ghcup-metadata) repository
 
 As an example with no internet connection, GHCup  will fail to list available tools:
