@@ -51,7 +51,7 @@ wget -O- https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0
 ```
 
 If the download fails, your `curl`/`wget` installation might be broken. On Linux, make sure you've installed
-these from your package manager and not via [snap](https://snapcraft.io/), [Flatpak](https://flatpak.org/) or [AppImage](https://appimage.org/). GHCup does neither recommend nor support those tools.
+these from your package manager and not via [snap](https://snapcraft.io/), [Flatpak](https://flatpak.org/) or [AppImage](https://appimage.org/). GHCup neither recommends nor supports those tools.
 On Windows, make sure you use `curl.exe` and not `curl` (which is a cmdlet) when testing. It should be pre-installed.
 
 If the download succeeds, but the error persists, try examining the file and verify that it's valid YAML:
