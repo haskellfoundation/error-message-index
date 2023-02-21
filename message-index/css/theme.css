@@ -1,0 +1,64 @@
+body {
+  --bg-color: #FFFFFF;
+  --text-color: #333;
+  --outline-color: #DB83ED;
+  --header-color: #6D28D9;
+  --anchor: #0000EE;
+  --bg-nav: transparent;
+  --code-color: #FAFAFA;
+  --filename-bg: #EAEAEA;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-color: #33333A;
+    --text-color: #F4F3F8;
+    --header-color: #70619E;
+    --anchor: #EB82DC;
+    --bg-nav: #393939;
+    --code-color: transparent;
+    --filename-bg: #2C2C2C;
+  }
+
+  code.hljs {
+    background-color: transparent;
+    filter: invert(1);
+  }
+}
+
+*:focus-visible {
+  outline-color: var(--outline-color);
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--header-color);
+}
+
+a {
+  color: var(--anchor);
+}
+
+input {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+details {
+  border: 2px solid #C7A1FF;
+}
+
+main code, main pre, main pre code, .example pre {
+  background-color: var(--code-color);
+}
+
+.filename {
+  background-color: var(--filename-bg);
+}
+
+nav.breadcrumb a {
+  color: var(--text-color);
+}
