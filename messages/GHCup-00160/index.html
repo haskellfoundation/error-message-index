@@ -30,6 +30,7 @@ any command such as <code>list</code>, <code>tui</code>, <code>install</code>, e
 <ul>
 <li>No internet connection</li>
 <li>Unreliable disk or Internet leading to a corrupted file</li>
+<li>Non-functional <code>curl</code> or <code>wget</code> (users have reported difficulties when these tools are installed through <a href="https://snapcraft.io/">snap</a>)</li>
 <li>Malformed metadata file, indicating an issue in the <a href="https://github.com/haskell/ghcup-metadata">ghcup-metadata</a> repository</li>
 </ul>
 <p>As an example with no internet connection, GHCup will fail to list available tools:</p>
@@ -45,12 +46,19 @@ any command such as <code>list</code>, <code>tui</code>, <code>install</code>, e
 [ ...   ] Yaml file not found: /home/hasufell/.ghcup/cache/ghcup-0.0.7.yaml
 [ ...   ] Consider removing /home/hasufell/.ghcup/cache/ghcup-0.0.7.yaml manually.
 [ ...   ]</code></pre>
+<p>If you use <code>ghcup --metadata-fetching-mode=Strict list</code>, then you’ll likely receive error
+<a href="https://errors.haskell.org/messages/GHCup-05841/">GHCup-05841</a> instead.</p>
 <p>The best way to debug this is to try to fetch the metadata manually:</p>
-<pre><code>curl https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml</code></pre>
+<pre><code>cd &quot;$(ghcup whereis cachedir)&quot;
+curl https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml</code></pre>
 <p>Alternatively try with wget:</p>
-<pre><code>wget -O- https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml</code></pre>
-<p>If the download succeeds, but the error persists, try examining the file:</p>
-<pre><code>cat $(ghcup whereis cachedir)/ghcup-0.0.7.yaml</code></pre>
+<pre><code>cd &quot;$(ghcup whereis cachedir)&quot;
+wget -O- https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml</code></pre>
+<p>If the download fails, your <code>curl</code>/<code>wget</code> installation might be broken. On Linux, make sure you’ve installed
+these from your package manager and not via <a href="https://snapcraft.io/">snap</a>, <a href="https://flatpak.org/">Flatpak</a> or <a href="https://appimage.org/">AppImage</a>. GHCup neither recommends nor supports those tools.
+On Windows, make sure you use <code>curl.exe</code> and not <code>curl</code> (which is a cmdlet) when testing. It should be pre-installed.</p>
+<p>If the download succeeds, but the error persists, try examining the file and verify that it’s valid YAML:</p>
+<pre><code>cat &quot;$(ghcup whereis cachedir)/ghcup-0.0.7.yaml&quot;</code></pre>
 <p>Fix your connection issues, make sure to delete <code>$(ghcup whereis cachedir)/ghcup-0.0.7.yaml</code> and then try again.
 If you believe this is not a connection issue and there’s something wrong with the file, please <a href="https://github.com/haskell/ghcup-metadata/issues">open an issue here</a>.</p>
 
