@@ -21,8 +21,10 @@ $ ghcup install ghc -u https://nothing/ghc.tar.gz 9.4.3
 ```
 
 This error is a combination of [GHCup-00841](https://errors.haskell.org/messages/GHCup-00841/index.html) and `GHCup-05000`.
+Sometimes you may encounter [GHCup-00160](https://errors.haskell.org/messages/GHCup-00160/index.html) instead, depending
+on how you invoked `ghcup`.
 
-Reasons for this errors:
+Reasons for this error:
 
 * the URL does not point to a valid download (this could be an issue with [GHCup's database of available tools](https://github.com/haskell/ghcup-metadata))
 * you have networking issues
