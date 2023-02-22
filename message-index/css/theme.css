@@ -3,7 +3,6 @@ body {
   --text-color: #333;
   --outline-color: #DB83ED;
   --header-color: #6D28D9;
-  --anchor: #0000EE;
   --bg-nav: transparent;
   --code-color: #FAFAFA;
   --filename-bg: #EAEAEA;
@@ -12,12 +11,19 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     --bg-color: #33333A;
-    --text-color: #F4F3F8;
-    --header-color: #70619E;
-    --anchor: #EB82DC;
+    --text-color: #C9D1D9;
+    --header-color: #8946C8;
     --bg-nav: #393939;
     --code-color: transparent;
     --filename-bg: #2C2C2C;
+  }
+
+  a {
+    color: #EB82DC;
+  }
+
+  a:visited {
+    color: #8B78C5;
   }
 
   code.hljs {
@@ -33,18 +39,18 @@ body {
 body {
   color: var(--text-color);
   background-color: var(--bg-color);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--header-color);
 }
 
-a {
-  color: var(--anchor);
-}
-
 input {
   background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
 }
 
 details {
