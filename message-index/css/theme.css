@@ -1,31 +1,26 @@
-body {
+:root {
   --bg-color: #FFFFFF;
   --text-color: #333;
   --outline-color: #DB83ED;
   --header-color: #6D28D9;
-  --bg-nav: transparent;
-  --code-color: #FAFAFA;
+  --anchor-color: initial;
+  --anchor-visited-color: initial;
+  --code-bg-color: #FAFAFA;
   --filename-bg: #EAEAEA;
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  :root {
     --bg-color: #333;
     --text-color: #C9D1D9;
-    --header-color: #8946C8;
-    --bg-nav: #393939;
-    --code-color: transparent;
+    --header-color: #BBA1FF;
+    --anchor-color: #EB82DC;
+    --anchor-visited-color: #D5C5FF;
+    --code-bg-color: transparent;
     --filename-bg: #2C2C2C;
   }
 
-  a {
-    color: #EB82DC;
-  }
-
-  a:visited {
-    color: #D5C5FF;
-  }
-
+   /* TODO: this is a stopgap until there's custom highlighting for dark mode */
   code.hljs {
     background-color: transparent;
     filter: invert(1);
@@ -39,9 +34,14 @@ body {
 body {
   color: var(--text-color);
   background-color: var(--bg-color);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--anchor-color);
+}
+
+a:visited {
+  color: var(--anchor-visited-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -58,7 +58,7 @@ details {
 }
 
 main code, main pre, main pre code, .example pre {
-  background-color: var(--code-color);
+  background-color: var(--code-bg-color);
 }
 
 .filename {
