@@ -2,9 +2,9 @@
   --bg-color: #FFFFFF;
   --text-color: #333;
   --outline-color: #DB83ED;
-  --header-color: #6D28D9;
-  --anchor-color: initial;
-  --anchor-visited-color: initial;
+  --header-color: #5E5184;
+  --anchor-color: #9E358F;
+  --anchor-visited-color: #6F5F9C;
   --code-bg-color: #FAFAFA;
   --filename-bg: #EAEAEA;
 }
@@ -20,7 +20,7 @@
     --filename-bg: #2C2C2C;
   }
 
-   /* TODO: this is a stopgap until there's custom highlighting for dark mode */
+  /* TODO: this is a stopgap until there's custom highlighting for dark mode */
   code.hljs {
     background-color: transparent;
     filter: invert(1);
