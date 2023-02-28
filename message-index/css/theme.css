@@ -10,7 +10,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    --bg-color: #33333A;
+    --bg-color: #333;
     --text-color: #C9D1D9;
     --header-color: #8946C8;
     --bg-nav: #393939;
