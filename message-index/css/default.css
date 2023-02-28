@@ -1,7 +1,6 @@
 *:focus-visible {
   outline-offset: 4px;
   outline-width: 1px;
-  outline-color: #DB83ED;
 }
 
 article .header {
@@ -12,7 +11,6 @@ article .header {
 
 body {
   font-size: 1.6rem;
-  color: #000;
   margin: 0 auto;
   max-width: 120rem;
 }
@@ -37,17 +35,13 @@ details > summary {
 }
 
 #error-message {
-  font-size: small;
+  font-size: medium;
 }
 
 .example {
   flex-grow: 1;
-  overflow-x: scroll !important;
+  overflow-x: auto;
   margin-top: 10px;
-}
-
-.example pre {
-  background-color: #FAFAFA;
 }
 
 .example-container {
@@ -71,7 +65,6 @@ details > summary {
 }
 
 .filename {
-  background-color: #EAEAEA;
   padding: 10px 5px 10px 5px;
 }
 
@@ -85,12 +78,10 @@ footer {
 
 h1 {
   font-size: 2.4rem;
-  color: #6D28D9;
 }
 
 h2 {
   font-size: 2rem;
-  color: #6D28D9;
 }
 
 header {
@@ -129,20 +120,14 @@ main {
   padding: 0 2%;
 }
 main code {
-  background-color: #EDE4FA;
   font-family: monospace;
   display: inline-block;
   padding-left: 2px;
   padding-right: 2px;
 }
 
-main pre {
-  background: #fafafa;
-}
-
 main pre code {
   padding: 10px;
-  background: #fafafa;
 }
 
 nav.breadcrumb {
@@ -152,7 +137,6 @@ nav.breadcrumb {
 
 nav.breadcrumb a {
   font-weight: normal;
-  color: black;
   text-decoration: underline;
   text-transform: none;
   display: inline;
