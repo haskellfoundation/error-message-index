@@ -5,7 +5,7 @@ title: Duplicate field export
 The module `Example` exports the symbol `answer` twice.
 In addition to the explicit entry in the export list it's also exported by `Example(..)`.
 
-To avoid the warning, remove one of the duplicated mention.
+To avoid the warning, remove one of the duplicated mentions.
 
 ## Error Message
 
