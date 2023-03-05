@@ -1,6 +1,6 @@
 ---
 title: Unknown flag in GHC options pragma
-summary:  Unknown flag in  {-\# OPTIONS_GHC \#-} pragma.
+summary:  'Unknown flag in  {-# OPTIONS_GHC #-} pragma.'
 severity: error
 introduced: 9.6.1
 ---

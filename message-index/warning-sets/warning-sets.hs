@@ -11,5 +11,5 @@ main = print
     [ ("-W" ++ wf, (is_def, gs))
     | w <- minusWeverythingOpts, wf <- toList (warnFlagNames w)
     , let is_def = w `elem` standardWarnings
-    , let gs = [ "`-W" ++ g ++ "`" | g <- smallestWarningGroups w ]
+    , let gs = [ "-W" ++ g | g <- smallestWarningGroups w ]
     ]
