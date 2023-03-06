@@ -274,7 +274,9 @@ flagSetFields =
           _ -> noResult "",
       field "flag_group" $ \_me -> do
         flagInfo >>= \case
-          Just (_, g) -> return $ unwords g
+          -- Don't render flag_group field for flags which are not member of any flag group (like -Wall)
+          Just (_, []) -> noResult ""
+          Just (_, groups) -> return $ unwords groups
           Nothing -> return ""
     ]
 
