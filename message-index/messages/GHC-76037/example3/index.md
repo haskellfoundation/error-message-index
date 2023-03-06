@@ -2,7 +2,7 @@
 title: Data constructor not imported
 ---
 
-The import statement `import Foo (Bar)` imports the `Bar` data type, but no its constructor `MkBar`.
+The import statement `import Foo (Bar)` imports the `Bar` data type, but not its constructor `MkBar`.
 As such, the constructor is not in scope.
 
 ## Error Message

@@ -20,7 +20,7 @@ Greeting.hs:3:5: error: [GHC-69158]
 
 ## Explanation
 
-This examples defines the modules `World` and `Universe`, both of which export
+This example defines the modules `World` and `Universe`, both of which export
 an identifier named `greeting`. The `Greeting` module then imports `World` and
 `Universe` qualified, meaning it can use both identifiers named `greeting` in
 the body of `bothGreetings` without any ambiguity. However, the export of both

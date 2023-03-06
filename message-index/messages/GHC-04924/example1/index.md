@@ -1,5 +1,5 @@
 ---
-title: Unknown flag in  {-\# OPTIONS_GHC \#-} pragma
+title: 'Unknown flag in  {-# OPTIONS_GHC #-} pragma'
 ---
 
 A flag was found in the `OPTIONS_GHC` pragma that was not known.

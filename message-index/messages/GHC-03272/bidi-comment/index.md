@@ -15,6 +15,6 @@ BiDi.hs:3:26: warning: [-Wunicode-bidirectional-format-characters] [GHC-03272]
 
 ## Explanation
 
-The phrase "bidirectional formatting" is surrounded by `U+202E RIGHT-TO-LEFT OVERRIDE (RLO)` and `U+202C POP DIRECTIONAL FORMATTING (PDF)` characters in the code that causes the warning to be emitted.
+The phrase "bidirectional format" is surrounded by `U+202E RIGHT-TO-LEFT OVERRIDE (RLO)` and `U+202C POP DIRECTIONAL FORMATTING (PDF)` characters in the code that causes the warning to be emitted.
 In software with good support for bidirectional text, the resulting comment reads "This comment contains tamrof lanoitceridib chars".
 When bidirectional layout is intended, the warning should be disabled; if bidirectional layout is not intended, the control characters should be removed.
