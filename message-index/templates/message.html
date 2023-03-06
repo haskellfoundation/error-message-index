@@ -4,7 +4,9 @@ $if(flag)$
   $if(on_by_default)$
   <i>Enabled by default</i>
   $else$
-  <i>Enabled by: <code>$flag_group$</code></i>
+      $if(flag_group)$
+      <i>Enabled by: <code>$flag_group$</code></i>
+      $endif$
   $endif$
 </p>
 $endif$
