@@ -26,12 +26,12 @@
 <p>
   <i>Flag: <code>-Wdodgy-imports</code></i><br />
   
-  <i>Enabled by:</i> <code>`-Wextra`</code>
+  <i>Enabled by: <code>-Wextra</code></i>
   
 </p>
 
 
-<p>When exporting identifiers from a module, all in-scope constructors (for a type) or the in-scope methods (for a typeclass) can also be exported with the <code>T(..)</code> syntax. However, if <code>T</code> does not have in-scope constructors - the type is being re-exported and does not have its constructors imported) or it has no constructors - then this export item suggests that the programmer intended for <code>T</code> to have in-scope constructors/methods when it has none.</p>
+<p>When exporting identifiers from a module, all in-scope constructors (for a type) or the in-scope methods (for a typeclass) can also be exported with the <code>T(..)</code> syntax. However, if <code>T</code> does not have in-scope constructors (the type is being re-exported and does not have its constructors imported) or it has no constructors - then this export item suggests that the programmer intended for <code>T</code> to have in-scope constructors/methods when it has none.</p>
 
 
 

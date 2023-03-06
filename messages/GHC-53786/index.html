@@ -80,7 +80,7 @@ f x y = case x of
   <summary>Case expression in do-block</summary>
   <div class="details-inner">
     <p>The expression in one branch of the case expression is a <code>do</code>-block that’s missing a <code>do</code>. This triggers a corner case in the grammar of Haskell, and the <code>case</code>-expression is interpreted as the pattern part of a bind statement in the top-level <code>do</code>-block.</p>
-<p>More details are available at https://gitlab.haskell.org/ghc/ghc/-/issues/984</p>
+<p>More details are available <a href="https://gitlab.haskell.org/ghc/ghc/-/issues/984">on the GHC issue tracker, issue #984</a>.</p>
 <h2 id="error-message">Error Message</h2>
 <pre><code>CaseExprInDoBlock.hs:5:3: error: [GHC-53786]
     (case ... of ...)-syntax in pattern
