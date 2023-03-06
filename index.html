@@ -582,7 +582,22 @@ var input = document.querySelector('.single_flt');
 if (input) {
   input.setAttribute("placeholder", "🔍 Type here to filter ...");
   input.focus();
+  
+  //Autofill the search from the URL 
+  let url = new URL(document.location.href);
+  let query = url.searchParams.get('q');
+  if(query !== null)
+  {
+    input.setAttribute('value',query)
+    //Move cursor to end
+    input.setSelectionRange(query.length,query.length);
+
+    //Make sure that the list gets filtered as if the query had been typed manually
+    input.dispatchEvent(new KeyboardEvent('keyup'));
+
+  }
 }
+
 </script>
 
   </main>
