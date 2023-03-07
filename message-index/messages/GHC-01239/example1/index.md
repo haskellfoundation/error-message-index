@@ -2,7 +2,7 @@
 title: Unexpected if expression in function application
 ---
 
-To pass if-then-else expressions as function argument we either have to surround it in parentheses,
+To pass If-Then-Else expressions as function argument we either have to surround it in parentheses,
 use function application operator `($)` or enable [`BlockArguments`](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/block_arguments.html#extension-BlockArguments) extension.
 
 ## Error Message
