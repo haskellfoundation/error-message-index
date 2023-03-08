@@ -2,7 +2,7 @@
 title: Unexpected if expression in function application
 summary: If expression used as function argument
 severity: error
-introduced: TODO
+introduced: 9.6.1
 ---
 
 Unlike in many other languages, in Haskell the If-Then-Else construct is an expression, which means it returns a value that can be processed further.
@@ -15,5 +15,5 @@ putStrLn (ageMessage 10) -- You are too young to enter
 putStrLn (ageMessage 20) -- Welcome to the club
 ```
 
-Thinking of If-Then-Else expression as a value, we might want to pass it as an input to a function.
-If you do that you can run into the following error.
+Because If-Then-Else expressions return values, it makes sense to pass them as input to a function.
+However, without language extensions, Haskell's grammar requires parentheses around them in function argument positions.
