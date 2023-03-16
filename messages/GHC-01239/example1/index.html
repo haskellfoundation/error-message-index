@@ -1,0 +1,49 @@
+<p>To pass If-Then-Else expressions as function arguments we either have to surround them in parentheses,
+use the function application operator <code>($)</code> or enable the <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/block_arguments.html#extension-BlockArguments"><code>BlockArguments</code></a> extension.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>IfInFunAppExpr.hs:4:18: error:
+    Unexpected if expression in function application:
+        if True then [1] else []
+    Suggested fixes:
+      • Use parentheses.
+      • Perhaps you intended to use BlockArguments
+  |
+4 | example = length if True then [1] else []
+  |                  ^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">IfInFunAppExpr.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IfInFunAppExpr where
+
+example :: Int
+example = length if True then [1] else []
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE BlockArguments #-}
+module IfInFunAppExpr where
+
+-- Requires BlockArguments language extension to work
+example :: Int
+example = length if True then [1] else []
+
+-- Works without BlockArguments
+example2 :: Int
+example2 = length (if True then [1] else [])
+
+-- Works without BlockArguments
+example3 :: Int
+example3 = length $ if True then [1] else []
+</code></pre>
+    </div>
+  </div>
+</div>
+
