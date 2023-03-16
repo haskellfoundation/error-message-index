@@ -58,4 +58,4 @@ jobs:
         ERRORS_HASKELL_ORG_SSH_KEY: ${{ secrets.ERRORS_HASKELL_ORG_SSH_KEY }}
       run: |
         sudo apt-get install -y lftp
-        ./deploy.sh 
+        ./deploy.sh --DEPLOY-IT-LIVE
