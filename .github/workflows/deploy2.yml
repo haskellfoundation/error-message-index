@@ -1,0 +1,61 @@
+on:
+  push:
+    branches:
+      - main
+      - test-deploy # This is to be deleted once it works
+
+permissions:
+  contents: write
+
+jobs:
+
+  build-and-test:
+    name: Build site
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install GHC 9.2.5
+      run: ghcup install ghc 9.2.5
+
+    - name: Select GHC 9.2.5
+      run: ghcup set ghc 9.2.5
+
+    - name: Check out repo
+      uses: actions/checkout@v3
+      
+    - name: Read the Cabal cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cabal/store
+          message-index/dist-newstyle
+        key: cabal-cache-0-${{ hashFiles('message-index/message-index.cabal') }}
+        restore-keys: |
+          cabal-cache-0
+
+    - name: Update the Cabal index
+      run: cabal update
+
+    - name: Check if site.hs is formatted using ormolu
+      uses: mrkkrp/ormolu-action@v6
+      with:
+        pattern: |
+          **/site.hs
+
+    - name: Build with Hakyll
+      working-directory: message-index
+      run: cabal run site build
+
+    - name: Deploy
+      shell: bash
+      env:
+        # Create the secret with:
+        #
+        # Settings -> Secrets -> New Repository Secret ->
+        #
+        #   Name: ERRORS_HASKELL_ORG_SSH_KEY
+        #   Value: The text of the ssh private key
+        ERRORS_HASKELL_ORG_SSH_KEY: ${{ secrets.ERRORS_HASKELL_ORG_SSH_KEY }}
+      run: |
+        sudo apt-get install -y lftp
+        ./deploy.sh --DEPLOY-IT-LIVE
