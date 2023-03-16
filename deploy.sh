@@ -12,6 +12,11 @@ else
     DESTINATION=errors-test
 fi
 
+# This can go away once we're hosted entirely on haskell.org infra by
+# renaming the file.  GH pages wants it to be called 404.html, while
+# h.o wants it to be called 404-page.html.
+cp ./message-index/_site/404.html ./message-index/_site/404-page.html
+
 # WARNING: --delete is dangerous.  Be absolutely sure you are
 # deploying to the correct directory.  Existing contents of the
 # destination directory will be removed.
