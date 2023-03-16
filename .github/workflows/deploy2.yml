@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - test-deploy # This is to be deleted once it works
 
 permissions:
   contents: write
