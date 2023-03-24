@@ -11,7 +11,7 @@ executable site
                   , filepath ^>= 1.4
                   , microlens ^>= 0.4.12
                   , binary ^>= 0.8.8
-                  , aeson ^>= 2.0.3
+                  , aeson ^>= 2.0.3 || ^>= 2.1
                   , pandoc-types ^>= 1.22
                   , containers ^>= 0.6
                   , text ^>= 1.2 || ^>= 2.0
