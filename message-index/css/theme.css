@@ -7,6 +7,18 @@
   --anchor-visited-color: #6F5F9C;
   --code-bg-color: #FAFAFA;
   --filename-bg: #EAEAEA;
+
+  /* Code highlighting */
+  --code-color: #383a42;
+  --code-bg-color: #fafafa;
+  --code-comment-color: #a0a1a7;
+  --code-kw-color:#a626a4;
+  --code-name-color: #e45649;
+  --code-literal-color: #0184bb;
+  --code-string-color: #50a14f;
+  --code-attr-color: #986801;
+  --code-symbol-color: #4078f2;
+  --code-class-color: #c18401;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +30,8 @@
     --anchor-visited-color: #D5C5FF;
     --code-bg-color: transparent;
     --filename-bg: #2C2C2C;
+
+  /* Code highlighting - TODO */
   }
 
   /* TODO: this is a stopgap until there's custom highlighting for dark mode */
