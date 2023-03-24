@@ -20,20 +20,26 @@ code.hljs{
 .hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{
   color: var(--code-name-color);
 }
-.hljs-literal{
+.hljs-literal,.hljs-number{
   color: var(--code-literal-color);
 }
 .hljs-addition,.hljs-attribute,.hljs-meta .hljs-string,.hljs-regexp,.hljs-string{
   color: var(--code-string-color);
 }
-.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{
+.hljs-type {
+  color: var(--code-constructor-color);
+}
+.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-variable{
   color: var(--code-attr-color);
 }
-.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{
+.hljs-meta {
+  color: var(--code-pragma-color);
+}
+.hljs-bullet,.hljs-link,.hljs-selector-id,.hljs-symbol,.hljs-title{
   color: var(--code-symbol-color);
 }
 .hljs-built_in,.hljs-class .hljs-title,.hljs-title.class_{
-  color: var(--code-class-color);
+  color: var(--record-field-color);
 }
 .hljs-emphasis{
   font-style: italic

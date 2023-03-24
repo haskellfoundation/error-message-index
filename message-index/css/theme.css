@@ -12,13 +12,18 @@
   --code-color: #383a42;
   --code-bg-color: #fafafa;
   --code-comment-color: #a0a1a7;
-  --code-kw-color:#a626a4;
+  --code-kw-color:#af005f;
   --code-name-color: #e45649;
-  --code-literal-color: #0184bb;
-  --code-string-color: #50a14f;
+  --code-literal-color: #268bd2;
+  --code-string-color: #cb4b16;
   --code-attr-color: #986801;
+  /* Used for both type and data ctors */
+  --code-constructor-color: #5f5faf;
+  /* Names being defined */
   --code-symbol-color: #4078f2;
-  --code-class-color: #c18401;
+  /* Names of fields in record declarations */
+  --code-record-field-color: #c18401;
+  --code-pragma-color: #2aa198;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,14 +36,22 @@
     --code-bg-color: transparent;
     --filename-bg: #2C2C2C;
 
-  /* Code highlighting - TODO */
+  /* Code highlighting*/
+  --code-color: #C9D1D9;
+  --code-bg-color: #333;
+  --code-comment-color: #a0a1a7;
+  --code-kw-color:#BBA1FF;
+  --code-name-color: #e45649;
+  --code-literal-color: #268bd2;
+  --code-string-color: #cb4b16;
+  --code-attr-color: #986801;
+  --code-constructor-color: #d079c9;
+  --code-symbol-color: var(--code-color);
+  --code-record-field-color: #c18401;
+  --code-pragma-color: #2aa198;
   }
 
-  /* TODO: this is a stopgap until there's custom highlighting for dark mode */
-  code.hljs {
-    background-color: transparent;
-    filter: invert(1);
-  }
+
 }
 
 *:focus-visible {
