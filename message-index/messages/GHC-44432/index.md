@@ -5,4 +5,4 @@ severity: error
 introduced: 9.6.1
 ---
 
-If a toplevel type signature is given, then there also needs to be an accompanying binding.
+If a type signature is given for a name, then that name also needs to be defined.
