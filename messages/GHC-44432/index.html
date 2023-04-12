@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Type signature lacks an accompanying binding [GHC-44432] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Type signature lacks an accompanying binding [GHC-44432]
+    </nav>
+    <h1>Type signature lacks an accompanying binding [GHC-44432]</h1>
+    
+
+<p>If a type signature is given for a name, then that name also needs to be defined.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Type signature lacks an accompanying binding</summary>
+  <div class="details-inner">
+    <p>If a type signature is given for a name in a local let expression, then the name also needs to be defined.</p>
+<p>In this example, a type signature was given for the name <code>two</code> in a let expression, but no definition was specified.
+This error can be fixed by adding a definition which accompanies the type signature.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingBinding.hs:6:5: error: [GHC-44432]
+    The type signature for ‘two’ lacks an accompanying binding
+  |
+6 |     two :: Integer
+  |     ^^^</code></pre>
+
+<pre class="filename">MissingBinding.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo =
+  let
+    two :: Integer
+  in 
+    40 + two</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo =
+  let
+    two :: Integer
+    two = 2
+  in 
+    40 + two</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type signature lacks an accompanying binding</summary>
+  <div class="details-inner">
+    <p>If a type signature is given for a name in a Haskell module, then the name also needs to be defined.</p>
+<p>In this example, a type signature was given for the name <code>someBoolean</code> in a Haskell module, but no definition was specified.
+This error can be fixed by adding a definition which accompanies the type signature.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingBinding.hs:3:1: error: [GHC-44432]
+    The type signature for ‘someBoolean’ lacks an accompanying binding
+  |
+3 | someBoolean :: Bool
+  | ^^^^^^^^^^^</code></pre>
+
+<pre class="filename">MissingBinding.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+someBoolean :: Bool</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+someBoolean :: Bool
+someBoolean = True</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type signature lacks an accompanying binding</summary>
+  <div class="details-inner">
+    <p>If a type signature is given for a name in a Haskell module, then the name also needs to be defined.</p>
+<p>In this example, the programmer misspelt the name <code>factorial</code>.
+GHC helpfully suggests that <code>fatcorial</code> might be the intended spelling.
+The error can be fixed by correcting the typo.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingBinding.hs:5:1: error: [GHC-44432]
+    The type signature for ‘factorial’ lacks an accompanying binding
+    Suggested fix: Perhaps use ‘fatcorial’ (Defined at Main.hs:6:1)
+  |
+5 | factorial :: Natural -&gt; Natural
+  | ^^^^^^^^^</code></pre>
+
+<pre class="filename">MissingBinding.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+import Numeric.Natural
+
+factorial :: Natural -> Natural
+fatcorial n
+  | n == 0 = 1
+  | otherwise = n * factorial (n - 1)</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+import Numeric.Natural
+
+factorial :: Natural -> Natural
+factorial n
+  | n == 0 = 1
+  | otherwise = n * factorial (n - 1)</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type signature lacks an accompanying binding</summary>
+  <div class="details-inner">
+    <p>If a type signature is given for a name in a where clause, then the name also needs to be defined.</p>
+<p>In this example, a type signature was given for the name <code>two</code> in a where clause, but no definition was specified.
+This error can be fixed by adding a definition which accompanies the type signature.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingBinding.hs:6:5: error: [GHC-44432]
+    The type signature for ‘two’ lacks an accompanying binding
+  |
+6 |     two :: Integer
+  |     ^^^</code></pre>
+
+<pre class="filename">MissingBinding.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo = 40 + two
+  where
+    two :: Integer</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo = 40 + two
+  where
+    two :: Integer
+    two = 2</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

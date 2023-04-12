@@ -1,0 +1,43 @@
+<p>If a type signature is given for a name in a local let expression, then the name also needs to be defined.</p>
+<p>In this example, a type signature was given for the name <code>two</code> in a let expression, but no definition was specified.
+This error can be fixed by adding a definition which accompanies the type signature.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>MissingBinding.hs:6:5: error: [GHC-44432]
+    The type signature for ‘two’ lacks an accompanying binding
+  |
+6 |     two :: Integer
+  |     ^^^</code></pre>
+
+<pre class="filename">MissingBinding.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo =
+  let
+    two :: Integer
+  in 
+    40 + two</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MissingBinding where
+
+fortytwo :: Integer
+fortytwo =
+  let
+    two :: Integer
+    two = 2
+  in 
+    40 + two</code></pre>
+    </div>
+  </div>
+</div>
+
