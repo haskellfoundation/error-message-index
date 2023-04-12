@@ -55,8 +55,9 @@ fortytwo :: Integer
 fortytwo =
   let
     two :: Integer
-  in 
-    40 + two</code></pre>
+  in
+    40 + two
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -70,8 +71,9 @@ fortytwo =
   let
     two :: Integer
     two = 2
-  in 
-    40 + two</code></pre>
+  in
+    40 + two
+</code></pre>
     </div>
   </div>
 </div>
@@ -101,7 +103,8 @@ This error can be fixed by adding a definition which accompanies the type signat
       <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
       <pre class="example-pre"><code class="language-haskell">module MissingBinding where
 
-someBoolean :: Bool</code></pre>
+someBoolean :: Bool
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -111,7 +114,8 @@ someBoolean :: Bool</code></pre>
       <pre class="example-pre"><code class="language-haskell">module MissingBinding where
 
 someBoolean :: Bool
-someBoolean = True</code></pre>
+someBoolean = True
+</code></pre>
     </div>
   </div>
 </div>
@@ -148,7 +152,8 @@ import Numeric.Natural
 factorial :: Natural -> Natural
 fatcorial n
   | n == 0 = 1
-  | otherwise = n * factorial (n - 1)</code></pre>
+  | otherwise = n * factorial (n - 1)
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -162,7 +167,8 @@ import Numeric.Natural
 factorial :: Natural -> Natural
 factorial n
   | n == 0 = 1
-  | otherwise = n * factorial (n - 1)</code></pre>
+  | otherwise = n * factorial (n - 1)
+</code></pre>
     </div>
   </div>
 </div>
@@ -195,7 +201,8 @@ This error can be fixed by adding a definition which accompanies the type signat
 fortytwo :: Integer
 fortytwo = 40 + two
   where
-    two :: Integer</code></pre>
+    two :: Integer
+</code></pre>
     </div>
   </div>
   <div class="example">
@@ -208,7 +215,8 @@ fortytwo :: Integer
 fortytwo = 40 + two
   where
     two :: Integer
-    two = 2</code></pre>
+    two = 2
+</code></pre>
     </div>
   </div>
 </div>

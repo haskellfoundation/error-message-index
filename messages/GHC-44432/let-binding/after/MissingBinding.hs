@@ -5,5 +5,5 @@ fortytwo =
   let
     two :: Integer
     two = 2
-  in 
+  in
     40 + two
