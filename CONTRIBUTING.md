@@ -7,10 +7,10 @@ are in force.
 
 The message index is in the directory `message-index`.
 
-## Using a version of GHC which emits Error Codes
+## Using a Recent-Enough GHC
 
 Starting with version 9.6, GHC emits a unique error code with each error message.
-If you want to contribute to the error message index, make sure that the version of GHC you have installed on your system is newer than 9.6.
+If you want to contribute to the error message index, make sure that the version of GHC you have installed on your system is 9.6 or newer.
 
 You can test which version of GHC you are using on the command line:
 
