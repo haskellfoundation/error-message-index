@@ -7,25 +7,21 @@ are in force.
 
 The message index is in the directory `message-index`.
 
-## Building GHC with Error Codes
+## Using a version of GHC which emits Error Codes
 
-Until the release of GHC 9.6.1, error and warning IDs are only available using a development version of GHC. Please
-follow the instructions on [building GHC with Hadrian](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/hadrian),
-using a version of the `master` branch from after 13 September, 2022. Your error messages would then contain an ID:
+Starting with version 9.6, GHC emits a unique error code with each error message.
+If you want to contribute to the error message index, make sure that the version of GHC you have installed on your system is newer than 9.6.
 
-```
-$ _build/stage1/bin/ghc --interactive
-GHCi, version 9.5.20220915: https://www.haskell.org/ghc/  :? for help
-ghci> 1 + "foo"
+You can test which version of GHC you are using on the command line:
 
-<interactive>:1:1: error: [GHC-39999]
-    • No instance for ‘Num String’ arising from the literal ‘1’
-    • In the first argument of ‘(+)’, namely ‘1’
-      In the expression: 1 + "foo"
-      In an equation for ‘it’: it = 1 + "foo"
+```console
+> ghc --version
+The Glorious Glasgow Haskell Compilation System, version 9.6.1
 ```
 
-This is not strictly necessary to contribute, but is a very useful way to ensure your example code *does* provide the error you are documenting.
+You can manage multiple versions of GHC on your system using [GHCup](https://www.haskell.org/ghcup/).
+
+
 
 ## How to Document a GHC Error Code
 
