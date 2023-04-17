@@ -9,16 +9,16 @@ This error is reported when GHC fails to recognize the name of a language extens
 
 There are two likely causes:
 
-1. You've made a typo, in which case ghc will likely also suggest the correct extension name to use.
-2. You're using older version of GHC which doesn't yet support given extension.
-    Here's a couple of things you can try to troubleshoot:
+1. You've made a typo, in which case GHC will likely also suggest the correct extension name to use.
+2. You're using older version of GHC that doesn't yet support the extension.
+    Here's a couple of things you can try in order to troubleshoot:
 
-    - Find out what version of GHC you're using:
+    - Find out which version of GHC you're using:
 
           ghc --version
 
-    - List all the supported extension that this version of GHC supports. Does the list contain your desired extension?
+    - List all the supported extensions that this version of GHC supports. Does the list contain your desired extension?
 
           ghc --supported-extensions
 
-    - Search for the extension name in the latest version of [GHC User's Guide](https://downloads.haskell.org/ghc/latest/docs/users_guide/exts.html). Most extensions have a `since` annotation which tells you in which version of GHC the extension was introduced.
+    - Search for the extension name in the latest version of the [GHC User's Guide](https://downloads.haskell.org/ghc/latest/docs/users_guide/exts.html). Most extensions have a `since` annotation which tells you in which version of GHC the extension was introduced.
