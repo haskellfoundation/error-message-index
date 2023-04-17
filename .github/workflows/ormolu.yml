@@ -1,0 +1,27 @@
+name: Ormolu
+
+on:
+  push:
+    paths:
+      - '**/site.hs'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '**/site.hs'
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  ormolu:
+    name: Ormolu
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check if site.hs is formatted using ormolu
+      uses: mrkkrp/ormolu-action@v11
+      with:
+        pattern: |
+          **/site.hs
