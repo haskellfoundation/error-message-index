@@ -9,8 +9,11 @@ permissions:
 jobs:
 
   build-and-test:
-    name: Build site
+    name: Deploy site on ${{ matrix.target }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [haskellorg, githubpages]
 
     steps:
     - name: Install GHC 9.2.5
@@ -39,9 +42,25 @@ jobs:
       working-directory: message-index
       run: cabal run site build
 
-    - name: Deploy
+    - name: Deploy on Github Pages
       uses: peaceiris/actions-gh-pages@v3
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ (matrix.target == 'githubpages') && (github.ref == 'refs/heads/main') }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./message-index/_site
+
+    - name: Deploy on Haskell.org
+      if: ${{ matrix.target == 'haskellorg' }}
+      shell: bash
+      env:
+        # Create the secret with:
+        #
+        # Settings -> Secrets -> New Repository Secret ->
+        #
+        #   Name: ERRORS_HASKELL_ORG_SSH_KEY
+        #   Value: The text of the ssh private key
+        ERRORS_HASKELL_ORG_SSH_KEY: ${{ secrets.ERRORS_HASKELL_ORG_SSH_KEY }}
+      run: |
+        sudo apt-get install -y lftp
+        ./deploy.sh --DEPLOY-IT-LIVE
+
