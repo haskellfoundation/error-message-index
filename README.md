@@ -10,11 +10,11 @@ If you're a Haskell tool developer who would like to integrate your project with
 ## Running Locally
 
 The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, enter the `message-index` directory and run:
-```
+```console
 $ cabal run -- site watch
 ```
 or
-```
+```console
 $ stack run -- site watch
 ```
 which fires up an HTTP server on `localhost:8000`.
