@@ -1,0 +1,33 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:1:14: error: [GHC-46537]
+    Unsupported extension: ExistientialQuantification
+    Suggested fix:
+      Perhaps you meant ‘ExistentialQuantification’ or ‘NoExistentialQuantification’
+  |
+1 | {-# LANGUAGE ExistientialQuantification #-}
+  |              ^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">UnsupportedExtension.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ExistientialQuantification #-}
+-- typo here      ^                
+module UnsupportedExtension where
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ExistentialQuantification #-}
+
+module UnsupportedExtension where
+</code></pre>
+    </div>
+  </div>
+</div>
+
