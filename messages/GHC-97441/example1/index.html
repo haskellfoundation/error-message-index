@@ -1,0 +1,59 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>OverflowedLiterals.hs:10:12: warning: [GHC-97441] [-Woverflowed-literals]
+    Literal 258 is out of the Word8 range 0..255
+   |
+10 |     print (258 :: Word8)
+   |            ^^^
+
+OverflowedLiterals.hs:15:12: warning: [GHC-97441] [-Woverflowed-literals]
+    Literal 9223372036854775817 is out of the Int range -9223372036854775808..9223372036854775807
+   |
+15 |     print (9223372036854775817 :: Int)
+   |            ^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">OverflowedLiterals.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Word (Word8)
+
+main :: IO ()
+main = do
+    -- Word8 can represent values in range (0,255)
+    -- 258 is 3 larger than maxBound so it will wrap around 0 -> 1 -> 2
+    -- prints 2 due to overflow
+    print (258 :: Word8)
+
+    -- Int can represent values in range (-9223372036854775808,9223372036854775807)
+    -- 9223372036854775817 is 10 larger than maxBound so it will wrap around to negative values
+    -- prints -9223372036854775799 due to overflow
+    print (9223372036854775817 :: Int)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Word (Word8)
+
+main :: IO ()
+main = do
+    -- Word8 can represent values in range (0,255)
+    -- prints 255
+    print (255 :: Word8)
+
+    -- Int can represent values in range (-9223372036854775808,9223372036854775807)
+    -- prints 9223372036854775807
+    print (9223372036854775807 :: Int)
+</code></pre>
+    </div>
+  </div>
+</div>
+

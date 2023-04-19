@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Overflowed Literals [GHC-97441] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Overflowed Literals [GHC-97441]
+    </nav>
+    <h1>Overflowed Literals [GHC-97441]</h1>
+    
+<p>
+  <i>Flag: <code>-Woverflowed-literals</code></i><br />
+  
+  <i>Enabled by default</i>
+  
+</p>
+
+
+<p>This warning is emitted if an integer literal (that is, a constant integer value in the source code) will overflow.</p>
+<p>Many integer types have fixed precision. This means that only a certain number of bits are available to represent their values.
+You can check the minimum and maximum values representable by given type by using <code>minBound</code> and <code>maxBound</code> from the <a href="https://hackage.haskell.org/package/base-4.18.0.0/docs/Prelude.html#t:Bounded">Bounded</a> type class defined in the <code>base</code> package. The range of supported values might differ based on what OS / platform you’re using.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span><span class="ot"> minBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">-</span><span class="dv">9223372036854775808</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span><span class="ot"> maxBound ::</span> <span class="dt">Int</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">9223372036854775807</span></span></code></pre></div>
+<p>Calculations that exceed this range cause the value to wrap around, which is called “overflow” or “underflow”. Literals outside the range also overflow. This doesn’t cause an error at runtime, but it might cause confusion because the overflowed value is usually not what you want or expect.</p>
+<p>To fix the warning you can:</p>
+<ul>
+<li>Use a different value for the literal so that it fits within the range supported by its type</li>
+<li>Use a type that is capable of representing the value (or <code>Integer</code>, which can represent values as big as your computer’s memory)</li>
+</ul>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Overflowed Literals</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>OverflowedLiterals.hs:10:12: warning: [GHC-97441] [-Woverflowed-literals]
+    Literal 258 is out of the Word8 range 0..255
+   |
+10 |     print (258 :: Word8)
+   |            ^^^
+
+OverflowedLiterals.hs:15:12: warning: [GHC-97441] [-Woverflowed-literals]
+    Literal 9223372036854775817 is out of the Int range -9223372036854775808..9223372036854775807
+   |
+15 |     print (9223372036854775817 :: Int)
+   |            ^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">OverflowedLiterals.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Word (Word8)
+
+main :: IO ()
+main = do
+    -- Word8 can represent values in range (0,255)
+    -- 258 is 3 larger than maxBound so it will wrap around 0 -> 1 -> 2
+    -- prints 2 due to overflow
+    print (258 :: Word8)
+
+    -- Int can represent values in range (-9223372036854775808,9223372036854775807)
+    -- 9223372036854775817 is 10 larger than maxBound so it will wrap around to negative values
+    -- prints -9223372036854775799 due to overflow
+    print (9223372036854775817 :: Int)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Word (Word8)
+
+main :: IO ()
+main = do
+    -- Word8 can represent values in range (0,255)
+    -- prints 255
+    print (255 :: Word8)
+
+    -- Int can represent values in range (-9223372036854775808,9223372036854775807)
+    -- prints 9223372036854775807
+    print (9223372036854775807 :: Int)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
