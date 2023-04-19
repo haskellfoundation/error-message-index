@@ -9,7 +9,7 @@ flag: -Woverflowed-literals
 This warning is emitted if an integer literal (that is, a constant integer value in the source code) will overflow.
 
 Many integer types have fixed precision. This means that only a certain number of bits are available to represent their values.
-You can check the minimum / maximum values representable by given type by using `minBound` / `maxBound` from [Bounded](https://hackage.haskell.org/package/base-4.18.0.0/docs/Prelude.html#t:Bounded) typeclass defined in the `base` package. The range of supported values might differ based on what OS / platform you’re using.
+You can check the minimum and maximum values representable by given type by using `minBound` and `maxBound` from the [Bounded](https://hackage.haskell.org/package/base-4.18.0.0/docs/Prelude.html#t:Bounded) type class defined in the `base` package. The range of supported values might differ based on what OS / platform you’re using.
 
 ```haskell
 >>> minBound :: Int
@@ -18,7 +18,7 @@ You can check the minimum / maximum values representable by given type by using 
 9223372036854775807
 ```
 
-Calculations that exceed this range cause the value to wrap around, which is called "overflow" or "underflow". Literals outside the range also overflow. This doesn't cause error at runtime, but might cause confusion because overflowed value is usually not what you want or expect.
+Calculations that exceed this range cause the value to wrap around, which is called "overflow" or "underflow". Literals outside the range also overflow. This doesn't cause an error at runtime, but it might cause confusion because the overflowed value is usually not what you want or expect.
 
 To fix the warning you can:
 
