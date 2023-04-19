@@ -25,3 +25,4 @@ jobs:
       with:
         path: |
           **/site.hs
+        hints: message_index/.hlint.yml
