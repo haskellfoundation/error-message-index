@@ -7,7 +7,7 @@ Haskell tooling emits a variety of errors, warnings, and other messages. In rece
 
 ## Supported Tools
 
-Today, the Haskell Message Index supports three tools, with more (like [Cabal](https://github.com/haskell/cabal/issues/8543)) on the horizon.
+Today, the Haskell Message Index supports three tools. Any user-facing Haskell-related programming tools are welcome to join the effort!
 
 | Tool  | Earliest supported version | Namespace |
 |-------|----------------------------|-----------|
