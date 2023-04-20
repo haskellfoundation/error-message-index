@@ -73,7 +73,7 @@ The Haskell Message Index is generated from a collection of files on
 disk using Hakyll. From these files, descriptions of the message are generated,
 as well as examples of how to handle them.
 
-Inside the top-level of the site source, there is a
+Inside the top level of the site source, there is a
 `messages` directory. Within `messages`, each subdirectory represents
 a message whose name is the message code. This subdirectory contains a
 file `index.md` that describes the message. Additionally,
