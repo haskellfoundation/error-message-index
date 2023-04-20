@@ -3,7 +3,17 @@
 
 **View the site →** https://errors.haskell.org/
 
-Haskell tooling emits a variety of errors, warnings, and other messages. In the latest development versions that are leading to the release of version 9.6.1, GHC emits a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
+Haskell tooling emits a variety of errors, warnings, and other messages. In recent versions, some of these tools emit a unique code for each message that allows it to be identified. This site allows these codes to be looked up, providing examples, context, and further information that can make them easier to understand.
+
+## Supported Tools
+
+Today, the Haskell Message Index supports three tools, with more (like [Cabal](https://github.com/haskell/cabal/issues/8543)) on the horizon.
+
+| Tool  | Earliest supported version | Namespace |
+|-------|----------------------------|-----------|
+| GHC   | 9.6.1                      | `GHC-`    |
+| Stack | 2.9.3                      | `S-`      |
+| GHCup | 0.1.19.0                   | `GHCup-`  |
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving the site. Thanks!
 
