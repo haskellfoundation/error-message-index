@@ -15,6 +15,10 @@ Today, the Haskell Message Index supports three tools, with more (like [Cabal](h
 | Stack | 2.9.3                      | `S-`      |
 | GHCup | 0.1.19.0                   | `GHCup-`  |
 
+## Contributing to the Message Index
+
+Contributions may come in the form of changes to the code base, as well as opening or commenting on issues and pull requests. You are warmly invited to participate!
+
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for instructions on improving the site. Thanks!
 
 If you're a Haskell tool developer who would like to integrate your project with the site, please refer to [tool-developers.md](./tool-developers.md) for recommendations regarding the error codes themselves.
@@ -46,15 +50,6 @@ and
 No executables found.
 ```
 typically indicate that the site was started from the root of the repository, rather than the `message-index` directory.
-
-## Contributor Expectations
-
-We welcome contributions that help to further progress the project towards its goals.
-
-Contributions may come in the form of changes to the code base, as well as opening or commenting on issues and pull requests.
-
-All contributors are expected to follow the [Haskell Foundation's Code of Conduct](https://haskell.foundation/guidelines-for-respectful-communication/).
-
 
 ## Maintenance
 
