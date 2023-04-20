@@ -13,6 +13,35 @@ If you want to contribute to the error message index, make sure that the version
 
 You can manage multiple versions of tools on your system using [GHCup](https://www.haskell.org/ghcup/).
 
+## If You Know Which Message You Want to Document
+
+Let's say you ran across `GHC-00000` in the wild, but it wasn't yet documented
+in the Haskell Message Index. You know a little about it and would like to help
+out.
+
+The simplest thing to do is create a new file in this repository,
+`message-index/messages/GHC-00000/index.md`, and write your documentation there.
+
+Here is a template you can use for the file:
+[FIXME: providing a tool would be a lot nicer]
+
+```
+---
+title: [FIXME: Is this something written by the contributor, or does it come from the tool?]
+summary: [FIXME: Is this something written by the contributor, or does it come from the tool?]
+severity: [FIXME]: What are the possible values here?
+introduced: <!-- Optional, but good to add if you know when the message was added to the tool -->
+flag: <!-- Optional. Is there a flag that enables this message? -->
+---
+
+YOUR DESCRIPTION GOES HERE
+```
+
+You can look at other messages in the Index to get a feel for the documentation style used in
+this project.
+
+To explore the full range of documentation possibilities, see [Reference: The Anatomy of a Message] below.
+
 ## How to Document a GHC Error Code
 
 To document a new error code, the following workflow can be convenient.
