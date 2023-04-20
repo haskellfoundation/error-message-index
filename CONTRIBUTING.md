@@ -7,21 +7,11 @@ are in force.
 
 The message index is in the directory `message-index`.
 
-## Using a Recent-Enough GHC
+### Using a Recent-Enough Tool
 
-Starting with version 9.6, GHC emits a unique error code with each error message.
-If you want to contribute to the error message index, make sure that the version of GHC you have installed on your system is 9.6 or newer.
+If you want to contribute to the error message index, make sure that the version of the tool you have installed on your system is new enough. See the README for a table of supported versions.
 
-You can test which version of GHC you are using on the command line:
-
-```console
-> ghc --version
-The Glorious Glasgow Haskell Compilation System, version 9.6.1
-```
-
-You can manage multiple versions of GHC on your system using [GHCup](https://www.haskell.org/ghcup/).
-
-
+You can manage multiple versions of tools on your system using [GHCup](https://www.haskell.org/ghcup/).
 
 ## How to Document a GHC Error Code
 
@@ -51,14 +41,6 @@ using a bunch of issues:
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
 - Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
-
-## Stack and Error Codes
-
-Since version 2.9.3, Stack has supported error codes in the `S-` namespace.
-
-## GHCup and Error Codes
-
-Since version 0.1.19.0, GHCup has supported error codes in the `GHCup-` namespace.
 
 ## Contributing New Messages
 
