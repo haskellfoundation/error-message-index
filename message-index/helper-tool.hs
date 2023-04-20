@@ -1,6 +1,7 @@
 module Main where
 
 import Control.Monad (forM)
+import Data.Char (toLower, isSpace)
 import Text.Read (readMaybe)
 import System.Directory (createDirectory)
 import System.FilePath ((</>))
@@ -8,6 +9,13 @@ import System.FilePath ((</>))
 -------------------------------------------------------------------------------
 -- Querying the user about the diagnostic
 -------------------------------------------------------------------------------
+
+-- | Remove leading and trailing whitespace, and convert to lower case.
+normalize :: String -> String
+normalize = fmap toLower . strip
+  where
+    strip = f . f
+    f = reverse . dropWhile isSpace
 
 -- Querying for the system: GHC / GHCup / Stack
 
@@ -21,13 +29,13 @@ readSystem = do
     putStrLn " 3) Stack"
     putStr "Input (Default = GHC): "
     ln <- getLine
-    case ln of
+    case normalize ln of
         "1" -> pure GHC
-        "GHC" -> pure GHC
+        "ghc" -> pure GHC
         "2" -> pure GHCup
-        "GHCup" -> pure GHCup
+        "ghcup" -> pure GHCup
         "3" -> pure Stack
-        "Stack" -> pure Stack
+        "stack" -> pure Stack
         _ -> pure GHC
 
 -- Querying for the error code
@@ -66,22 +74,21 @@ readSummary = do
     getLine
 
 -- Severity
-data Severity = Error | Warning | NA deriving Show
+data Severity = Error | Warning deriving Show
 
 readSeverity :: IO Severity
 readSeverity = do
     putStrLn "What is the severity of the diagnostic."
     putStrLn " 1) Error"
     putStrLn " 2) Warning"
-    putStrLn " 3) N/A"
-    putStr "Input (Default = N/A): "
+    putStr "Input (Default = Error): "
     ln <- getLine
-    case ln of
+    case normalize ln of
         "1" -> pure Error
-        "Error" -> pure Error
+        "error" -> pure Error
         "2" -> pure Warning
-        "Warning" -> pure Warning
-        _ -> pure NA
+        "warning" -> pure Warning
+        _ -> pure Error
 
 -- Warning flag
 type WarningFlag = String
@@ -170,7 +177,7 @@ createFiles tmpl = do
     let toplvl_index = unlines [ "---" 
                                , "title: " <> title tmpl
                                , "summary: " <> summary tmpl
-                               , "severity: " <> case severity tmpl of { Warning -> "warning"; Error -> "error"; NA -> "na" }
+                               , "severity: " <> case severity tmpl of { Warning -> "warning"; Error -> "error" }
                                , "introduced: " <> introduced tmpl
                                , "---"
                                , ""
