@@ -7,6 +7,17 @@ on:
       - 'message-index/helper-tool.hs'
     branches:
       - main
+<<<<<<< HEAD
+=======
+  pull_request:
+    paths:
+      - '**/site.hs'
+      - '**/helper-tool.hs'
+    types:
+      - opened
+      - synchronize
+      - reopened
+>>>>>>> cafdc4c (Fix hlint and ormolu problems)
 
 jobs:
   hlint:

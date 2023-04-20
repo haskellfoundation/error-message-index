@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/site.hs'
+      - '**/helper-tool.hs'
     branches:
       - main
   pull_request:
