@@ -42,15 +42,30 @@ this project.
 
 To explore the full range of documentation possibilities, see [Reference: The Anatomy of a Message] below.
 
-### Task Lists
+## If You *Don't* Know Which Message You Want to Document
+
+Interested in helping out, but not sure where to start?
 
 We keep track of which GHC errors are being worked on, and which still require documentation,
 using a bunch of issues:
 
 - [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/162). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
+
+Once you've identified an issue you'd like to work on, refer to the previous section for how to get started.
+
+### Helping With the Site Itself
+
+There's more to the Message Index than messages!
+
 - Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
+
+
+The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
+Pull requests that make it easier to understand or navigate are very
+welcome. The main generator `site.hs` is formatted using
+[Ormolu](https://github.com/tweag/ormolu).
 
 ## Reference: The Anatomy of a Message
 
@@ -133,13 +148,6 @@ metadata, just like message descriptions. They have only the `title`
 field. All `.hs` files are shown in the list of files for the
 example. The `index.md` file should explain how the files illustrate
 the message.
-
-## Contributing to the Site
-
-The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
-Pull requests that make it easier to understand or navigate are very
-welcome. The main generator `site.hs` is formatted using
-[Ormolu](https://github.com/tweag/ormolu).
 
 ## Reference: How to Document a GHC Error Code
 
