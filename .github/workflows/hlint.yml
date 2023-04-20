@@ -1,0 +1,28 @@
+name: HLint
+
+on:
+  push:
+    paths:
+      - '**/site.hs'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - '**/site.hs'
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  hlint:
+    name: HLint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check site.hs with hlint
+      uses: haskell-actions/hlint-scan@v1
+      with:
+        path: |
+          **/site.hs
+        hints: message_index/.hlint.yml
