@@ -42,25 +42,6 @@ this project.
 
 To explore the full range of documentation possibilities, see [Reference: The Anatomy of a Message] below.
 
-## How to Document a GHC Error Code
-
-To document a new error code, the following workflow can be convenient.
- 1. Choose a code that you'd like to document, say `GHC-123`
- 2. One of the following modules in the `compiler` directory of the GHC source tree will have a method called `diagnosticCode` in the instance of `Diagnostic`:
-   * `GHC.Tc.Errors.Ppr` (error constructors starting `Tc`)
-   * `GHC.Driver.Errors.Ppr` (error constructors starting `Driver`)
-   * `GHC.Parser.Errors.Ppr` (error constructors starting `Pc`)
-   * `GHC.HsToCore.Errors.Ppr` (error constructors starting `Ds`)
- 3. Once the code has been found, identify the error datatype constructor that produces it.
- 4. The documentation for the constructor will be in one of the following modules. Read the Haddock for an explanation of the error's meaning:
-   * `GHC.Tc.Errors.Types`
-   * `GHC.Driver.Errors.Types`
-   * `GHC.Parser.Errors.Types`
-   * `GHC.HsToCore.Errors.Types`
- 5. Find the pretty-printer for the error constructor in the `X.Ppr` module. This will give an idea of how the message looks when rendered.
- 6. Grep the `testsuite` directory for the error text to find examples that trigger the error.
- 7. Follow the instructions below to create a page with an explanation and examples.
-
 ### Task Lists
 
 We keep track of which GHC errors are being worked on, and which still require documentation,
@@ -159,3 +140,25 @@ The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
 Pull requests that make it easier to understand or navigate are very
 welcome. The main generator `site.hs` is formatted using
 [Ormolu](https://github.com/tweag/ormolu).
+
+## Reference: How to Document a GHC Error Code
+
+[FIXME I don't know how, or why, to follow these steps. Can someone who's submitted a
+message explain it?]
+
+To document a new error code, the following workflow can be convenient.
+ 1. Choose a code that you'd like to document, say `GHC-123`
+ 2. [FIXME: This is not an actionable step] One of the following modules in the `compiler` directory of the GHC source tree will have a method called `diagnosticCode` in the instance of `Diagnostic`:
+   * `GHC.Tc.Errors.Ppr` (error constructors starting `Tc`)
+   * `GHC.Driver.Errors.Ppr` (error constructors starting `Driver`)
+   * `GHC.Parser.Errors.Ppr` (error constructors starting `Pc`)
+   * `GHC.HsToCore.Errors.Ppr` (error constructors starting `Ds`)
+ 3. Once the code has been found, identify the error datatype constructor that produces it.
+ 4. The documentation for the constructor will be in one of the following modules. Read the Haddock for an explanation of the error's meaning:
+   * `GHC.Tc.Errors.Types`
+   * `GHC.Driver.Errors.Types`
+   * `GHC.Parser.Errors.Types`
+   * `GHC.HsToCore.Errors.Types`
+ 5. Find the pretty-printer for the error constructor in the `X.Ppr` module. This will give an idea of how the message looks when rendered.
+ 6. Grep the `testsuite` directory for the error text to find examples that trigger the error.
+ 7. Follow the instructions below to create a page with an explanation and examples.
