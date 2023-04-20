@@ -71,10 +71,13 @@ using a bunch of issues:
 - Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
 
-## Contributing New Messages
+## Reference: The Anatomy of a Message
 
 The Haskell Message Index is generated from a collection of files on
-disk using Hakyll. Inside the top-level of the site source, there is a
+disk using Hakyll. From these files, descriptions of the message are generated,
+as well as examples of how to handle them.
+
+Inside the top-level of the site source, there is a
 `messages` directory. Within `messages`, each subdirectory represents
 a message whose name is the message code. This subdirectory contains a
 file `index.md` that describes the message. Additionally,
@@ -100,6 +103,8 @@ The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
 
 You can also use the `makeFolder.sh` templating script. Usage is as follows:
+
+[FIXME: makeFolder.sh is GHC-specific]
 
 ```bash
 ./makeFolder.sh <NAMESPACE>-<NUMERIC_ERROR_CODE> <HaskellModuleName>
