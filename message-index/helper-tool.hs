@@ -1,6 +1,6 @@
 module Main where
 
-import Control.Monad (forM)
+import Control.Monad (forM_, forM)
 import Data.Char (toLower, isSpace)
 import Text.Read (readMaybe)
 import System.Directory (createDirectory)
@@ -46,12 +46,13 @@ type ErrorCode = String
 
 readCode :: IO ErrorCode
 readCode = do
-    putStrLn "What is the errorcode that you want to document."
+    putStrLn "What is the numeric code that you want to document."
+    putStrLn "For example, enter \"01234\" if you want to document GHC-01234."
     putStr "Input: "
     ln <- getLine
     case (readMaybe ln) :: Maybe Int of
         Nothing -> do
-            putStrLn "Could not parse the input as an integer. Try again."
+            putStrLn "Could not parse the input as an integer. Only enter the numeric part of the error."
             readCode
         Just _ -> pure ln
 
@@ -97,6 +98,7 @@ type WarningFlag = String
 readWarningFlag :: Severity -> IO (Maybe WarningFlag)
 readWarningFlag Warning = do
     putStrLn "What is the warning flag which enables this warning."
+    putStrLn "For example, enter \"-Wtabs\" if you are documenting GHC's warning about tabs in your source file."
     putStr "Input: "
     ln <- getLine
     pure (Just ln)
@@ -107,13 +109,17 @@ type Version = String
 
 readVersion :: IO Version
 readVersion = do
-    putStrLn "For which version was this error message emitted for the first time?"
+    putStrLn "Which version of the tool emitted the numeric code (not the message) for the first time?"
     putStrLn "Note: For GHC this is most likely 9.6.1."
     putStr "Input: "
     getLine
 
 -- Examples
-type Examples = Int
+type Examples = [String]
+
+validateExampleName :: String -> Bool
+validateExampleName "" = False
+validateExampleName str = not (any isSpace str)
 
 -- | Only ask for examples if the system is GHC.
 readExamples :: System -> IO Examples
@@ -122,9 +128,16 @@ readExamples GHC = do
     putStr "Input: "
     ln <- getLine
     case (readMaybe ln) :: Maybe Int of
-        Nothing -> pure 0
-        Just n -> pure n
-readExamples _ = pure 0
+        Nothing -> pure []
+        (Just n) -> forM [1..n] readExample
+readExamples _ = pure []
+
+readExample :: Int -> IO String
+readExample i = do
+    putStrLn ("Give a name for example " <> show i)
+    putStr "Input: "
+    ln <- getLine
+    if validateExampleName ln then pure ln else readExample i
 
 -- Template
 data Template =
@@ -189,8 +202,7 @@ createFiles tmpl = do
     -- - "messages/XXX-NNNNNN/" and "messages/XXX-NNNNNN/index.md"
     -- - "messages/XXX-NNNNNN/before/" and "messages/XXX-NNNNNN/before/Module.hs"
     -- - "messages/XXX-NNNNNN/after/" and "messages/XXX-NNNNNN/after/Module.hs"
-    forM [1 .. (examples tmpl)] $ \n -> do
-        let example = "example" <> show n
+    forM_ (examples tmpl) $ \example -> do
         let example_dir = message_dir </> example
         createDirectory example_dir
         createDirectory (example_dir </> "before")
@@ -210,7 +222,6 @@ createFiles tmpl = do
                                    , "-- Insert the fixed example here."
                                    ]
         writeFile (example_dir </> "after" </> "Example.hs") after_module
-    pure ()
    
 
 -------------------------------------------------------------------------------
