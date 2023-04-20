@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - '**/site.hs'
+      - '**/helper-tool.hs'
     types:
       - opened
       - synchronize
@@ -25,3 +26,4 @@ jobs:
       with:
         pattern: |
           **/site.hs
+          **/helper-tool.hs
