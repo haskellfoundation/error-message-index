@@ -3,12 +3,12 @@ name: HLint
 on:
   push:
     paths:
-      - '**/site.hs'
+      - 'message-index/site.hs'
     branches:
       - main
   pull_request:
     paths:
-      - '**/site.hs'
+      - 'message-index/site.hs'
     types:
       - opened
       - synchronize
@@ -18,11 +18,14 @@ jobs:
   hlint:
     name: HLint
     runs-on: ubuntu-latest
+    permissions:
+      # Needed to upload results to GitHub code scanning.
+      security-events: write
     steps:
     - uses: actions/checkout@v3
     - name: Check site.hs with hlint
       uses: haskell-actions/hlint-scan@v1
       with:
         path: |
-          **/site.hs
-        hints: message_index/.hlint.yml
+          message-index/site.hs
+        hints: message-index/.hlint.yml
