@@ -18,6 +18,9 @@ jobs:
   hlint:
     name: HLint
     runs-on: ubuntu-latest
+    permissions:
+      # Needed to upload results to GitHub code scanning.
+      security-events: write
     steps:
     - uses: actions/checkout@v3
     - name: Check site.hs with hlint
