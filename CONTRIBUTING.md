@@ -22,25 +22,28 @@ out.
 The simplest thing to do is create a new file in this repository,
 `message-index/messages/GHC-00000/index.md`, and write your documentation there.
 
-Here is a template you can use for the file:
-[FIXME: providing a tool would be a lot nicer]
+Here is a template you can use for the file [FIXME: use the tool provided by #408 when available.]:
 
 ```
 ---
-title: [FIXME: Is this something written by the contributor, or does it come from the tool?]
-summary: [FIXME: Is this something written by the contributor, or does it come from the tool?]
-severity: [FIXME]: What are the possible values here?
-introduced: <!-- Optional, but good to add if you know when the message was added to the tool -->
-flag: <!-- Optional. Is there a flag that enables this message? -->
+title: <Your title for the message>
+summary: <Your short summary, as a sentence.>
+severity: <!-- Optional. one of `error` or `warning`. -->
+introduced: <!-- Optional. Represents when the **code** for this message was added to the tool -->
+flag: <!-- Optional. If it exists, list the tool's flag that enables this message -->
 ---
 
-YOUR DESCRIPTION GOES HERE
+<Your description>
 ```
 
 You can look at other messages in the Index to get a feel for the documentation style used in
 this project.
 
-To explore the full range of documentation possibilities, see [Reference: The Anatomy of a Message] below.
+To explore the full range of documentation possibilities, see [The Anatomy of a
+Message][anatomy] below. It explains each of the fields in the header above, and includes
+another example document for reference.
+
+[anatomy]: #reference-the-anatomy-of-a-message
 
 ## If You *Don't* Know Which Message You Want to Document
 
