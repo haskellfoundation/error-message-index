@@ -143,8 +143,7 @@ the message.
 
 ## Reference: How to Document a GHC Error Code
 
-[FIXME I don't know how, or why, to follow these steps. Can someone who's submitted a
-message explain it?]
+[FIXME this section may be irrelevant or out of date.]
 
 To document a new error code, the following workflow can be convenient.
  1. Choose a code that you'd like to document, say `GHC-123`
