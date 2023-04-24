@@ -9,7 +9,7 @@ The message index is in the directory `message-index`.
 
 ### Using a Recent-Enough Tool
 
-If you want to contribute to the error message index, make sure that the version of the tool you have installed on your system is new enough. See the README for a table of supported versions.
+If you want to contribute to the error message index, make sure that the version of the tool you have installed on your system is new enough. See the [README](README.md) for a table of supported versions.
 
 You can manage multiple versions of tools on your system using [GHCup](https://www.haskell.org/ghcup/).
 
