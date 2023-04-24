@@ -73,9 +73,7 @@ welcome. The main generator `site.hs` is formatted using
 ## Reference: The Anatomy of a Message
 
 The Haskell Message Index is generated from a collection of files on
-disk using Hakyll. From these files, descriptions of the message are generated,
-as well as examples of how to handle them.
-
+disk using Hakyll. This section describes those files.
 
 A message with ID `GHC-123` and two examples might have the following structure:
 
