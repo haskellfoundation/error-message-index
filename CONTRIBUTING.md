@@ -76,13 +76,6 @@ The Haskell Message Index is generated from a collection of files on
 disk using Hakyll. From these files, descriptions of the message are generated,
 as well as examples of how to handle them.
 
-Inside the top level of the site source, there is a
-`messages` directory. Within `messages`, each subdirectory represents
-a message whose name is the message code. This subdirectory contains a
-file `index.md` that describes the message. Additionally,
-subdirectories of the message directory may represent examples - each
-example contains a file `index.md` as well as a number of Haskell,
-Cabal, or YAML files that represent the example.
 
 A message with ID `GHC-123` and two examples might have the following structure:
 
@@ -97,6 +90,14 @@ A message with ID `GHC-123` and two examples might have the following structure:
      * `/messages/GHC-123/example2/index.md` - description and metadata for the second example
      * `/messages/GHC-123/example2/before/Main.hs` - an example file that exhibits the error
      * `/messages/GHC-123/example2/after/Main.hs` - an example file in which the error has been fixed
+
+Inside the top level of the site source, there is a
+`messages` directory. Within `messages`, each subdirectory represents
+a message whose name is the message code. This subdirectory contains a
+file `index.md` that describes the message. Additionally,
+subdirectories of the message directory may represent examples - each
+example contains a file `index.md` as well as a number of Haskell,
+Cabal, or YAML files that represent the example.
 
 The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
