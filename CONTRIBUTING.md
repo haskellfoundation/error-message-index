@@ -100,16 +100,6 @@ Cabal, or YAML files that represent the example.
 The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
 
-You can also use the `makeFolder.sh` templating script. Usage is as follows:
-
-[FIXME: makeFolder.sh is GHC-specific]
-
-```bash
-./makeFolder.sh <NAMESPACE>-<NUMERIC_ERROR_CODE> <HaskellModuleName>
-```
-
-This will generate a folder called `NAMESPACE-NUMERIC_ERROR_CODE` containing an empty `index.md` file, a subfolder called `example1` with a corresponding `index.md`, and two blank `before`/`after` Haskell source files. Use `GHC` as `NAMESPACE` to document GHC error messages, and `S` as `NAMESPACE` to document Stack errors.
-
 ### Message Descriptions
 
 Message descriptions (in `index.md` in the message directory) are
