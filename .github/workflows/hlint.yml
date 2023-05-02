@@ -6,13 +6,6 @@ on:
       - 'message-index/site.hs'
     branches:
       - main
-  pull_request:
-    paths:
-      - 'message-index/site.hs'
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 jobs:
   hlint:
