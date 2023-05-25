@@ -4,11 +4,13 @@ on:
   push:
     paths:
       - '**/site.hs'
+      - '**/create-message-template.hs'
     branches:
       - main
   pull_request:
     paths:
       - '**/site.hs'
+      - '**/create-message-template.hs'
     types:
       - opened
       - synchronize
@@ -25,3 +27,4 @@ jobs:
       with:
         pattern: |
           **/site.hs
+          **/create-message-template.hs
