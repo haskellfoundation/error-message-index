@@ -10,7 +10,7 @@ import Text.Read (readMaybe)
 -------------------------------------------------------------------------------
 -- Run this tool with `runghc` on the commandline:
 
--- $ runghc helper-tool.hs
+-- $ runghc create-message-template.hs
 
 -------------------------------------------------------------------------------
 

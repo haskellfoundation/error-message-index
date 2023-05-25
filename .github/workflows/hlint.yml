@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'message-index/site.hs'
-      - 'message-index/helper-tool.hs'
+      - 'message-index/create-message-template.hs'
     branches:
       - main
 
@@ -20,5 +20,5 @@ jobs:
     - name: Check site.hs with hlint
       uses: haskell-actions/hlint-scan@v1
       with:
-        path: message-index/site.hs message-index/helper-tool.hs
+        path: message-index/site.hs message-index/create-message-template.hs
         hints: message-index/.hlint.yml
