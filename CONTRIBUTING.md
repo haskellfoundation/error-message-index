@@ -17,31 +17,30 @@ You can manage multiple versions of tools on your system using [GHCup](https://w
 
 Let's say you ran across `GHC-00000` in the wild, but it wasn't yet documented
 in the Haskell Message Index. You know a little about it and would like to help
-out.
+out. Here's how you can document it, using a command-line tool found in this
+repository.
 
-The simplest thing to do is create a new file in this repository,
-`message-index/messages/GHC-00000/index.md`, and write your documentation there.
+*(If you aren't familiar with git, you can simply [create a new
+issue][new-issue] and someone will help you out.)*
 
-Here is a template you can use for the file [FIXME: use the tool provided by #408 when available.]:
+[new-issue]: https://github.com/haskellfoundation/error-message-index/issues/new
 
-```
----
-title: <Your title for the message>
-summary: <Your short summary, as a sentence.>
-severity: <!-- Optional. one of `error` or `warning`. -->
-introduced: <!-- Optional. Represents when the **code** for this message was added to the tool -->
-flag: <!-- Optional. If it exists, list the tool's flag that enables this message -->
----
+1. Change to the `message-index` directory.
+2. Execute `runghc create-message-template.hs` and answer the questions.
+3. Optionally commit the new files and create a draft pull request right away.
 
-<Your description>
-```
+The files created by the tool will need further editing, but it's never too
+early to get feedback by opening an issue or pull request.
 
-You can look at other messages in the Index to get a feel for the documentation style used in
-this project.
+Here is a collection of other tips:
 
-To explore the full range of documentation possibilities, see [The Anatomy of a
-Message][anatomy] below. It explains each of the fields in the header above, and includes
-another example document for reference.
+- To explore the full range of documentation possibilities, see [The Anatomy of
+  a Message][anatomy] below. It explains each of the fields in the header above,
+  and includes another example document for reference.
+- Remember to search the tool's source code for the error number to learn more about
+  it! Your error may already have code documentation or examples in the test suite.
+- You can also look at other messages in the Index to get a feel for the
+  documentation style used in this project.
 
 [anatomy]: #reference-the-anatomy-of-a-message
 
