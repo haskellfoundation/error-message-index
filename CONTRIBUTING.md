@@ -48,8 +48,7 @@ Here is a collection of other tips:
 
 Interested in helping out, but not sure where to start?
 
-We keep track of which GHC errors are being worked on, and which still require documentation,
-using a bunch of issues:
+We keep track of which GHC errors are being worked on and which still require documentation.
 
 - [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/307). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
