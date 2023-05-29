@@ -52,23 +52,56 @@ We keep track of which GHC errors are being worked on and which still require do
 
 - [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/307). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
+- Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
 
 Once you've identified an issue you'd like to work on, refer to the previous section for how to get started.
 
-### Helping With the Site Itself
+## Helping With the Site Itself
 
 There's more to the Message Index than messages!
 
-- Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
-- Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
+Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 
 
 The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
 Pull requests that make it easier to understand or navigate are very
 welcome. The main generator `site.hs` is formatted using
-[Ormolu](https://github.com/tweag/ormolu).
+[Ormolu](https://github.com/tweag/ormolu). See [Technology
+choices][tech-choices] below for more info.
 
-Finally, if you want to work on the scaffolding tool, it has a simplistic test script at
+[tech-choices]: #reference-technology-choices
+
+### Running Locally
+
+The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, enter the `message-index` directory and run:
+```console
+$ cabal run -- site watch
+```
+or
+```console
+$ stack run -- site watch
+```
+which fires up an HTTP server on `localhost:8000`.
+
+The error messages:
+```
+cabal: There is no <pkgname>.cabal package file or cabal.project file. To
+build packages locally you need at minimum a <pkgname>.cabal file. You can use
+'cabal init' to create one.
+
+For non-trivial projects you will also want a cabal.project file in the root
+directory of your project. This file lists the packages in your project and
+all other build configuration. See the Cabal user guide for full details.
+```
+and
+```
+No executables found.
+```
+typically indicate that the site was started from the root of the repository, rather than the `message-index` directory.
+
+### `create-message-template`
+
+If you want to work on the scaffolding tool itself, note that it has a test script at
 `test/create-message-template/test.sh`.
 
 ## Reference: The Anatomy of a Message
