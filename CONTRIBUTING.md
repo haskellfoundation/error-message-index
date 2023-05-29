@@ -69,6 +69,9 @@ Pull requests that make it easier to understand or navigate are very
 welcome. The main generator `site.hs` is formatted using
 [Ormolu](https://github.com/tweag/ormolu).
 
+Finally, if you want to work on the scaffolding tool, it has a simplistic test script at
+`test/create-message-template/test.sh`.
+
 ## Reference: The Anatomy of a Message
 
 The Haskell Message Index is generated from a collection of files on
