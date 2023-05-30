@@ -7,69 +7,107 @@ are in force.
 
 The message index is in the directory `message-index`.
 
-## Using a Recent-Enough GHC
+### Using a Recent-Enough Tool
 
-Starting with version 9.6, GHC emits a unique error code with each error message.
-If you want to contribute to the error message index, make sure that the version of GHC you have installed on your system is 9.6 or newer.
+If you want to contribute to the error message index, make sure that the version of the tool you have installed on your system is new enough. See the [README](README.md) for a table of supported versions.
 
-You can test which version of GHC you are using on the command line:
+You can manage multiple versions of tools on your system using [GHCup](https://www.haskell.org/ghcup/).
 
-```console
-> ghc --version
-The Glorious Glasgow Haskell Compilation System, version 9.6.1
-```
+## If You Know Which Message You Want to Document
 
-You can manage multiple versions of GHC on your system using [GHCup](https://www.haskell.org/ghcup/).
+Let's say you ran across `GHC-00000` in the wild, but it wasn't yet documented
+in the Haskell Message Index. You know a little about it and would like to help
+out. Here's how you can document it, using a command-line tool found in this
+repository.
 
+*(If you aren't familiar with git, you can simply [create a new
+issue][new-issue] and someone will help you out.)*
 
+[new-issue]: https://github.com/haskellfoundation/error-message-index/issues/new
 
-## How to Document a GHC Error Code
+1. Change to the `message-index` directory.
+2. Execute `runghc create-message-template.hs` and answer the questions.
+3. Optionally commit the new files and create a draft pull request right away.
 
-To document a new error code, the following workflow can be convenient.
- 1. Choose a code that you'd like to document, say `GHC-123`
- 2. One of the following modules in the `compiler` directory of the GHC source tree will have a method called `diagnosticCode` in the instance of `Diagnostic`:
-   * `GHC.Tc.Errors.Ppr` (error constructors starting `Tc`)
-   * `GHC.Driver.Errors.Ppr` (error constructors starting `Driver`)
-   * `GHC.Parser.Errors.Ppr` (error constructors starting `Pc`)
-   * `GHC.HsToCore.Errors.Ppr` (error constructors starting `Ds`)
- 3. Once the code has been found, identify the error datatype constructor that produces it.
- 4. The documentation for the constructor will be in one of the following modules. Read the Haddock for an explanation of the error's meaning:
-   * `GHC.Tc.Errors.Types`
-   * `GHC.Driver.Errors.Types`
-   * `GHC.Parser.Errors.Types`
-   * `GHC.HsToCore.Errors.Types`
- 5. Find the pretty-printer for the error constructor in the `X.Ppr` module. This will give an idea of how the message looks when rendered.
- 6. Grep the `testsuite` directory for the error text to find examples that trigger the error.
- 7. Follow the instructions below to create a page with an explanation and examples.
+The files created by the tool will need further editing, but it's never too
+early to get feedback by opening an issue or pull request.
 
-### Task Lists
+Here is a collection of other tips:
 
-We keep track of which GHC errors are being worked on, and which still require documentation,
-using a bunch of issues:
+- To explore the full range of documentation possibilities, see [The Anatomy of
+  a Message][anatomy] below. It explains each of the fields in the header above,
+  and includes another example document for reference.
+- Remember to search the tool's source code for the error number to learn more about
+  it! Your error may already have code documentation or examples in the test suite.
+- You can also look at other messages in the Index to get a feel for the
+  documentation style used in this project.
 
-- [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/162). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
+[anatomy]: #reference-the-anatomy-of-a-message
+
+## If You *Don't* Know Which Message You Want to Document
+
+Interested in helping out, but not sure where to start?
+
+We keep track of which GHC errors are being worked on and which still require documentation.
+
+- [All error codes that still need documenting are collected here](https://github.com/haskellfoundation/error-message-index/issues/307). This issue contains links to individual issues for every error, allowing the list to be updated as PRs are merged. These individual issues for every error may also contain helpful links to test cases, suggestions on examples, and useful metadata to a contributor.
 - There is also an (incomplete) list of issues tagged `good first issue`; these are errors which are especially good for newer contributors to document (no incredibly esoteric type-level errors that are hard to understand, let alone describe!): https://github.com/haskellfoundation/error-message-index/labels/good%20first%20issue
-- Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 - Issues related to improving, clarifying, or extending existing documentation are tagged `error-message-index-improvements`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-improvements
 
-## Stack and Error Codes
+Once you've identified an issue you'd like to work on, refer to the previous section for how to get started.
 
-Since version 2.9.3, Stack has supported error codes in the `S-` namespace.
+## Helping With the Site Itself
 
-## GHCup and Error Codes
+There's more to the Message Index than messages!
 
-Since version 0.1.19.0, GHCup has supported error codes in the `GHCup-` namespace.
+Issues related to improving the site, the workflow for contributing, or other information are tagged `error-message-index-site`: https://github.com/haskellfoundation/error-message-index/labels/error-message-index-site
 
-## Contributing New Messages
+
+The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
+Pull requests that make it easier to understand or navigate are very
+welcome. The main generator `site.hs` is formatted using
+[Ormolu](https://github.com/tweag/ormolu). See [Technology
+choices][tech-choices] below for more info.
+
+[tech-choices]: #reference-technology-choices
+
+### Running Locally
+
+The site is built with the [Hakyll](https://jaspervdj.be/hakyll/) static site generator. To view the site locally, enter the `message-index` directory and run:
+```console
+$ cabal run -- site watch
+```
+or
+```console
+$ stack run -- site watch
+```
+which fires up an HTTP server on `localhost:8000`.
+
+The error messages:
+```
+cabal: There is no <pkgname>.cabal package file or cabal.project file. To
+build packages locally you need at minimum a <pkgname>.cabal file. You can use
+'cabal init' to create one.
+
+For non-trivial projects you will also want a cabal.project file in the root
+directory of your project. This file lists the packages in your project and
+all other build configuration. See the Cabal user guide for full details.
+```
+and
+```
+No executables found.
+```
+typically indicate that the site was started from the root of the repository, rather than the `message-index` directory.
+
+### `create-message-template`
+
+If you want to work on the scaffolding tool itself, note that it has a test script at
+`test/create-message-template/test.sh`.
+
+## Reference: The Anatomy of a Message
 
 The Haskell Message Index is generated from a collection of files on
-disk using Hakyll. Inside the top-level of the site source, there is a
-`messages` directory. Within `messages`, each subdirectory represents
-a message whose name is the message code. This subdirectory contains a
-file `index.md` that describes the message. Additionally,
-subdirectories of the message directory may represent examples - each
-example contains a file `index.md` as well as a number of Haskell,
-Cabal, or YAML files that represent the example.
+disk using Hakyll. This section describes those files.
 
 A message with ID `GHC-123` and two examples might have the following structure:
 
@@ -85,16 +123,16 @@ A message with ID `GHC-123` and two examples might have the following structure:
      * `/messages/GHC-123/example2/before/Main.hs` - an example file that exhibits the error
      * `/messages/GHC-123/example2/after/Main.hs` - an example file in which the error has been fixed
 
+Inside the top level of the site source, there is a
+`messages` directory. Within `messages`, each subdirectory represents
+a message whose name is the message code. This subdirectory contains a
+file `index.md` that describes the message. Additionally,
+subdirectories of the message directory may represent examples - each
+example contains a file `index.md` as well as a number of Haskell,
+Cabal, or YAML files that represent the example.
+
 The path components `messages` and the two `index.md` files must be
 named as specified here, while the other components may vary.
-
-You can also use the `makeFolder.sh` templating script. Usage is as follows:
-
-```bash
-./makeFolder.sh <NAMESPACE>-<NUMERIC_ERROR_CODE> <HaskellModuleName>
-```
-
-This will generate a folder called `NAMESPACE-NUMERIC_ERROR_CODE` containing an empty `index.md` file, a subfolder called `example1` with a corresponding `index.md`, and two blank `before`/`after` Haskell source files. Use `GHC` as `NAMESPACE` to document GHC error messages, and `S` as `NAMESPACE` to document Stack errors.
 
 ### Message Descriptions
 
@@ -137,9 +175,16 @@ field. All `.hs` files are shown in the list of files for the
 example. The `index.md` file should explain how the files illustrate
 the message.
 
-## Contributing to the Site
+## Reference: Technology choices
 
-The site is generated using [Hakyll](https://jaspervdj.be/hakyll/).
-Pull requests that make it easier to understand or navigate are very
-welcome. The main generator `site.hs` is formatted using
-[Ormolu](https://github.com/tweag/ormolu).
+The website generated by `message-index` uses a few JS components.
+
+ - [highlight.js](https://highlightjs.org/) for highlighting blocks of code. [License: BSD 3-Clause](https://github.com/highlightjs/highlight.js/blob/main/LICENSE).
+ - [TableFilter](http://www.tablefilter.com/) for the filtering functionality in the error message table. [License: MIT](https://github.com/koalyptus/TableFilter/blob/master/LICENSE).
+
+Generally speaking, we choose technology for this site based on the following criteria:
+
+ * The build process for the site should be simple, relying on no build tools or package managers aside from `cabal` or `stack`
+ * CSS and Javascript code should be straightforward to maintain by someone who has only rudimentary front-end development skills
+ * The generated site should consist only of static files that can be hosted anywhere
+ * URLs should be predictable, and easy for external tools to generate (e.g. so IDEs can link to error documentation)

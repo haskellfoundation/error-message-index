@@ -1,0 +1,46 @@
+This tool helps you create the scaffolding for a new error message on the error-message-index.
+You can leave any of the text fields blank and fill them in by hand later.
+
+· Which tool's error code do you want to document?
+ 1) GHC
+ 2) GHCup
+ 3) Stack
+Input (Default = GHC): 
+· What is the numeric code that you want to document?
+For example, enter "01234" if you want to document GHC-01234.
+Input: 
+· What is the title of the error message?
+This is used as the title of the documentation page as well as in links to the page.
+Input: 
+· Give a short summary of the error message.
+This appears on the overview page that lists all the documented errors and warnings.
+Input: 
+· What is the severity of the diagnostic?
+ 1) Error
+ 2) Warning
+Input (Default = Error): 
+
+· Which version of the tool emitted the numeric code (not the message) for the first time?
+Note: For GHC this is most likely 9.6.1.
+Input: 
+· How many examples should be generated?
+Input: 
+· Give a name for example 1
+The name should not contain spaces and begin with a lowercase letter.
+Input: 
+· Give a name for example 2
+The name should not contain spaces and begin with a lowercase letter.
+Input: 
+· Creating scaffolding...
+·· Created file messages/GHC-101010/index.md with these contents:
+
+---
+title: My Title
+summary: My summary which has a few words
+severity: error
+introduced: 9.6.1
+---
+
+Insert your error message here.
+·· Creating blank example in directory messages/GHC-101010/stunning-example...
+·· Creating blank example in directory messages/GHC-101010/sublime-example...

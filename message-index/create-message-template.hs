@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad (forM, forM_)
 import Data.Char (isLower, isSpace, toLower, toUpper)
-import System.Directory (createDirectory)
+import System.Directory (createDirectory, createDirectoryIfMissing)
 import System.FilePath ((<.>), (</>))
 import System.IO (BufferMode (..), hSetBuffering, stdout)
 import Text.Read (readMaybe)
@@ -31,7 +31,7 @@ data Tool = GHC | GHCup | Stack deriving (Show)
 
 readTool :: IO Tool
 readTool = do
-  putStrLn "Which tool's error code do you want to document?"
+  putStrLn "· Which tool's error code do you want to document?"
   putStrLn " 1) GHC"
   putStrLn " 2) GHCup"
   putStrLn " 3) Stack"
@@ -57,7 +57,7 @@ type ErrorCode = String
 
 readCode :: IO ErrorCode
 readCode = do
-  putStrLn "What is the numeric code that you want to document."
+  putStrLn "· What is the numeric code that you want to document?"
   putStrLn "For example, enter \"01234\" if you want to document GHC-01234."
   putStr "Input: "
   ln <- getLine
@@ -72,7 +72,7 @@ type Title = String
 
 readTitle :: IO Title
 readTitle = do
-  putStrLn "What is the title of the error message?"
+  putStrLn "· What is the title of the error message?"
   putStrLn "This is used as the title of the documentation page as well as in links to the page."
   putStr "Input: "
   getLine
@@ -82,7 +82,7 @@ type Summary = String
 
 readSummary :: IO Summary
 readSummary = do
-  putStrLn "Give a short summary of the error message."
+  putStrLn "· Give a short summary of the error message."
   putStrLn "This appears on the overview page that lists all the documented errors and warnings."
   putStr "Input: "
   getLine
@@ -92,7 +92,7 @@ data Severity = Error | Warning deriving (Show)
 
 readSeverity :: IO Severity
 readSeverity = do
-  putStrLn "What is the severity of the diagnostic."
+  putStrLn "· What is the severity of the diagnostic?"
   putStrLn " 1) Error"
   putStrLn " 2) Warning"
   putStr "Input (Default = Error): "
@@ -113,7 +113,7 @@ type WarningFlag = String
 -- | Only ask for a warning flag if Severity = Warning.
 readWarningFlag :: Severity -> IO (Maybe WarningFlag)
 readWarningFlag Warning = do
-  putStrLn "What is the warning flag which enables this warning?"
+  putStrLn "· What is the warning flag which enables this warning?"
   putStrLn "For example, enter \"-Wtabs\" if you are documenting GHC's warning about tabs in your source file."
   putStrLn "You can leave this blank if you're not sure."
   putStr "Input: "
@@ -125,7 +125,7 @@ type Version = String
 
 readVersion :: IO Version
 readVersion = do
-  putStrLn "Which version of the tool emitted the numeric code (not the message) for the first time?"
+  putStrLn "· Which version of the tool emitted the numeric code (not the message) for the first time?"
   putStrLn "Note: For GHC this is most likely 9.6.1."
   putStr "Input: "
   getLine
@@ -140,7 +140,7 @@ validateExampleName str@(s : _) = not (any isSpace str) && isLower s
 -- | Only ask for examples if the system is GHC.
 readExamples :: Tool -> IO Examples
 readExamples GHC = do
-  putStrLn "How many examples should be generated?"
+  putStrLn "· How many examples should be generated?"
   putStr "Input: "
   ln <- getLine
   case readMaybe ln :: Maybe Int of
@@ -150,7 +150,8 @@ readExamples _ = pure []
 
 readExample :: Int -> IO String
 readExample i = do
-  putStrLn ("Give a name for example " <> show i)
+  putStrLn ""
+  putStrLn ("· Give a name for example " <> show i)
   putStrLn "The name should not contain spaces and begin with a lowercase letter."
   putStr "Input: "
   ln <- getLine
@@ -197,13 +198,13 @@ readTemplate = do
 
 createFiles :: Template -> IO ()
 createFiles tmpl = do
-  putStrLn "Creating scaffolding for the following configuration:"
-  print tmpl
   putStrLn ""
+  putStrLn "· Creating scaffolding..."
 
   -- Create the new directory "messages/XXX-NNNNNN/" and "messages/XXX-NNNNNN/index.md"
   let message_dir = "messages" </> case tool tmpl of { GHC -> "GHC-"; GHCup -> "GHCup-"; Stack -> "S-" } ++ code tmpl
-  createDirectory message_dir
+  createDirectoryIfMissing True message_dir
+  let index_filename = message_dir </> "index.md"
   let toplvl_index =
         unlines
           [ "---",
@@ -215,7 +216,10 @@ createFiles tmpl = do
             "",
             "Insert your error message here."
           ]
-  writeFile (message_dir </> "index.md") toplvl_index
+  writeFile index_filename toplvl_index
+  putStrLn ("·· Created file " <> index_filename <> " with these contents:")
+  putStrLn ""
+  putStr toplvl_index
 
   -- Create the example directories and entries:
   -- - "messages/XXX-NNNNNN/" and "messages/XXX-NNNNNN/example-name/index.md"
@@ -227,6 +231,7 @@ createFiles tmpl = do
         uppercase (s : ss) = toUpper s : ss
     let example_name = uppercase example
     createDirectory example_dir
+    putStrLn ("·· Creating blank example in directory " <> example_dir <> "...")
     createDirectory (example_dir </> "before")
     createDirectory (example_dir </> "after")
     let example_index =
