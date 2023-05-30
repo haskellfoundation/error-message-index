@@ -56,7 +56,7 @@ main = hakyll $ do
   match "messages/*/*/index.md" $
     version "nav" $ do
       route $ setExtension "html"
-      compile getResourceBody
+      compile $ getResourceBody
 
   match "messages/*/*/index.md" $ do
     route $ setExtension "html"
