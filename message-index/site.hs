@@ -285,5 +285,5 @@ indexless url
   | reverse toDrop `isPrefixOf` lru = reverse $ drop (length toDrop) lru
   | otherwise = url
   where
-    lru = reverse url
+    lru = reverse $ url
     toDrop = "index.html"
