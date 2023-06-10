@@ -1,0 +1,50 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>src/Main.hs:6:12: error: [GHC-39999]
+    • No instance for ‘GHC.Records.HasField &quot;foo&quot; MyData Int’
+        arising from selecting the field ‘foo’
+      Perhaps you want to add ‘foo’ to the import list in the import of
+      ‘DataType’ (src/Main.hs:3:1-24).
+    • In the expression: x.foo
+      In an equation for ‘getFoo’: getFoo x = x.foo
+  |
+6 | getFoo x = x.foo
+  |</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This error arises when using the <code>OverloadedRecordDot</code> extension.
+Given a module exporting a record:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="dt">DataType</span> <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">MyData</span> <span class="ot">=</span> <span class="dt">MyData</span> {<span class="ot"> foo ::</span> <span class="dt">Int</span>,<span class="ot"> bar ::</span> <span class="dt">String</span> }</span></code></pre></div>
+<p>When <code>MyData</code> is imported into a module without also importing the fields, attempting to access fields using <code>OverloadedRecordDot</code> will result in an error.</p>
+<p>Adding the field to the import list will resolve the issue.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import DataType (MyData)
+
+getFoo :: MyData -> Int
+getFoo x = x.foo
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import DataType (MyData(foo))
+
+getFoo :: MyData -> Int
+getFoo x = x.foo
+</code></pre>
+    </div>
+  </div>
+</div>
+
