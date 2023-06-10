@@ -1,6 +1,6 @@
 ---
-title: Cannot use qualified in pre and postpositive position
-summary: A module cannot be imported using the qualified modifier in pre and postpositive position
+title: Cannot use qualified both before and after the module
+summary: A module cannot be imported using the qualified modifier both before and after the name of the module
 severity: error
 introduced: 9.6.1
 ---
