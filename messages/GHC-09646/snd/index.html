@@ -1,0 +1,38 @@
+<p>When pattern matching, tuple sections are not allowed as patterns to be matched against. In the example below, one of the components of a tuple pattern was forgotten. We can fix this by adding the wildcard _ to match on the first element of the pair.</p>
+<h1 id="error-message">Error Message</h1>
+<pre><code>before.hs:4:6: error: [GHC-09646] Tuple section in pattern context
+  |
+4 | snd' (,x) = x 
+  |      ^^^^
+Failed, no modules loaded.</code></pre>
+
+<pre class="filename">Snd.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Snd where
+
+{-# LANGUAGE TupleSections #-}
+
+snd' :: (a, a) -> a 
+snd' (,x) = x 
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Snd where
+
+{-# LANGUAGE TupleSections #-}
+
+snd' :: (a, a) -> a 
+snd' (_,x) = x 
+</code></pre>
+    </div>
+  </div>
+</div>
+
