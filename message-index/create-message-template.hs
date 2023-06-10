@@ -206,16 +206,18 @@ createFiles tmpl = do
   createDirectoryIfMissing True message_dir
   let index_filename = message_dir </> "index.md"
   let toplvl_index =
-        unlines
+        unlines $
           [ "---",
             "title: " <> title tmpl,
             "summary: " <> summary tmpl,
-            "severity: " <> case severity tmpl of Warning -> "warning"; Error -> "error",
-            "introduced: " <> introduced tmpl,
-            "---",
-            "",
-            "Insert your error message here."
+            "severity: " <> case severity tmpl of Warning -> "warning"; Error -> "error"
           ]
+            <> (case warningflag tmpl of Nothing -> []; Just flg -> ["flag: " <> flg])
+            <> [ "introduced: " <> introduced tmpl,
+                 "---",
+                 "",
+                 "Insert your error message here."
+               ]
   writeFile index_filename toplvl_index
   putStrLn ("·· Created file " <> index_filename <> " with these contents:")
   putStrLn ""
