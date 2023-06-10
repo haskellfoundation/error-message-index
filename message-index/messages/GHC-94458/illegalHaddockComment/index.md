@@ -2,7 +2,7 @@
 title: Illegal Haddock comments for definitions in where clause
 ---
 
-In this example, the user tried to document the two identifiers "fizz" and "buzz" that are introduced in a local where clause.
+In this example, the user tried to document the two identifiers `fizz` and `buzz` that are introduced in a local `where` clause.
 Since these identifiers are not part of the public API, a warning is emitted that Haddock comments are not allowed in that place.
 A normal comment can be used instead.
 
