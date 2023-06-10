@@ -165,6 +165,10 @@ table tbody td {
   padding: 5px;
 }
 
+footer {
+  padding: 0 2%;
+}
+
 @media (max-width: 319px) {
   footer {
     text-align: center;
