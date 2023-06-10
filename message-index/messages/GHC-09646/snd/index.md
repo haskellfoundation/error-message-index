@@ -2,7 +2,7 @@
 title: Using tuple section in pattern
 ---
 
-When pattern matching, tuple sections are not allowed as patterns to be matched against. In the example below, we can fix this by adding the wildcard _ to match on the first element of the pair.  
+When pattern matching, tuple sections are not allowed as patterns to be matched against. In the example below, one of the components of a tuple pattern was forgotten. We can fix this by adding the wildcard _ to match on the first element of the pair. 
 
 #  Error Message 
 

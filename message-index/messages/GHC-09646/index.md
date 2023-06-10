@@ -5,7 +5,7 @@ severity: error
 introduced: 9.6.1
 ---
 
-Pattern matching allows constructors and literals to be used to take apart values, exposing their contents. The syntax of patterns is very similar to that of the expressions that create values, but many constructs that are allowed in expression contexts are not meaningful patterns. 
+[Tuple sections](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/tuple_sections.html) are a concise syntax for functions that result in tuples. The missing expressions in the tuple become arguments to the function. Because tuple sections always result in functions, and functions cannot be matched in patterns, tuple sections are not allowed in patterns.
 
 ## Example Text
 
