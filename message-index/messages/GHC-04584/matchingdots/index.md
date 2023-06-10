@@ -2,7 +2,7 @@
 title: Using .. in pattern 
 ---
 
-When pattern matching, Expressions are not allowed as patterns to be matched against. Instead, consider matching on a list, and using a conditional. 
+When pattern matching, expressions are not allowed as patterns to be matched against. Instead, consider matching on a list, and using a conditional. 
 
 
 # Error Message
