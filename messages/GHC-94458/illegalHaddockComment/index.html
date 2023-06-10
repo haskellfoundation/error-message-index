@@ -1,0 +1,49 @@
+<p>In this example, the user tried to document the two identifiers <code>fizz</code> and <code>buzz</code> that are introduced in a local <code>where</code> clause.
+Since these identifiers are not part of the public API, a warning is emitted that Haddock comments are not allowed in that place.
+A normal comment can be used instead.</p>
+<pre><code>messages/GHC-94458/illegalHaddockComment/before/IllegalHaddockComment.hs:5:5: warning: [GHC-94458] [-Winvalid-haddock]
+    A Haddock comment cannot appear in this position and will be ignored.
+  |
+5 |     -- | The sound of a refreshing beverage.
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+messages/GHC-94458/illegalHaddockComment/before/IllegalHaddockComment.hs:7:5: warning: [GHC-94458] [-Winvalid-haddock]
+    A Haddock comment cannot appear in this position and will be ignored.
+  |
+7 |     -- | The sound of an annoying fly.
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">IllegalHaddockComment.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalHaddockComment where
+
+main = print (fizz ++ buzz)
+  where
+    -- | The sound of a refreshing beverage.
+    fizz = "fizz"
+    -- | The sound of an annoying fly.
+    buzz = "buzz"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalHaddockComment where
+
+main = print (fizz ++ buzz)
+  where
+    -- The sound of a refreshing beverage.
+    fizz = "fizz"
+    -- The sound of an annoying fly.
+    buzz = "buzz"
+</code></pre>
+    </div>
+  </div>
+</div>
+
