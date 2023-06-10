@@ -7,6 +7,12 @@ on:
       - 'message-index/create-message-template.hs'
     branches:
       - main
+  pull_request:
+    paths:
+      - 'message-index/site.hs'
+      - 'message-index/create-message-template.hs'
+    branches:
+      - main
 
 jobs:
   hlint:
