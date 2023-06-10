@@ -12,7 +12,7 @@ executable site
                   , microlens ^>= 0.4.12
                   , binary ^>= 0.8.8
                   , aeson ^>= 2.0.3 || ^>= 2.1
-                  , pandoc-types ^>= 1.22
+                  , pandoc-types ^>= 1.22 || ^>= 1.23
                   , containers ^>= 0.6
                   , text ^>= 1.2 || ^>= 2.0
   ghc-options:      -threaded -rtsopts -with-rtsopts=-N
