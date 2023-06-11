@@ -1,0 +1,36 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>EscapeSeqOutOfRange.hs:4:13: error:
+    numeric escape sequence out of range at character '2'
+  |
+4 | x = '\1114112'
+  |             ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>This example shows that a numeric escape sequence with a value higher than
+<code>1114111</code> throws an error, but a number that is within range does not.</p>
+
+<pre class="filename">EscapeSeqOutOfRange.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module EscapeSeqOutOfRange where
+
+x :: Char
+x = '\1114112'
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module EscapeSeqOutOfRange where
+
+x :: Char
+x = '\1114111'
+</code></pre>
+    </div>
+  </div>
+</div>
+
