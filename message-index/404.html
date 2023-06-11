@@ -13,7 +13,7 @@ if (messageRe.test(window.location.pathname)) {
   const otherSince = "VERSION%20IN%20WHICH%20THE%20ERROR%20CODE%20WAS%20INTRODUCED";
   const since = messageNum.substring(0, 4) == "GHC-" ? ghcSince : otherSince;
   const defaultContents = "---%0Atitle%3A%20SHORT%20TITLE%0Asummary%3A%20ONE%20SENTENCE%20SUMMARY%0Aintroduced%3A%20" + since + "%0Aseverity%3A%20CHOOSE%20ONE%3A%20warning%20error%0A---%0A%0APlease%20describe%20the%20meaning%20of%20the%20error%20here%2C%20formatted%20in%20Markdown.";
-  const contribURL = "https://github.com/haskellfoundation/error-message-index/new/main/message-index/messages/" + messageNum + "/new?filename=index.md&value=" + defaultContents;
+  const contribURL = "https://github.com/haskellfoundation/error-message-index/new/main/message-index/messages/" + messageNum + "/?filename=index.md&value=" + defaultContents;
 
   const firstPara = "<p>Message <code>" + messageNum + "</code> is not yet documented here.</p>";
   const secondPara "<p>You can help out by documenting it. There are two ways to get started:</p>";
