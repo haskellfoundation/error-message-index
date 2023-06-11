@@ -14,4 +14,4 @@ EscapeSeqOutOfRange.hs:4:13: error:
 ## Explanation
 
 This example shows that a numeric escape sequence with a value higher than 
-`1114111` throws an error, but numbers lower than that don't.
+`1114111` throws an error, but a number that is within range does not.
