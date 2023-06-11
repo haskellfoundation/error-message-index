@@ -1,0 +1,41 @@
+<p>When pattern matching, expressions are not allowed as patterns to be matched against. Instead, consider matching on a list, and using a conditional.</p>
+<h1 id="error-message">Error Message</h1>
+<pre><code>before_dots.hs:3:3: error: [GHC-04584]
+    Expression syntax in pattern: [1 .. 10]
+  |
+3 | f [1..10] = 0 
+  |   ^^^^^^^</code></pre>
+
+<pre class="filename">Matchingdots.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Matchingdots where
+
+-- If the input is [1..10], return 0, otherwise return 1 
+f :: [Int] -> Int
+f [1..10] = 0 
+f _ = 1 
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Matchingdots where
+
+-- If the input is [1..10], return 0, otherwise return 1 
+f :: [Int] -> Int
+f xs 
+    | xs == [1..10] = 0 
+    | otherwise = 1      
+
+</code></pre>
+    </div>
+  </div>
+</div>
+
