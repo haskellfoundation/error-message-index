@@ -6,11 +6,12 @@ flag: -Wredundant-strictness-flags
 introduced: GHC 9.6.1
 ---
 
-A strictness annotation (also called a bang: `!`) can be used to denote that a type should not be evaluated lazily.
+A strictness annotation (also called a bang: `!`) can be used to denote that a value should not be evaluated lazily.
 In some cases this can lead to faster code because fewer heap allocation are required.
+Here it is used to mark a that a field in a datatype should not be evaluated lazily.
 
 However, unlifted types like `Int#` are strict by definition because they are a value,
 not a pointer to a potentially unevaluated value (thunk).
 
-Therefore, adding strictness annotations to unlifted types or fields of such types are redudant.
-They should be omitted to prevent confusion.
+Therefore, adding strictness annotations to unlifted types or fields of such types are redundant.
+They should be omitted to avoid confusion.
