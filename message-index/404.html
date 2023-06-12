@@ -17,7 +17,7 @@ if (messageRe.test(window.location.pathname)) {
 
   const firstPara = "<p>Message <code>" + messageNum + "</code> is not yet documented here.</p>";
   const secondPara = "<p>You can help out by documenting it. There are two ways to get started:</p>";
-  const list = "<ul><li><a href=\"" + contribURL + "\">Submit documentation directly through GitHub's online editor</a></li><li><a href=\"https://github.com/haskellfoundation/error-message-index/blob/main/CONTRIBUTING.md\">Add documentation or examples on your own computer</a> and send a pull request</li></ul>";
+  const list = "<ul><li><a href=\"https://github.com/haskellfoundation/error-message-index/fork\">Fork the repository</a> and then <a href=\"" + contribURL + "\">submit documentation directly through GitHub's online editor</a></li><li><a href=\"https://github.com/haskellfoundation/error-message-index/blob/main/CONTRIBUTING.md\">Add documentation or examples on your own computer</a> and send a pull request</li></ul>";
   const thirdPara = "<p>All contributions are reviewed. We welcome contributions from new Haskellers and non-expert users of English - we'll work together to create high-quality documentation.";
 
   document.getElementById("documentation-pointer").innerHTML = firstPara + secondPara + list + thirdPara;
