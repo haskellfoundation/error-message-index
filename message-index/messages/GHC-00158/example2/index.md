@@ -6,7 +6,7 @@ In this example, the `stock` strategy is incorrectly specified when deriving the
 
 ## Error Message
 
-```haskell
+```
 IncorrectDerivingStrategy.hs:6:18: error: [GHC-00158]
     • Can't make a derived instance of
         ‘Num IntWrapper’ with the stock strategy:
