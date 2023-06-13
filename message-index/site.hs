@@ -193,6 +193,17 @@ messageTitleField = field "title" getTitle
 messageCtx :: Context String
 messageCtx = field "id" (pure . getId) <> indexlessUrlField "url"
 
+data ExampleOrder = InGroup Integer | Last
+
+getExampleOrder :: Identifier -> Compiler ExampleOrder
+getExampleOrder ident = do
+  metas <- getMetadata ident
+  let msgId = getIdentId ident
+  case KM.lookup "order" metas of
+    (Just (JSON.Number i)) -> pure $ InGroup (truncate i)
+    Just other -> fail $ "Not an integer: " ++ show other
+    Nothing -> pure Last
+
 getId :: Item a -> String
 getId item = fromMaybe "" $ getIdentId (itemIdentifier item)
 
@@ -213,6 +224,7 @@ getExamples = do
 getExampleFiles :: Compiler [Item (FilePath, Maybe (Item String), Maybe (Item String))]
 getExampleFiles = do
   me <- getUnderlying
+  error (show me)
   (id, exampleName) <- case splitDirectories $ toFilePath me of
     ["messages", id, exampleName, _mdFile] -> pure (id, exampleName)
     _ -> fail "Not processing an example"
