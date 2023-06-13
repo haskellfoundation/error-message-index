@@ -3,6 +3,7 @@ title: Pattern matching on GADTs without MonoLocalBinds is fragile
 summary: Pattern matching on GADTs without MonoLocalBinds is fragile
 introduced: 9.6.1
 severity: warning
+flag: -Wgadt-mono-local-binds
 ---
 
 This warning is triggered on pattern matching involving GADTs, if `MonoLocalBinds` is disabled. Type inference can be fragile in this case.
