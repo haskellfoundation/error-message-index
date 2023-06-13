@@ -1,5 +1,6 @@
 ---
 title: Type expected, but kind received.
+order: 0
 ---
 
 Forgetting the type parameter to `Maybe` is the culprit, but it is only caught in the

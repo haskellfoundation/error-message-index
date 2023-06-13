@@ -1,5 +1,6 @@
 ---
 title: Values of Different Types
+order: 1
 ---
 
 Function `inc` has type `Int -> Int`, hence it expects an argument

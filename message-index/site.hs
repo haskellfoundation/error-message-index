@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
 
@@ -10,7 +11,8 @@ import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Foldable (for_)
 import Data.Functor ((<&>))
-import Data.List (find, isPrefixOf, lookup, nub, sort)
+import Data.Function (on)
+import Data.List (find, isPrefixOf, lookup, nub, sort, sortBy)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
@@ -23,6 +25,8 @@ import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
 import System.FilePath
 import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
+
+import Debug.Trace
 
 main :: IO ()
 main = hakyll $ do
@@ -194,6 +198,7 @@ messageCtx :: Context String
 messageCtx = field "id" (pure . getId) <> indexlessUrlField "url"
 
 data ExampleOrder = InGroup Integer | Last
+  deriving (Eq, Ord, Show)
 
 getExampleOrder :: Identifier -> Compiler ExampleOrder
 getExampleOrder ident = do
@@ -219,12 +224,15 @@ getExamples = do
   code <- case splitDirectories $ toFilePath me of
     ["messages", code, "index.md"] -> pure code
     other -> fail $ "Not processing a message: " ++ show other
-  loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
+  items <- loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
+  sortByM (getExampleOrder . itemIdentifier) items
+  where
+    sortByM :: (Monad m, Ord b) => (a -> m b) -> [a] -> m [a]
+    sortByM f = fmap (map fst . sortBy (compare `on` snd)) . mapM (\x -> (x,) <$> f x)
 
 getExampleFiles :: Compiler [Item (FilePath, Maybe (Item String), Maybe (Item String))]
 getExampleFiles = do
   me <- getUnderlying
-  error (show me)
   (id, exampleName) <- case splitDirectories $ toFilePath me of
     ["messages", id, exampleName, _mdFile] -> pure (id, exampleName)
     _ -> fail "Not processing an example"
