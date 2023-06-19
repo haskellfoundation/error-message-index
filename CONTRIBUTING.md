@@ -170,10 +170,15 @@ The fields in the metadata block should be:
 ### Example Descriptions
 
 Example descriptions are written in Markdown with Pandoc-style
-metadata, just like message descriptions. They have only the `title`
-field. All `.hs` files are shown in the list of files for the
+metadata, just like message descriptions. They have the obligatory `title`
+and optional `order` fields. All `.hs` files are shown in the list of files for the
 example. The `index.md` file should explain how the files illustrate
 the message.
+
+Examples are ordered according to their `order` field. Examples
+with no explicit `order` are shown last and examples with the same
+`order` will be shown in an unspecified order with respect to each other,
+but will appear before examples with a greater order.
 
 ## Reference: Technology choices
 
