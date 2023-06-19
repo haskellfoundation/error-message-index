@@ -1,6 +1,6 @@
 ---
 title: Type expected, but kind received.
-order: 0
+order: 1
 ---
 
 Forgetting the type parameter to `Maybe` is the culprit, but it is only caught in the
@@ -19,4 +19,16 @@ ghci> :k (->)
 (->) :: * -> * -> *
 ghci> :k Maybe
 Maybe :: * -> *
+```
+
+## Error Message
+
+```
+Type.hs:1:14: error: [GHC-83865]
+    • Expecting one more argument to ‘Maybe’
+      Expected a type, but ‘Maybe’ has kind ‘* -> *’
+    • In the type signature: isNothing :: Maybe -> Bool
+  |
+1 | isNothing :: Maybe -> Bool
+  |
 ```
