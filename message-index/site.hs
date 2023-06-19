@@ -10,8 +10,8 @@ import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Foldable (for_)
-import Data.Functor ((<&>))
 import Data.Function (on)
+import Data.Functor ((<&>))
 import Data.List (find, isPrefixOf, lookup, nub, sort, sortBy)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
@@ -25,8 +25,6 @@ import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
 import System.FilePath
 import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
-
-import Debug.Trace
 
 main :: IO ()
 main = hakyll $ do
