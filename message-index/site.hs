@@ -196,7 +196,13 @@ messageCtx :: Context String
 messageCtx = field "id" (pure . getId) <> indexlessUrlField "url"
 
 data ExampleOrder = InGroup Integer | Last
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Show)
+
+instance Ord ExampleOrder where
+  compare (InGroup i) (InGroup j) = compare i j
+  compare (InGroup _) Last = LT
+  compare Last (InGroup _) = GT
+  compare Last Last = EQ  
 
 getExampleOrder :: Identifier -> Compiler ExampleOrder
 getExampleOrder ident = do
