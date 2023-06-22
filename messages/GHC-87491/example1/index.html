@@ -1,0 +1,40 @@
+<p>This file is written in <code>Haskell2010</code> which doesn’t have the
+<code>ImportQualifiedPost</code> extension. To fix this you need to either turn on
+<code>ImportQualifiedPost</code>, or change the <code>qualified</code> keyword to be prefix.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>ImportQualifiedPost:5:16: error: [GHC-87491]
+    Found `qualified' in postpositive position.
+    Suggested fix: Perhaps you intended to use ImportQualifiedPost
+  |
+5 | import Prelude qualified
+  |                ^^^^^^^^^</code></pre>
+
+<pre class="filename">ImportQualifiedPost.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+
+module ImportQualifiedPost where
+
+import Prelude qualified
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+{-# LANGUAGE ImportQualifiedPost #-}
+
+module ImportQualifiedPost where
+
+import Prelude qualified
+</code></pre>
+    </div>
+  </div>
+</div>
+
