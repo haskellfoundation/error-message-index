@@ -1,0 +1,52 @@
+<p>When pattern matching, let expressions are not allowed as patterns to be matched against. The logic encapsulated here should either be lifted to outside of the function, or moved inside of the function itself.</p>
+<h1 id="error-message">Error Message</h1>
+<pre><code>Example.hs:5:6: error: [GHC-78892]
+    (let ... in ...)-syntax in pattern
+  |
+5 | f n (let exp = x^2 in exp n) = True 
+  |      ^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+<p>#  Intermediate fix step
+In the below example, it is worth noting that you may first have considered refactoring to something along the lines of</p>
+<pre><code>sq :: Int -&gt; Int 
+sq x = x^2 
+
+f :: Int -&gt; Int -&gt; Bool 
+f n (sq n) = True
+f n _ = False 
+</code></pre>
+<p>The above code would throw a parse error in the pattern <a href="https://errors.haskell.org/messages/GHC-07626/">GHC-07626</a>.</p>
+
+<pre class="filename">Example.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example where
+
+-- Is the second argument the square of the first? 
+f :: Int -> Int -> Bool 
+f n (let sq = x^2 in sq n) = True 
+f n _ = False
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example where
+
+-- Is the second argument the square of the first?
+sq :: Int -> Int 
+sq x = x^2
+
+f :: Int -> Int -> Bool 
+f n m 
+    | m == sq n = True
+    | otherwise = False 
+</code></pre>
+    </div>
+  </div>
+</div>
+
