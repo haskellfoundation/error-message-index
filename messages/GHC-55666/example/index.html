@@ -1,0 +1,40 @@
+<pre><code>src/MyLib.hs:16:5: warning: [GHC-55666] [-Wredundant-strictness-flags]
+    * Strictness flag has no effect on unlifted type `Int#'
+    * In the definition of data constructor `MkT'
+      In the data type declaration for `T'
+   |
+   |   = MkT !Int#
+   |     ^^^^^^^</code></pre>
+
+<pre class="filename">Bang_on_unlifted_type.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+
+module Bang_on_unlifted_type where
+
+import GHC.Base (Int#)
+
+data T = MkT !Int#
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE MagicHash #-}
+
+module Bang_on_unlifted_type where
+
+import GHC.Base (Int#)
+
+data T = MkT Int#
+</code></pre>
+    </div>
+  </div>
+</div>
+

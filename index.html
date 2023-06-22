@@ -37,7 +37,7 @@
 </p>
 
 <p>
-  So far, 83 errors and warnings are documented here.
+  So far, 84 errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -344,6 +344,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
             <td><a href="./messages/GHC-53786/">Case expression included in pattern</a></td>
             <td>A pattern contains case-of syntax.</td>
             <td>9.6.1</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHC-55666</td>
+            <td><a href="./messages/GHC-55666/">Strictness annotation on unlifted type</a></td>
+            <td>Using a strictness annotation (bang) on an unlifted type is redudant as unlifted values are strict by definition</td>
+            <td>GHC 9.6.1</td>
         </tr>
     
         <tr>
