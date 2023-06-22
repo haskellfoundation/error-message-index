@@ -1,0 +1,50 @@
+<h2 id="message">Message</h2>
+<pre><code>GADTWithoutMonoBind.hs:7:3: warning: [GHC-58008] [-Wgadt-mono-local-binds]
+    Pattern matching on GADTs without MonoLocalBinds is fragile.
+    Suggested fix:
+      Enable any of the following extensions: GADTs, TypeFamilies
+  |
+7 | f A = ()
+  |   ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>When using GADTs, the type system is different in the sense that it’s not
+possible to derive the principal type of the function <code>f</code>. Both
+<code>f :: A a -&gt; ()</code> and <code>f :: A () -&gt; ()</code> can be considered the most general
+typing for the function. The <code>MonoLocalBinds</code> extension uses a slightly more
+conservative policy in order to be able to derive the type properly in such
+cases.</p>
+
+<pre class="filename">GADTWithoutMonoBind.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module GADTWithoutMonoBind where
+
+data A a where
+  A :: A ()
+
+f :: A () -> ()
+f A = ()
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE MonoLocalBinds #-}
+
+module GADTWithoutMonoBind where
+
+data A a where
+  A :: A ()
+
+f :: A () -> ()
+f A = ()
+</code></pre>
+    </div>
+  </div>
+</div>
+
