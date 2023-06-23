@@ -5,5 +5,5 @@ severity: error
 introduced: 9.6.1
 ---
 
-Using a deprecation pragma it is possible to declare that a Haskell entity such as a type or a toplevel function is deprecated.
+A Haskell entity, such as a type or a top-level definition, can be declared to be deprecated using a pragma.
 It is, however, illegal to specify multiple deprecation warnings for the same entity.
