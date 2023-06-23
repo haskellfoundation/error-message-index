@@ -1,0 +1,37 @@
+<p>In this example, two deprecation warnings have been given for the constant <code>pi</code>. This is not allowed, and can be fixed by just specifying one deprecation message.</p>
+<pre><code>messages/GHC-00711/doubleDeprecation/before/DoubleDeprecation.hs:4:16: error: [GHC-00711]
+    Multiple warning declarations for ‘pi’
+    also at  messages/GHC-00711/doubleDeprecation/before/DoubleDeprecation.hs:3:16-17
+  |
+4 | {-# DEPRECATED pi &quot;Chosen approximation turned out to be too imprecise.&quot; #-}
+  |                ^^</code></pre>
+
+<pre class="filename">DoubleDeprecation.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DoubleDeprecation where
+
+{-# DEPRECATED pi "pi is deprecated." #-}
+{-# DEPRECATED pi "Chosen approximation turned out to be too imprecise." #-}
+pi :: Int
+pi = 3
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DoubleDeprecation where
+
+{-# DEPRECATED pi "pi is deprecated. Chosen approximation turned out to be too imprecise." #-}
+pi :: Int
+pi = 3
+</code></pre>
+    </div>
+  </div>
+</div>
+
