@@ -2,8 +2,8 @@
 title: Cannot implement a typeclass for type synonyms by default
 ---
 
-The programmer defined a data type `RGB`, and a type synonym `T`, and then tried to implement an instance of the typeclass `Eq` for `T`.
-In the language version Haskell2010 this is not allowed, since all typeclass instances have to start with a type constructor.
+The programmer defined a data type `RGB`, and a type synonym `T`, and then tried to implement an instance of the type class `Eq` for `T`.
+In the language version Haskell 2010 this is not allowed, since all type class instances have to start with a type constructor.
 This problem can be fixed by implementing the typeclass instance directly for the type `RGB` instead of the type synonym `T`.
 
 ```
