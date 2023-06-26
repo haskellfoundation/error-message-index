@@ -202,7 +202,7 @@ instance Ord ExampleOrder where
   compare (InGroup i) (InGroup j) = compare i j
   compare (InGroup _) Last = LT
   compare Last (InGroup _) = GT
-  compare Last Last = EQ  
+  compare Last Last = EQ
 
 getExampleOrder :: Identifier -> Compiler ExampleOrder
 getExampleOrder ident = do
