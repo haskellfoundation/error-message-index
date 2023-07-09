@@ -1,0 +1,33 @@
+<p>The <code>Handle</code> type is abstract and does not export its constructors. It is therefore not possible to derive an instance of a typeclass for the <code>Handle</code> type in another module. You can only derive an instance of a typeclass in the module where <code>Handle</code> is defined.</p>
+<p>`<code>messages/GHC-54540/constructorsNotInScope/before/ConstructorsNotInScope.hs:6:1: error: [GHC-54540]     • Can't make a derived instance of ‘Eq Handle’:         The data constructors of ‘Handle’ are not all in scope           so you cannot derive an instance for it     • In the stand-alone deriving instance for ‘Eq Handle’   | 6 | deriving instance Eq Handle   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></p>
+
+<pre class="filename">ConstructorsNotInScope.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE StandaloneDeriving #-}
+module ConstructorsNotInScope where
+
+import System.IO( Handle )
+
+deriving instance Eq Handle
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE StandaloneDeriving #-}
+module ConstructorsNotInScope where
+
+import System.IO( Handle )
+
+-- It is not possible to derive an instance for the type class in this module.
+</code></pre>
+    </div>
+  </div>
+</div>
+

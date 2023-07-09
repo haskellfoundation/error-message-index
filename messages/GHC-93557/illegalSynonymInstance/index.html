@@ -1,0 +1,53 @@
+<p>The programmer defined a data type <code>RGB</code>, and a type synonym <code>T</code>, and then tried to implement an instance of the type class <code>Eq</code> for <code>T</code>.
+In the language version Haskell 2010 this is not allowed, since all type class instances have to start with a type constructor.
+This problem can be fixed by implementing the typeclass instance directly for the type <code>RGB</code> instead of the type synonym <code>T</code>.</p>
+<pre><code>messages/GHC-93557/illegalSynonymInstance/before/IllegalSynonymInstance.hs:8:10: error: [GHC-93557]
+    • Illegal instance declaration for ‘Eq T’:
+        All instance types must be of the form (T t1 ... tn)
+        where T is not a synonym.
+    • In the instance declaration for ‘Eq T’
+    Suggested fix: Perhaps you intended to use TypeSynonymInstances
+  |
+8 | instance Eq T where
+  |          ^^^^</code></pre>
+
+<pre class="filename">IllegalSynonymInstance.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+module IllegalSynonymInstance where
+
+data RGB = R | G | B
+
+type T = RGB
+
+instance Eq T where
+    R == R = True
+    G == G = True
+    B == B = True
+    _ == _ = False
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+module IllegalSynonymInstance where
+
+data RGB = R | G | B
+
+instance Eq RGB where
+    R == R = True
+    G == G = True
+    B == B = True
+    _ == _ = False
+</code></pre>
+    </div>
+  </div>
+</div>
+

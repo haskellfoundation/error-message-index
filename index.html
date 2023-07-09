@@ -37,7 +37,7 @@
 </p>
 
 <p>
-  So far, 87 errors and warnings are documented here.
+  So far, 89 errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -354,6 +354,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
         </tr>
     
         <tr>
+            <td class="nowrap">GHC-54540</td>
+            <td><a href="./messages/GHC-54540/">Cannot derive instance without constructors in scope</a></td>
+            <td>It is not possible to derive a typeclass instance if the constructors of the type are not in scope</td>
+            <td>9.6.1</td>
+        </tr>
+    
+        <tr>
             <td class="nowrap">GHC-55666</td>
             <td><a href="./messages/GHC-55666/">Strictness annotation on unlifted type</a></td>
             <td>Using a strictness annotation (bang) on an unlifted type is redudant as unlifted values are strict by definition</td>
@@ -547,6 +554,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
             <td><a href="./messages/GHC-92994/">Unexpected nested forall in foreign declaration</a></td>
             <td>A foreign function import uses a higher-rank type.</td>
             <td>9.6.1</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHC-93557</td>
+            <td><a href="./messages/GHC-93557/">Illegal typeclass instance</a></td>
+            <td>Illegal typeclass instance</td>
+            <td>9.8.1</td>
         </tr>
     
         <tr>
