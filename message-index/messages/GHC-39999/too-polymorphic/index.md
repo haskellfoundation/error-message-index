@@ -1,5 +1,6 @@
 ---
 title: A usage of `+` on a too polymorphic variable.
+order: 1
 ---
 
 ## Error message

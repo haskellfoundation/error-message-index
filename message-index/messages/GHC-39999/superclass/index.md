@@ -1,5 +1,6 @@
 ---
 title: Missing superclass declaration
+order: 3
 ---
 
 ### Error message on GHC 9.6.2

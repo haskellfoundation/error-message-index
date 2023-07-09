@@ -1,5 +1,6 @@
 ---
-title: A usage of `x.foo` with the field `foo` not being in scape
+title: A usage of `x.foo` with the field `foo` not being in scope
+order: 2
 ---
 
 ## Error message
