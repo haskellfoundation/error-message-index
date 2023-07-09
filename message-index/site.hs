@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
 
@@ -9,8 +10,9 @@ import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
 import Data.Foldable (for_)
+import Data.Function (on)
 import Data.Functor ((<&>))
-import Data.List (find, isPrefixOf, lookup, nub, sort)
+import Data.List (find, isPrefixOf, lookup, nub, sort, sortBy)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
@@ -193,6 +195,24 @@ messageTitleField = field "title" getTitle
 messageCtx :: Context String
 messageCtx = field "id" (pure . getId) <> indexlessUrlField "url"
 
+data ExampleOrder = InGroup Integer | Last
+  deriving (Eq, Show)
+
+instance Ord ExampleOrder where
+  compare (InGroup i) (InGroup j) = compare i j
+  compare (InGroup _) Last = LT
+  compare Last (InGroup _) = GT
+  compare Last Last = EQ
+
+getExampleOrder :: Identifier -> Compiler ExampleOrder
+getExampleOrder ident = do
+  metas <- getMetadata ident
+  let msgId = getIdentId ident
+  case KM.lookup "order" metas of
+    (Just (JSON.Number i)) -> pure $ InGroup (truncate i)
+    Just other -> fail $ "Not an integer: " ++ show other
+    Nothing -> pure Last
+
 getId :: Item a -> String
 getId item = fromMaybe "" $ getIdentId (itemIdentifier item)
 
@@ -208,7 +228,11 @@ getExamples = do
   code <- case splitDirectories $ toFilePath me of
     ["messages", code, "index.md"] -> pure code
     other -> fail $ "Not processing a message: " ++ show other
-  loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
+  items <- loadAll $ fromGlob ("messages/" <> code <> "/*/index.*") .&&. hasNoVersion
+  sortByM (getExampleOrder . itemIdentifier) items
+  where
+    sortByM :: (Monad m, Ord b) => (a -> m b) -> [a] -> m [a]
+    sortByM f = fmap (map fst . sortBy (compare `on` snd)) . mapM (\x -> (x,) <$> f x)
 
 getExampleFiles :: Compiler [Item (FilePath, Maybe (Item String), Maybe (Item String))]
 getExampleFiles = do
