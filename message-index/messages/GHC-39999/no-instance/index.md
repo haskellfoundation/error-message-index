@@ -1,5 +1,6 @@
 ---
 title: A usage of (==) on a data type which doesn‘t have an instance for Eq.
+order: 0
 ---
 
 ## Error message
