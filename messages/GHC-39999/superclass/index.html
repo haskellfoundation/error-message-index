@@ -1,0 +1,48 @@
+<h3 id="error-message-on-ghc-9.6.2">Error message on GHC 9.6.2</h3>
+<pre><code>Main.hs:5:10: error: [GHC-39999]
+    • Could not deduce ‘Show (Foo a)’
+        arising from the head of a quantified constraint
+        arising from the superclasses of an instance declaration
+      from the context: Show a
+        bound by a quantified context at Main.hs:5:10-18
+    • In the instance declaration for ‘Show1 Foo’
+  |
+5 | instance Show1 Foo where
+  |          ^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The <a href="https://hackage.haskell.org/package/base-4.18.0.0/docs/Data-Functor-Classes.html#t:Show1"><code>Show1</code></a> class has
+changed in GHC 9.6 to require a quantified superclass constraint <code>Show</code>. To fix this error, for every <code>instance Show1</code> declaration add a corresponding <code>instance Show</code> declaration for the same data type.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">import Data.Functor.Classes (Show1(..))
+
+newtype Foo a = Foo a
+
+instance Show1 Foo where
+  liftShowsPrec showsPrec _showList prec (Foo a) rest = "Foo " ++ showsPrec prec a rest
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">import Data.Functor.Classes (Show1(..))
+
+newtype Foo a = Foo a
+
+instance Show a => Show (Foo a) where
+   show (Foo a) = "Foo " ++ show a
+
+instance Show1 Foo where
+  liftShowsPrec showsPrec _showList prec (Foo a) rest = "Foo " ++ showsPrec prec a rest
+</code></pre>
+    </div>
+  </div>
+</div>
+
