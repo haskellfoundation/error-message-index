@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Type Mismatch [GHC-83865] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Type Mismatch [GHC-83865]
+    </nav>
+    <h1>Type Mismatch [GHC-83865]</h1>
+    
+
+<p>GHC expected one type, but was given another. Unlike dynamically-typed programming languages,
+type signatures in Haskell are like a contract between the programmer and the compiler.
+In its simplest form, when you call a function <code>f</code> with type <code>a -&gt; b</code>, with some argument <code>x</code>,
+the compiler will check whether <code>x</code> has type <code>a</code> and if that is not the case, it will trigger
+the type mismatch error. This case is illustrated by the <code>terms</code> example, below.</p>
+<p>Type mismatch errors are quite general, however, so you will still encounter them
+in many other situations.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Values of Different Types</summary>
+  <div class="details-inner">
+    <p>Function <code>inc</code> has type <code>Int -&gt; Int</code>, hence it expects an argument
+of type <code>Int</code>; yet, on the definition of <code>two</code> it was called with
+an argument of type <code>String</code>.</p>
+<p>If you ever need to know the type of something, you can ask for it in <code>ghci</code>
+with the command <code>:type</code> (or its shorthand <code>:t</code>):</p>
+<pre><code>ghci&gt; :t &quot;x&quot;
+&quot;x&quot; :: String</code></pre>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Terms.hs:6:11: error: [GHC-83865]
+    • Couldn't match type ‘[Char]’ with ‘Int’
+      Expected: Int
+        Actual: String
+    • In the first argument of ‘inc’, namely ‘&quot;x&quot;’
+      In the expression: inc &quot;x&quot;
+      In an equation for ‘two’: two = inc &quot;x&quot;
+  |
+4 | two = inc &quot;x&quot;
+  |</code></pre>
+
+<pre class="filename">Terms.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">inc :: Int -> Int
+inc i = i + 1
+
+two = inc "x"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">inc :: Int -> Int
+inc i = i + 1
+
+two = inc 1
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Type expected, but kind received.</summary>
+  <div class="details-inner">
+    <p>Forgetting the type parameter to <code>Maybe</code> is the culprit, but it is only caught in the
+context of the the arrow in the declaration of <code>isNothing</code>, which can be confusing.
+The arrow (<code>-&gt;</code>) in Haskell is a <em>type constructor</em>. It takes two types
+of <em>kind</em> <code>Type</code>, and returns a fresh type, also of kind <code>Type</code>. That is, for <code>x -&gt; y</code>
+to make any sense, GHC needs <code>x</code> and <code>y</code> to be types of kind <code>Type</code>, which is not
+the case in this example: <code>Maybe</code> by itself has kind <code>Type -&gt; Type</code>.</p>
+<p>If you ever need to know the kind of something, you can ask <code>ghci</code>
+with the <code>:kind</code> (or its shorthand <code>:k</code>), keeping in mind
+that <code>*</code> (pronounced “star”) is a synonym for <code>Type</code>:</p>
+<pre><code>ghci&gt; :k (-&gt;)
+(-&gt;) :: * -&gt; * -&gt; *
+ghci&gt; :k Maybe
+Maybe :: * -&gt; *</code></pre>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Type.hs:1:14: error: [GHC-83865]
+    • Expecting one more argument to ‘Maybe’
+      Expected a type, but ‘Maybe’ has kind ‘* -&gt; *’
+    • In the type signature: isNothing :: Maybe -&gt; Bool
+  |
+1 | isNothing :: Maybe -&gt; Bool
+  |</code></pre>
+
+<pre class="filename">Type.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">isNothing :: Maybe -> Bool
+isNothing Nothing = True
+isNothing _ = False
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">isNothing :: Maybe a -> Bool
+isNothing Nothing = True
+isNothing _ = False
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

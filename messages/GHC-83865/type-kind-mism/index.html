@@ -1,0 +1,47 @@
+<p>Forgetting the type parameter to <code>Maybe</code> is the culprit, but it is only caught in the
+context of the the arrow in the declaration of <code>isNothing</code>, which can be confusing.
+The arrow (<code>-&gt;</code>) in Haskell is a <em>type constructor</em>. It takes two types
+of <em>kind</em> <code>Type</code>, and returns a fresh type, also of kind <code>Type</code>. That is, for <code>x -&gt; y</code>
+to make any sense, GHC needs <code>x</code> and <code>y</code> to be types of kind <code>Type</code>, which is not
+the case in this example: <code>Maybe</code> by itself has kind <code>Type -&gt; Type</code>.</p>
+<p>If you ever need to know the kind of something, you can ask <code>ghci</code>
+with the <code>:kind</code> (or its shorthand <code>:k</code>), keeping in mind
+that <code>*</code> (pronounced “star”) is a synonym for <code>Type</code>:</p>
+<pre><code>ghci&gt; :k (-&gt;)
+(-&gt;) :: * -&gt; * -&gt; *
+ghci&gt; :k Maybe
+Maybe :: * -&gt; *</code></pre>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Type.hs:1:14: error: [GHC-83865]
+    • Expecting one more argument to ‘Maybe’
+      Expected a type, but ‘Maybe’ has kind ‘* -&gt; *’
+    • In the type signature: isNothing :: Maybe -&gt; Bool
+  |
+1 | isNothing :: Maybe -&gt; Bool
+  |</code></pre>
+
+<pre class="filename">Type.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">isNothing :: Maybe -> Bool
+isNothing Nothing = True
+isNothing _ = False
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">isNothing :: Maybe a -> Bool
+isNothing Nothing = True
+isNothing _ = False
+</code></pre>
+    </div>
+  </div>
+</div>
+

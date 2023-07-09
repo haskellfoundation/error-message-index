@@ -1,0 +1,45 @@
+<p>Function <code>inc</code> has type <code>Int -&gt; Int</code>, hence it expects an argument
+of type <code>Int</code>; yet, on the definition of <code>two</code> it was called with
+an argument of type <code>String</code>.</p>
+<p>If you ever need to know the type of something, you can ask for it in <code>ghci</code>
+with the command <code>:type</code> (or its shorthand <code>:t</code>):</p>
+<pre><code>ghci&gt; :t &quot;x&quot;
+&quot;x&quot; :: String</code></pre>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Terms.hs:6:11: error: [GHC-83865]
+    • Couldn't match type ‘[Char]’ with ‘Int’
+      Expected: Int
+        Actual: String
+    • In the first argument of ‘inc’, namely ‘&quot;x&quot;’
+      In the expression: inc &quot;x&quot;
+      In an equation for ‘two’: two = inc &quot;x&quot;
+  |
+4 | two = inc &quot;x&quot;
+  |</code></pre>
+
+<pre class="filename">Terms.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">inc :: Int -> Int
+inc i = i + 1
+
+two = inc "x"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">inc :: Int -> Int
+inc i = i + 1
+
+two = inc 1
+</code></pre>
+    </div>
+  </div>
+</div>
+
