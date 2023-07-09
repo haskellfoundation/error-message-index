@@ -3,7 +3,7 @@ title: Strictness annotation on unlifted type
 summary: Using a strictness annotation (bang) on an unlifted type is redudant as unlifted values are strict by definition
 severity: warning
 flag: -Wredundant-strictness-flags
-introduced: GHC 9.6.1
+introduced: 9.6.1
 ---
 
 A strictness annotation (also called a bang: `!`) can be used to denote that a value should not be evaluated lazily.

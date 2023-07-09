@@ -2,7 +2,7 @@
 title: Found 'qualified' after the module
 summary: qualified after the module requires the ImportQualifiedPost extension.
 severity: error
-introduced: 8.10.1
+introduced: 9.6.1
 ---
 
 The [`ImportQualifiedPost extension`](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/import_qualified_post.html),
