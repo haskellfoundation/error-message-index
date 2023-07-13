@@ -1,0 +1,76 @@
+<p>Since these type classes don’t allow hand-written instances, you’ll get the following errors if you try to implement them.
+To fix the errors, just remove the instance declarations - GHC will provide them for you automatically.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>UserSpecifiedInstances.hs:9:10: error: [GHC-97044]
+    • Class ‘Coercible’ does not support user-specified instances.
+    • In the instance declaration for ‘Coercible Foo ()’
+  |
+9 | instance Coercible Foo ()
+  |          ^^^^^^^^^^^^^^^^
+
+UserSpecifiedInstances.hs:11:10: error: [GHC-97044]
+    • Class ‘Typeable’ does not support user-specified instances.
+    • In the instance declaration for ‘Typeable Foo’
+   |
+11 | instance Typeable Foo
+   |          ^^^^^^^^^^^^
+
+UserSpecifiedInstances.hs:13:10: error: [GHC-97044]
+    • Class ‘~’ does not support user-specified instances.
+    • In the instance declaration for ‘Foo ~ Foo’
+   |
+13 | instance Foo ~ Foo
+   |          ^^^^^^^^^</code></pre>
+
+<pre class="filename">UserSpecifiedInstances.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Coerce (Coercible, coerce)
+import Type.Reflection (Typeable(..))
+import Data.Type.Equality
+
+newtype Foo = Foo { unFoo :: () }
+
+instance Coercible Foo ()
+
+instance Typeable Foo
+
+instance Foo ~ Foo
+
+main :: IO ()
+main = do
+    let foo = Foo ()
+    print (coerce foo:: ())
+    print (typeOf foo)
+    print (Refl :: Foo :~: Foo)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Coerce
+import Data.Type.Equality
+import Type.Reflection
+
+newtype Foo = Foo { unFoo :: () }
+
+main :: IO ()
+main = do
+    let foo = Foo ()
+    print (coerce foo:: ())
+    print (typeOf foo)
+    print (Refl :: Foo :~: Foo)
+</code></pre>
+    </div>
+  </div>
+</div>
+

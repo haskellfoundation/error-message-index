@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>User-specified instance is not allowed [GHC-97044] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      User-specified instance is not allowed [GHC-97044]
+    </nav>
+    <h1>User-specified instance is not allowed [GHC-97044]</h1>
+    
+
+<p>There are several special type classes in <a href="https://hackage.haskell.org/package/base">base</a> which require special treatment from the compiler. For this reason they don’t permit user-specified instances.</p>
+<p>An attempt to provide an explicit instance declaration in your library / application code, e.g.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Coercible</span> <span class="dt">A</span> <span class="dt">B</span> <span class="kw">where</span> <span class="op">...</span></span></code></pre></div>
+<p>will lead to this error being reported.</p>
+<p>The instances for these type classes are automatically created by GHC on an as-needed basis.</p>
+<p>This restriction applies to the following type classes:</p>
+<ul>
+<li><a href="https://hackage.haskell.org/package/base/docs/Data-Coerce.html#t:Coercible">Coercible</a> - This class does not have regular instances; instead they are created on-the-fly during type-checking.</li>
+<li><a href="https://hackage.haskell.org/package/base/docs/Type-Reflection.html#t:Typeable">Typeable</a> - Since GHC 7.10, all types automatically have <code>Typeable</code> instances derived. This is in contrast to previous releases where Typeable had to be explicitly derived using the DeriveDataTypeable language extension.</li>
+<li>Type equality classes <code>~</code> and <code>~~</code> defined in <a href="https://hackage.haskell.org/package/base/docs/Data-Type-Equality.html">Data.Type.Equality</a></li>
+<li><a href="https://hackage.haskell.org/package/base/docs/GHC-Exts.html#t:WithDict">WithDict</a> - is used to create dictionaries for classes with a single method. It is used to implement a primitive that we cannot define in Haskell but we can write in Core. Some details can be found in a <a href="https://hackage.haskell.org/package/ghc-9.6.1/docs/src/GHC.Tc.Instance.Class.html#line-493">Note in GHC library</a></li>
+<li><a href="https://hackage.haskell.org/package/base/docs/GHC-TypeLits.html#t:KnownChar">KnownChar</a> - This class gives the Char associated with a type-level Char literal. There are instances of the class for every concrete literal: ‘a’, ‘b’, ‘c’ etc. But instances for user-defined types are not permitted.</li>
+<li><a href="https://hackage.haskell.org/package/base/docs/GHC-TypeNats.html#t:KnownNat">KnownNat</a> - This class gives the integer associated with a type-level natural. There are instances of the class for every concrete literal: 0, 1, 2, etc. But instances for user-defined types are not permitted.</li>
+<li><a href="https://hackage.haskell.org/package/base/docs/GHC-TypeLits.html#t:KnownSymbol">KnownSymbol</a> - This class gives the string associated with a type-level symbol. There are instances of the class for every concrete literal: “hello”, etc. But instances for user-defined types are not permitted.</li>
+<li><a href="https://hackage.haskell.org/package/base/docs/GHC-Generics.html#t:Generic">Generic</a> - This class is one of the key pieces of <code>GHC.Generics</code> and you usually want to derive it using <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/generics.html#extension-DeriveGeneric">DeriveGeneric</a> extension. Hand-written instances of Generic instances are allowed by default, but disallowed when <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/safe_haskell.html">SafeHaskell</a> extension is enabled.</li>
+</ul>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Attempts to create hand-written instances for special type classes</summary>
+  <div class="details-inner">
+    <p>Since these type classes don’t allow hand-written instances, you’ll get the following errors if you try to implement them.
+To fix the errors, just remove the instance declarations - GHC will provide them for you automatically.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>UserSpecifiedInstances.hs:9:10: error: [GHC-97044]
+    • Class ‘Coercible’ does not support user-specified instances.
+    • In the instance declaration for ‘Coercible Foo ()’
+  |
+9 | instance Coercible Foo ()
+  |          ^^^^^^^^^^^^^^^^
+
+UserSpecifiedInstances.hs:11:10: error: [GHC-97044]
+    • Class ‘Typeable’ does not support user-specified instances.
+    • In the instance declaration for ‘Typeable Foo’
+   |
+11 | instance Typeable Foo
+   |          ^^^^^^^^^^^^
+
+UserSpecifiedInstances.hs:13:10: error: [GHC-97044]
+    • Class ‘~’ does not support user-specified instances.
+    • In the instance declaration for ‘Foo ~ Foo’
+   |
+13 | instance Foo ~ Foo
+   |          ^^^^^^^^^</code></pre>
+
+<pre class="filename">UserSpecifiedInstances.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Coerce (Coercible, coerce)
+import Type.Reflection (Typeable(..))
+import Data.Type.Equality
+
+newtype Foo = Foo { unFoo :: () }
+
+instance Coercible Foo ()
+
+instance Typeable Foo
+
+instance Foo ~ Foo
+
+main :: IO ()
+main = do
+    let foo = Foo ()
+    print (coerce foo:: ())
+    print (typeOf foo)
+    print (Refl :: Foo :~: Foo)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+import Data.Coerce
+import Data.Type.Equality
+import Type.Reflection
+
+newtype Foo = Foo { unFoo :: () }
+
+main :: IO ()
+main = do
+    let foo = Foo ()
+    print (coerce foo:: ())
+    print (typeOf foo)
+    print (Refl :: Foo :~: Foo)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
