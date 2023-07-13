@@ -1,5 +1,5 @@
 ---
-title: <insert a title for this example here>
+title: Misspelled pragmas
 ---
 
 Typos in pragma names leads to warnings being emitted. Fixing the typos makes the warnings go away.
