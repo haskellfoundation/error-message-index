@@ -1,0 +1,1 @@
+data Direction = Up | Down

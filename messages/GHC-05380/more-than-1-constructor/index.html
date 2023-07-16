@@ -1,0 +1,32 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Main.hs:1:1: error: [GHC-05380]
+    A newtype must have exactly one constructor,
+      but ‘Direction’ has two
+    In the newtype declaration for ‘Direction’
+  |
+1 | newtype Direction = Up | Down
+  |</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>A <code>newtype</code> constructor can only have a single constructor.
+It is not allowed to have multiple constructors when defining a <code>newtype</code>.</p>
+
+<pre class="filename">More-than-1-constructor.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">newtype Direction = Up | Down
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">data Direction = Up | Down
+</code></pre>
+    </div>
+  </div>
+</div>
+
