@@ -14,5 +14,5 @@ Main.hs:1:1: error: [GHC-05380]
 ```
 ## Explanation
 
-A newtype constructor can only have a single constructor. It is not allowed to have multiple
-constructors when defining a newtype.
+A `newtype` constructor can only have a single constructor.
+It is not allowed to have multiple constructors when defining a `newtype`.

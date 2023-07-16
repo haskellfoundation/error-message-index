@@ -14,7 +14,7 @@ Main.hs:1:1: error: [GHC-05380]
 
 ## Explanation
 
-A `newtype` constructor does need to have a single constructor. It is not allowed to
-have a newtype without a constructor. It is allowed to have a `data` type without a
-constructor, so in order to fix this, you need to come up with a constructor for the newtype
-or change the `newtype` keyword to a `data` keyword.
+A `newtype` definition is required to have exactly one constructor, so constructorless `newtype`s are not allowed.
+Datatypes defined using `data` are allowed to be constructorless,
+so this problem can be fixed either by adding a constructor to the `newtype`
+or by changing the `newtype` keyword to a `data` keyword.

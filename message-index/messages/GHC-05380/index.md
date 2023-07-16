@@ -10,6 +10,7 @@ constructors, you should use `data` instead of `newtype`.
 
 The reason that you need exactly one constructor is that `newtype` constructors
 are removed at runtime.
-So during runtime, if you define `newtype Age = Age Int`, `Age` is the same as `Int`.
-Only during the compilation phase, will the `Age` and `Int` types be different.
-If we allow multiple constructors for a newtype, there would be no way to distinguish them during execution.
+For example, if you define `newtype Age = Age Int`, the bits in memory that represent
+an `Age` are identical to those that would represent the `Int` in the constructor.
+The `Age` and `Int` types are distinguished only at compile time.
+If types defined with `newtype` could have multiple constructors, there would be no way to distinguish them during execution.
