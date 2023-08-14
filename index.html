@@ -37,7 +37,7 @@
 </p>
 
 <p>
-  So far, 95 errors and warnings are documented here.
+  So far, 96 errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -245,6 +245,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
             <td class="nowrap">GHC-25078</td>
             <td><a href="./messages/GHC-25078/">Precedence out of range</a></td>
             <td>An invalid operator precedence was provided.</td>
+            <td>9.6.1</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHC-25897</td>
+            <td><a href="./messages/GHC-25897/">GADT pattern match must have a known result type</a></td>
+            <td>A pattern match on a GADT cannot succeed unless GHC knows the result type of the pattern match.</td>
             <td>9.6.1</td>
         </tr>
     

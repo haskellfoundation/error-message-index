@@ -1,0 +1,142 @@
+<p>In this example, the definition <code>foo</code> uses pattern matching on a GADT. GHC is not able to infer types for GADT pattern matches, but no type signature is provided. Following the suggestion in the error message and adding a type signature solves the problem.</p>
+<p>Both starting files in this example are identical, but they are matched with different solutions. <code>Example2.hs</code> demonstrates that GHC’s expected type need not be a concrete base type - even a type family satisfies this check.</p>
+<h2 id="message">Message</h2>
+<p>The following message is provided for both lines 16 and 17, because GHC type checks each branch of a pattern match separately:</p>
+<pre><code>Example1.hs:16:9: error:
+    • Could not deduce (p ~ Bool)
+      from the context: x ~ 'A
+        bound by a pattern with constructor: FA :: F 'A,
+                 in a \case alternative
+        at Example1.hs:16:3-4
+      ‘p’ is a rigid type variable bound by
+        the inferred type of foo :: F x -&gt; p
+        at Example1.hs:(15,1)-(17,13)
+    • In the expression: True
+      In a \case alternative: FA -&gt; True
+      In the expression:
+        \case
+          FA -&gt; True
+          FB -&gt; False
+    • Relevant bindings include
+        foo :: F x -&gt; p (bound at Example1.hs:15:1)
+    Suggested fix: Consider giving ‘foo’ a type signature
+   |
+16 |   FA -&gt; True
+   |   </code></pre>
+
+<pre class="filename">Example1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Example1 where
+
+data X = A | B
+
+data F x where
+  FA :: F A
+  FB :: F B
+
+-- Results in error GHC-25897
+foo = \case
+  FA -> True
+  FB -> False
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Example1 where
+
+data X = A | B
+
+data F x where
+  FA :: F A
+  FB :: F B
+
+-- Compiles successfully, because the
+-- result type of the pattern match
+-- is known, from the type signature,
+-- to be 'Bool'.
+foo :: F x -> Bool
+foo = \case
+  FA -> True
+  FB -> False
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">Example2.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Example2 where
+
+data X = A | B
+
+data F x where
+  FA :: F A
+  FB :: F B
+
+-- Results in error GHC-25897
+foo = \case
+  FA -> True
+  FB -> False
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Example2 where
+
+data X = A | B
+
+data F x where
+  FA :: F A
+  FB :: F B
+
+type family G a where
+  G A = Bool
+  G B = Bool
+
+-- Compiles successfully, because the
+-- result type of the pattern match
+-- is known, from the type signature,
+-- to be 'G x'
+foo3 :: F x -> G x
+foo3 = \case
+  FA -> True
+  FB -> False
+</code></pre>
+    </div>
+  </div>
+</div>
+
