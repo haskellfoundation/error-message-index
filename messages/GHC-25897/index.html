@@ -170,8 +170,8 @@ type family G a where
 -- result type of the pattern match
 -- is known, from the type signature,
 -- to be 'G x'
-foo3 :: F x -> G x
-foo3 = \case
+foo :: F x -> G x
+foo = \case
   FA -> True
   FB -> False
 </code></pre>
