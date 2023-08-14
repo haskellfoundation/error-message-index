@@ -1,0 +1,15 @@
+---
+title: <insert a title for this example here>
+---
+
+In this example, the data type declaration for the `Void1` data type was annotated with the kind signature `* %1 -> *`.
+This is not allowed, the kind signature of that data type should be `* -> *`.
+
+```
+messages/GHC-13218/illegalKindSignature/before/IllegalKindSignature.hs:4:1: error: [GHC-13218]
+    • Illegal linear function in a kind: * %1 -> *
+    • In the data type declaration for ‘Void1’
+  |
+4 | data Void1 :: * %1 -> *
+  | ^^^^^^^^^^
+```
