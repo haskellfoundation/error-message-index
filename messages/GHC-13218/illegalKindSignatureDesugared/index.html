@@ -1,0 +1,41 @@
+<p>This example is similar to the previous one, except that instead of the spelling <code>* %1 -&gt; *</code>, the spelling <code>Fun One Type Type</code> was chosen.
+In this case, the signature should be <code>Fun Many Type Type</code> instead.</p>
+<pre><code>messages/GHC-13218/illegalKindSignatureDesugared/before/IllegalKindSignatureDesugared.hs:7:1: error: [GHC-13218]
+    • Illegal linear function in a kind: * %1 -&gt; *
+    • In the data type declaration for ‘Void1’
+  |
+7 | data Void1 :: FUN One Type Type
+  | ^^^^^^^^^^</code></pre>
+
+<pre class="filename">IllegalKindSignatureDesugared.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes, KindSignatures, DataKinds #-}
+module IllegalKindSignatureDesugared where
+
+import GHC.Exts
+import GHC.Types
+
+data Void1 :: FUN One Type Type
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes, KindSignatures, DataKinds #-}
+module IllegalKindSignatureDesugared where
+
+import GHC.Exts
+import GHC.Types
+
+data Void1 :: FUN Many Type Type
+</code></pre>
+    </div>
+  </div>
+</div>
+

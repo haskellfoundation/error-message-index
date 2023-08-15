@@ -1,0 +1,45 @@
+<p>This example is similar to the previous two examples, except that the malformed kind was first declared as a type synonym.</p>
+<pre><code>messages/GHC-13218/illegalStandaloneKindSignature/before/IllegalStandaloneKindSignature.hs:9:1: error: [GHC-13218]
+    • Illegal linear function in a kind: * %1 -&gt; *
+    • In the expansion of type synonym ‘K’
+      In the data type declaration for ‘Void1’
+  |
+9 | data Void1 :: K
+  | ^^^^^^^^^^</code></pre>
+
+<pre class="filename">IllegalStandaloneKindSignature.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes, KindSignatures, DataKinds #-}
+module IllegalStandaloneKindSignature where
+
+import GHC.Exts
+import GHC.Types
+
+type K = Type %1 -> Type
+
+data Void1 :: K
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes, KindSignatures, DataKinds #-}
+module IllegalStandaloneKindSignature where
+
+import GHC.Exts
+import GHC.Types
+
+type K = Type -> Type
+
+data Void1 :: K
+</code></pre>
+    </div>
+  </div>
+</div>
+
