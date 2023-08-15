@@ -1,5 +1,5 @@
 ---
-title: <insert a title for this example here>
+title: Computing a multiplicity with a type family and GADT is not supported
 ---
 
 This example of an interaction between multiplicities and type equalities was discussed in the[GHC proposal](https://github.com/ghc-proposals/ghc-proposals/pull/111#issuecomment-438125526) which introduced linear types.
