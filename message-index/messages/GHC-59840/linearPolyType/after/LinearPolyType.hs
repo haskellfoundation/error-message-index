@@ -1,3 +1,3 @@
 module LinearPolyType where
 
--- This program can currently not be written :(
+-- This program cannot currently be written
