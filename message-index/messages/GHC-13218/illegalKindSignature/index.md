@@ -1,5 +1,6 @@
 ---
-title: <insert a title for this example here>
+title: Illegal kind signature for Void1 data type
+order: 0
 ---
 
 In this example, the data type declaration for the `Void1` data type was annotated with the kind signature `* %1 -> *`.
