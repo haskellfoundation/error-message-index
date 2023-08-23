@@ -1,0 +1,42 @@
+<p>In this example the programmer tries to use a C function with the help of GHC’s FFI system.
+The type given to the imported function, however, is not allowed.
+Only non-linear function types can be given to foreign functions.</p>
+<pre><code>messages/GHC-57396/linear-ffi/before/LinearFFI.hs:6:1: error: [GHC-57396]
+    • Unacceptable argument type in foreign declaration:
+        Linear types are not supported in FFI declarations, see #18472
+    • When checking declaration:
+        foreign import ccall safe &quot;exp&quot; c_exp :: Double %1 -&gt; Double
+  |
+6 | foreign import ccall &quot;exp&quot; c_exp :: Double %1 -&gt; Double
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">LinearFFI.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes #-}
+module LinearFFI where
+
+import Foreign.Ptr
+
+foreign import ccall "exp" c_exp :: Double %1 -> Double
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE LinearTypes #-}
+module LinearFFI where
+
+import Foreign.Ptr
+
+foreign import ccall "exp" c_exp :: Double -> Double
+</code></pre>
+    </div>
+  </div>
+</div>
+
