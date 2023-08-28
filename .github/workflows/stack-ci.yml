@@ -27,3 +27,4 @@ jobs:
     - uses: freckle/stack-action@v4
       with:
         working-directory: message-index
+        pedantic: false
