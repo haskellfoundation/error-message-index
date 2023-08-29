@@ -32,7 +32,7 @@ First, make sure the remote file exists. It's name is the same as the YAML file,
 
 Then make sure you have the required GPG public keys: https://www.haskell.org/ghcup/guide/#gpg-verification
 
-Run ghcup with `-v` to see the exact gpg error, e.g.:
+Finally, run `ghcup` with `-v` to see the exact `gpg` error, which can be used to diagnose why verification is failing. For example, if the key has not been imported, GPG will fail with the following message:
 
 ```
 $ ghcup -v --gpg strict list
