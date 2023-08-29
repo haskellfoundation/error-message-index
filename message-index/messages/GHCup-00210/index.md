@@ -25,7 +25,7 @@ $ ghcup --gpg strict list
 ```
 
 ## Troubleshooting
-Make sure the remote file exists. It's named the same as the yaml, except it ends with `.sig`. E.g.:
+First, make sure the remote file exists. It's name is the same as the YAML file, except it ends with `.sig`. For example:
 
 * https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml
 * https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml.sig
