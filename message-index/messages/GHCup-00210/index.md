@@ -24,6 +24,7 @@ $ ghcup --gpg strict list
 [ ...   ]                                                                     "/home/hasufell/.ghcup/cache/ghcup-0.0.7.yaml"] failed with exit code 2.
 ```
 
+## Troubleshooting
 Make sure the remote file exists. It's named the same as the yaml, except it ends with `.sig`. E.g.:
 
 * https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-0.0.7.yaml
