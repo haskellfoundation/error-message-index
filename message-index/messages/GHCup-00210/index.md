@@ -5,7 +5,7 @@ severity: error
 introduced: 0.1.19.0
 ---
 
-GHCup was asked to verify all downloaded yaml files via GPG. E.g.
+GHCup receives information about available Haskell tools through a metadata file in YAML format that describes where to find the tools. As a defense against unauthorized third parties misleading GHCup into installing malicious software, GHCup supports checking that these metadata files are signed by a trusted [GPG](https://en.wikipedia.org/wiki/GNU_Privacy_Guard) key. This error occurs when GHCup was asked to verify all downloaded YAML files via GPG. E.g.
 
 ```
 $ ghcup --gpg strict list
