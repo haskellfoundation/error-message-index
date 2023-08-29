@@ -1,6 +1,6 @@
 ---
 title: GPG verify failed
-summary: GHCup tried to verify the authenticity of a yaml file through GPG signatures, but failed
+summary: GHCup tried to verify the authenticity of a software channel using GPG, but failed
 severity: error
 introduced: 0.1.19.0
 ---
