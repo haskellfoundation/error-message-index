@@ -1,0 +1,62 @@
+<h2 id="error">Error</h2>
+<pre><code>Impred.hs:7:8: error: [GHC-91028]
+    • Couldn't match expected type ‘(forall s. ST s a) -&gt; a’
+                  with actual type ‘a0’
+      Cannot instantiate unification variable ‘a0’
+      with a type involving polytypes: (forall s. ST s a) -&gt; a
+    • In the expression: id runST
+      In an equation for ‘test’: test = id runST
+    • Relevant bindings include
+        test :: (forall s. ST s a) -&gt; a (bound at Impred.hs:7:1)
+  |
+7 | test = id runST
+  |        ^^^^^^^^
+
+Impred.hs:7:11: error: [GHC-91028]
+    • Couldn't match expected type ‘a0’
+                  with actual type ‘(forall s. ST s a1) -&gt; a1’
+      Cannot instantiate unification variable ‘a0’
+      with a type involving polytypes: (forall s. ST s a1) -&gt; a1
+    • In the first argument of ‘id’, namely ‘runST’
+      In the expression: id runST
+      In an equation for ‘test’: test = id runST
+  |
+7 | test = id runST
+  |           ^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Some code truly needs impredicativity. In this example, <code>runST</code> has the type <code>(forall s. ST s a) -&gt; a</code>. Because the <code>forall</code> is nested underneath the arrow, GHC can’t just provide it with a type argument - indeed, <code>runST</code> is one of the motivating examples for the utility of higher-rank polymorphism, and impredicativity removes restrictions from the uses of higher-rank functions. But applying <code>id</code> to <code>runST</code> requires instantiating the type variable in <code>id</code> to <code>(forall s. ST s a) -&gt; a</code>, which is polymorphic.</p>
+<p>Here, the error occurs twice: once when GHC attempts to match the type of <code>id</code>’s argument to the type of <code>runST</code>, and again when it attempts to match <code>id</code>’s return type to the type signature on <code>test</code>. In each case, the type variable <code>a0</code> from <code>id</code>’s type <code>forall a0. a0 -&gt; a0</code> is needed.</p>
+<p>This code can be fixed by turning on impredicative polymorphism, which implies <code>RankNTypes</code>.</p>
+
+<pre class="filename">Impred.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RankNTypes #-}
+module Impred where
+
+import Control.Monad.ST
+
+test :: (forall s. ST s a) -> a
+test = id runST
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module Impred where
+
+import Control.Monad.ST
+
+test :: (forall s. ST s a) -> a
+test = id runST
+</code></pre>
+    </div>
+  </div>
+</div>
+

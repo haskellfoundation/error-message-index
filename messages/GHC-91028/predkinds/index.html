@@ -1,0 +1,54 @@
+<h2 id="error">Error</h2>
+<pre><code>PredKinds.hs:6:13: error: [GHC-91028]
+    • Expected kind ‘forall (k :: k1). a’, but ‘z’ has kind ‘k0’
+      Cannot instantiate unification variable ‘k0’
+      with a kind involving polytypes: forall (k2 :: k1). a
+    • In the first argument of ‘Proxy’, namely ‘(z :: forall k. a)’
+      In the type signature: t :: Proxy (z :: forall k. a)
+  |
+6 | t :: Proxy (z :: forall k. a)
+  |             ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Even when impredicative types are enabled, polymorphic kinds remain predicative. In this case, the type constructor <code>Proxy</code> has the kind <code>forall k. k -&gt; Type</code>. This allows its argument to be any type, no matter its kind. Applying it to the type <code>(z :: forall k. a)</code> would require instantiating <code>Proxy</code>’s kind argument <code>k</code> with the polymorphic kind <code>forall k. a</code>, but this is not allowed.</p>
+<p>The only way to fix this error is to rewrite the code so that impredicative polymorphism is not required. One way to do this is to lift the polymorphism outward, so that GHC will suitably instantiate the type <code>z</code>’s polymorphic arguments in the argument position to <code>Proxy</code>. After performing this transformation, the fully explicit type of <code>t</code> can be seen in GHCI:</p>
+<pre><code>ghci&gt; :l PredKinds.hs
+[1 of 1] Compiling PredKinds        ( PredKinds.hs, interpreted )
+Ok, one module loaded.
+ghci&gt; :set -fprint-explicit-kinds
+ghci&gt; :t t
+t :: forall {k1} {k2 :: k1} a (z :: forall (k3 :: k1). a).
+     Proxy @{a} (z @k2)</code></pre>
+<p>Here, GHC has provided the argument <code>k2</code> to <code>z</code>, resulting in a type with a monomorphic kind <code>a</code>.</p>
+
+<pre class="filename">PredKinds.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module PredKinds where
+
+import Data.Proxy
+
+t :: Proxy (z :: forall k. a)
+t = Proxy
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module PredKinds where
+
+import Data.Proxy
+
+t :: forall a (z :: forall k. a). Proxy z
+t = Proxy
+</code></pre>
+    </div>
+  </div>
+</div>
+

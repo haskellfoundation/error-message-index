@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Cannot equate polymorphic types with type variables [GHC-91028] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Cannot equate polymorphic types with type variables [GHC-91028]
+    </nav>
+    <h1>Cannot equate polymorphic types with type variables [GHC-91028]</h1>
+    
+
+<p>During the type checking process, type variables are replaced with actual types. For example, the function <code>id</code> has type <code>a -&gt; a</code>, which is a shorter way of writing <code>forall a. a -&gt; a</code>. When <code>id</code> is applied to an argument, the variable <code>a</code> is <em>instantiated</em> with the argument’s type, causing <code>id</code>’s return type (and thus the whole expression) to be the same as the argument’s type. This is because <code>id</code>’s type is <em>polymorphic</em> - it contains variables that can be instantiated with many different types.</p>
+<p>For technical reasons, type variables cannot be instantiated with types that are themselves polymorphic in Haskell. This kind of instantiation is referred to as <a href="https://en.wikipedia.org/wiki/Impredicativity"><em>impredicative</em></a>, borrowing a term from logic that describes terms with quantifiers where the variable ranges over the same set as the one in which the quantifier is being used. Haskell is <em>predicative</em>, meaning that the variables of the <code>forall</code> quantifier do not range over types that themselves contain <code>forall</code>. Predicativity makes a type system much less expressive, which means that implementations are able to be more predictable for users, run faster, and give better error messages. Impredicativity is sometimes very useful, but predicativity is usually strong enough.</p>
+<p>This error occurs when GHC is asked to instantiate a type variable with a polymorphic type, which would require impredicativity.</p>
+<h2 id="enabling-impredicativity">Enabling Impredicativity</h2>
+<p>For some time, GHC has supported an extension called <code>ImpredicativeTypes</code>, but it was unreliable for many years. Starting in version 9.2, GHC uses a new implementation of type inference with impredicativity called <a href="https://www.microsoft.com/en-us/research/publication/a-quick-look-at-impredicativity/">Quick Look</a> that is more robust than previous implementations, so <code>ImpredicativeTypes</code> is now considered suitable for serious use. If your application does require the additional power provided by impredicativity, then enabling this extension may resolve this error message. Code that uses <code>ImpredicativeTypes</code> is likely to be less compatible with GHC 9.0 and earlier due to the revamping of this extension.</p>
+<h2 id="impredicative-kinds">Impredicative Kinds</h2>
+<p>Types and kinds are unified into a single entity in GHC, with typing rules rather than a separate grammar being used to track the difference between them. GHC’s kind system thus supports many features of the type system, including polymorphism. A definition may be polymorphic over both types and kinds. This error can also occur when GHC attempts to instantiate a kind variable with a polymorphic kind.</p>
+<p>However, even when <code>ImpredicativeTypes</code> is enabled, GHC requires that kind polymorphism be predicative.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Enabling Impredicativity</summary>
+  <div class="details-inner">
+    <h2 id="error">Error</h2>
+<pre><code>Impred.hs:7:8: error: [GHC-91028]
+    • Couldn't match expected type ‘(forall s. ST s a) -&gt; a’
+                  with actual type ‘a0’
+      Cannot instantiate unification variable ‘a0’
+      with a type involving polytypes: (forall s. ST s a) -&gt; a
+    • In the expression: id runST
+      In an equation for ‘test’: test = id runST
+    • Relevant bindings include
+        test :: (forall s. ST s a) -&gt; a (bound at Impred.hs:7:1)
+  |
+7 | test = id runST
+  |        ^^^^^^^^
+
+Impred.hs:7:11: error: [GHC-91028]
+    • Couldn't match expected type ‘a0’
+                  with actual type ‘(forall s. ST s a1) -&gt; a1’
+      Cannot instantiate unification variable ‘a0’
+      with a type involving polytypes: (forall s. ST s a1) -&gt; a1
+    • In the first argument of ‘id’, namely ‘runST’
+      In the expression: id runST
+      In an equation for ‘test’: test = id runST
+  |
+7 | test = id runST
+  |           ^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Some code truly needs impredicativity. In this example, <code>runST</code> has the type <code>(forall s. ST s a) -&gt; a</code>. Because the <code>forall</code> is nested underneath the arrow, GHC can’t just provide it with a type argument - indeed, <code>runST</code> is one of the motivating examples for the utility of higher-rank polymorphism, and impredicativity removes restrictions from the uses of higher-rank functions. But applying <code>id</code> to <code>runST</code> requires instantiating the type variable in <code>id</code> to <code>(forall s. ST s a) -&gt; a</code>, which is polymorphic.</p>
+<p>Here, the error occurs twice: once when GHC attempts to match the type of <code>id</code>’s argument to the type of <code>runST</code>, and again when it attempts to match <code>id</code>’s return type to the type signature on <code>test</code>. In each case, the type variable <code>a0</code> from <code>id</code>’s type <code>forall a0. a0 -&gt; a0</code> is needed.</p>
+<p>This code can be fixed by turning on impredicative polymorphism, which implies <code>RankNTypes</code>.</p>
+
+<pre class="filename">Impred.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RankNTypes #-}
+module Impred where
+
+import Control.Monad.ST
+
+test :: (forall s. ST s a) -> a
+test = id runST
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module Impred where
+
+import Control.Monad.ST
+
+test :: (forall s. ST s a) -> a
+test = id runST
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Impredicative Kind Polymorphism</summary>
+  <div class="details-inner">
+    <h2 id="error">Error</h2>
+<pre><code>PredKinds.hs:6:13: error: [GHC-91028]
+    • Expected kind ‘forall (k :: k1). a’, but ‘z’ has kind ‘k0’
+      Cannot instantiate unification variable ‘k0’
+      with a kind involving polytypes: forall (k2 :: k1). a
+    • In the first argument of ‘Proxy’, namely ‘(z :: forall k. a)’
+      In the type signature: t :: Proxy (z :: forall k. a)
+  |
+6 | t :: Proxy (z :: forall k. a)
+  |             ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Even when impredicative types are enabled, polymorphic kinds remain predicative. In this case, the type constructor <code>Proxy</code> has the kind <code>forall k. k -&gt; Type</code>. This allows its argument to be any type, no matter its kind. Applying it to the type <code>(z :: forall k. a)</code> would require instantiating <code>Proxy</code>’s kind argument <code>k</code> with the polymorphic kind <code>forall k. a</code>, but this is not allowed.</p>
+<p>The only way to fix this error is to rewrite the code so that impredicative polymorphism is not required. One way to do this is to lift the polymorphism outward, so that GHC will suitably instantiate the type <code>z</code>’s polymorphic arguments in the argument position to <code>Proxy</code>. After performing this transformation, the fully explicit type of <code>t</code> can be seen in GHCI:</p>
+<pre><code>ghci&gt; :l PredKinds.hs
+[1 of 1] Compiling PredKinds        ( PredKinds.hs, interpreted )
+Ok, one module loaded.
+ghci&gt; :set -fprint-explicit-kinds
+ghci&gt; :t t
+t :: forall {k1} {k2 :: k1} a (z :: forall (k3 :: k1). a).
+     Proxy @{a} (z @k2)</code></pre>
+<p>Here, GHC has provided the argument <code>k2</code> to <code>z</code>, resulting in a type with a monomorphic kind <code>a</code>.</p>
+
+<pre class="filename">PredKinds.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module PredKinds where
+
+import Data.Proxy
+
+t :: Proxy (z :: forall k. a)
+t = Proxy
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE ImpredicativeTypes #-}
+module PredKinds where
+
+import Data.Proxy
+
+t :: forall a (z :: forall k. a). Proxy z
+t = Proxy
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
