@@ -57,7 +57,6 @@ main = hakyll $ do
 
   match "messages/*/*/index.md" $
     version "nav" $ do
-      route $ setExtension "html"
       compile getResourceBody
 
   match "messages/*/*/index.md" $ do
@@ -95,7 +94,6 @@ main = hakyll $ do
 
   match "messages/*/index.md" $
     version "nav" $ do
-      route $ setExtension "html"
       compile pandocCompiler
 
   match "messages/*/index.md" $ do
