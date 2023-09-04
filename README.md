@@ -25,5 +25,7 @@ If you're a Haskell tool developer who would like to integrate your project with
 
 ## Maintenance
 
-The Message Index is a project of the [Haskell Foundation](http://haskell.foundation). Please get in touch if you have ideas, requests, or any other feedback!
+The Message Index is a project of the [Haskell Foundation](http://haskell.foundation), maintained on a volunteer basis by David Binder (@BinderDavid). Please get in touch if you have ideas, requests, or any other feedback!
+
+
 
