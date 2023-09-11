@@ -1,6 +1,6 @@
 ---
-title: Rewrite rules are ignored in SafeHaskell
-summary: Rewrite rules are not allowed in SafeHaskell and therefore ignored
+title: Rewrite rules are ignored in Safe Haskell
+summary: Rewrite rules are not allowed in Safe Haskell and are therefore ignored
 severity: warning
 introduced: 9.6.1
 ---
