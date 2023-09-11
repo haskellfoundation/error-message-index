@@ -1,5 +1,5 @@
 {-# LANGUAGE Haskell2010 #-}
-{-# OPTIONS_GHC -fwarn-safe #-}
+{-# OPTIONS_GHC -Wsafe #-}
 module InferredSafe where
 
 theAnswer :: Int
