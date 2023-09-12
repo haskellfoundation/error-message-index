@@ -1,0 +1,39 @@
+<p>In this example the module was annotated as trustworthy, but GHC inferred that the module is also safe.
+Since “safe” is a stronger guarantee than “trustworthy”, GHC warns that the module should be annotated as safe instead.
+The warning can therefore be fixed by changing the annotation from trustworthy to safe.</p>
+<pre><code>messages/GHC-19244/trustworthy-safe/before/TrustworthySafe.hs:1:27: warning: [GHC-19244] [-Wtrustworthy-safe]
+    ‘TrustworthySafe’ is marked as Trustworthy but has been inferred as safe!
+  |
+1 | {-# LANGUAGE Haskell2010, Trustworthy #-}
+  |</code></pre>
+
+<pre class="filename">TrustworthySafe.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010, Trustworthy #-}
+{-# OPTIONS_GHC -fwarn-trustworthy-safe #-}
+module TrustworthySafe where
+
+theAnswer :: Int
+theAnswer = 42
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010, Safe #-}
+{-# OPTIONS_GHC -fwarn-trustworthy-safe #-}
+module TrustworthySafe where
+
+theAnswer :: Int
+theAnswer = 42
+</code></pre>
+    </div>
+  </div>
+</div>
+
