@@ -1,0 +1,38 @@
+<p>Wanting to rewrite occurrences of <code>myId x</code> to <code>x</code> in programs is sensible. But since GHC cannot check in general whether rewrite rules violate the guarantees of SafeHaskell, GHC chooses to ignore all such rules in modules which are annotated as <code>Safe</code>.These rewrite rules should therefore be removed.</p>
+<pre><code>messages/GHC-56147/ignored-rule/before/IgnoredRule.hs:4:11: warning: [GHC-56147]
+    Rule &quot;myId&quot; ignored
+    Defining user rules is disabled under Safe Haskell
+  |
+4 | {-# RULES &quot;myId&quot; forall x. myId x = x #-}
+  |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">IgnoredRule.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Safe #-}
+module IgnoredRule where
+
+{-# RULES "myId" forall x. myId x = x #-}
+myId :: a -> a
+myId x = x
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Safe #-}
+module IgnoredRule where
+
+
+myId :: a -> a
+myId x = x
+</code></pre>
+    </div>
+  </div>
+</div>
+
