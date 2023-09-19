@@ -26,8 +26,10 @@
 
 <p>This error means that a variable name used in a program can’t be matched up with a corresponding <em>binding site</em>.</p>
 <p>In Haskell, every variable comes into existence at a specific location. Examples include function argument names, local definitions with <code>let</code>, and module-level definitions. Creating a new name like this is called <em>binding</em> it, and the area of the program that can refer to the new name is called its <em>scope</em>. The message means that the provided name is not available for reference right where it is referred to.</p>
+<p>A common situation where this error occurs is when the programmer forgets to import some name from a module. In that case, the solution is to add the missing import declaration.</p>
 <h2 id="example-error-text">Example error text</h2>
 <pre><code>error: [GHC-88464] Variable not in scope: x</code></pre>
+<pre><code>error: [GHC-88464] Variable not in scope: sort :: [Int] -&gt; [Int]</code></pre>
 
 
 
@@ -68,6 +70,51 @@ g y = x
 f x = 5
 
 g x = x
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Forgetting an import declaration</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>ForgotImport.hs:4:19: error: [GHC-88464]
+    Variable not in scope: sort :: [Int] -&gt; [Int]
+    Suggested fix: Perhaps use ‘sqrt’ (imported from Prelude)
+  |
+4 | top10 = take 10 . sort
+  |                   ^^^^</code></pre>
+<h2 id="description">Description</h2>
+<p>In this example, the programmer forgot to import the <code>sort</code> function from the <code>Data.List</code> module. The updated version adds the appropriate import declaration.</p>
+
+<pre class="filename">ForgotImport.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module ForgotImport where
+
+top10 :: [Int] -> [Int]
+top10 = take 10 . sort
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module ForgotImport where
+
+import Data.List (sort)
+
+top10 :: [Int] -> [Int]
+top10 = take 10 . sort
 </code></pre>
     </div>
   </div>
