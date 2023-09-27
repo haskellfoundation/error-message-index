@@ -48,7 +48,6 @@ main = hakyll $ do
   for_ exampleExtensions $ \ext -> do
     match (fromGlob $ "messages/*/*/**." <> ext) $
       version "raw" $ do
-        route idRoute
         compile getResourceBody
 
     match (fromGlob $ "messages/*/*/**." <> ext) $ do
@@ -130,7 +129,6 @@ main = hakyll $ do
 
   match "index.html" $
     version "nav" $ do
-      route idRoute
       compile getResourceBody
 
   match "index.html" $ do
