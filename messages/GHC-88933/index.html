@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Non-numeric type in default declaration [GHC-88933] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href>The Haskell Error Index</a>&nbsp;»
+      
+      Non-numeric type in default declaration [GHC-88933]
+    </nav>
+    <h1>Non-numeric type in default declaration [GHC-88933]</h1>
+    
+
+<p>A numeric literal such as <code>5</code> is overloaded in Haskell and has the type <code>forall a. Num a =&gt; a</code>.
+This allows the programmer to use numeric literals in many contexts without having a separate literal syntax for different numeric types.
+By extension, many numeric functions have a polymorphic type involving the <code>Num</code> type class.</p>
+<p>A downside of using overloaded arithmetic expressions is that GHC is not always able to non-ambiguously infer a concrete type, such as <code>Int</code> or <code>Double</code>.
+This is the case, for example, in the expression <code>show 5</code>.
+The compiler cannot infer if the programmer means <code>show (5 :: Int)</code>, <code>show (5 :: Double)</code> or any other numeric type.</p>
+<p>Since this case is very common, the Haskell report specifies a default behaviour for overloaded numeric expressions which involve the <code>Num</code> typeclass.
+Numeric types are defaulted to <code>Integer</code>, and if that is not possible to <code>Double</code>.</p>
+<p>This defaulting behaviour can be customized with “default declarations”.
+A default declaration uses the syntax <code>default (...)</code> with a list of comma-separated types.
+These types are tried in the order in which they occur in the default declaration.</p>
+<p>Every type which appears in a default declaration must implement the <code>Num</code> type class.
+If a type which occurs in a default declaration does not have such an instance, then this error
+is thrown by GHC.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>A default declaration was provided for Bool</summary>
+  <div class="details-inner">
+    <p>In this example a default declaration was provided for the type <code>Bool</code>.
+Since <code>Bool</code> does not implement the <code>Num</code> type class, we have to remove
+the default declaration if we want to compile the program.</p>
+<h1 id="error-message">Error message</h1>
+<pre><code>BoolDefaultDeclaration.hs:3:1: error: [GHC-88933]
+    • The default type ‘Bool’ is not an instance of ‘Num’
+    • When checking the types in a default declaration
+  |
+3 | default (Bool)
+  | ^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">BoolDefaultDeclaration.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module BoolDefaultDeclaration where
+
+default (Bool)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module BoolDefaultDeclaration where
+
+
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>A default declaration was provided for String</summary>
+  <div class="details-inner">
+    <p>In this example, the programmer wrote a default declaration for the type <code>String</code>, which does not implement the type class <code>Num</code>.
+If we enable the <code>OverloadedStrings</code> extension, then the rules about which types are allowed in default declarations are relaxed.
+Every type which implements either the <code>Num</code> or the <code>IsString</code> type class is now allowed in default declarations.</p>
+<h1 id="error-message">Error message</h1>
+<pre><code>StringDefaultDeclaration.hs:4:1: error: [GHC-88933]
+    • The default type ‘String’ is not an instance of ‘Num’
+    • When checking the types in a default declaration
+  |
+4 | default (String)
+</code></pre>
+
+<pre class="filename">StringDefaultDeclaration.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">
+module StringDefaultDeclaration where
+
+default (String)
+
+main :: IO ()
+main = print "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE OverloadedStrings #-}
+module StringDefaultDeclaration where
+
+default (String)
+
+main :: IO ()
+main = print "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
