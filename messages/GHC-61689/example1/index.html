@@ -1,0 +1,66 @@
+<h2 id="message">Message</h2>
+<pre><code>SymbolNotExported.hs:3:16: error: [GHC-61689]
+    Module ‘A’ does not export ‘two’.
+  |
+3 | import A (one, two)
+  |                ^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The module <code>SymbolNotExported</code> imports the symbol <code>two</code> even though <code>A</code> does not export it.</p>
+<p>The fix is to remove the bad import.</p>
+
+<pre class="filename">A.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module A (one) where
+
+one :: ()
+one = ()
+
+two :: ()
+two = ()
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module A (one) where
+
+one :: ()
+one = ()
+
+two :: ()
+two = ()
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">SymbolNotExported.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module SymbolNotExported where
+
+import A (one, two)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module SymbolNotExported where
+
+import A (one)
+</code></pre>
+    </div>
+  </div>
+</div>
+

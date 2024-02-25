@@ -162,6 +162,53 @@ barAddOne (MkBar n) = MkBar (n + 1)
   </div>
 </details>
 
+<details open="open">
+  <summary>Field selector exported with NoFieldSelectors</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>NoFieldSelectorsExport.hs:3:35: error: [GHC-76037]
+    Not in scope: ‘foo’
+    Suggested fix:
+      Notice that ‘foo’ is a field selector belonging to the type ‘T’
+      that has been suppressed by NoFieldSelectors.
+  |
+3 | module NoFieldSelectorsExport (T, foo) where
+  |                                   ^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The field selector <code>foo</code> has been disabled via <code>NoFieldSelectors</code>, therefore it cannot be a top-level export. The fix is to export it as part of its type <code>T</code> (consequently it can be imported for e.g. record creation or updates).</p>
+
+<pre class="filename">NoFieldSelectorsExport.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoFieldSelectors #-}
+
+module NoFieldSelectorsExport (T, foo) where
+
+data T = MkT { foo :: T }
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoFieldSelectors #-}
+
+module NoFieldSelectorsExport (T (foo)) where
+
+data T = MkT { foo :: T }
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
 
 
   </main>

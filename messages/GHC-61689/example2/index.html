@@ -1,0 +1,70 @@
+<h2 id="message">Message</h2>
+<pre><code>NoFieldSelectors.hs:3:24: error: [GHC-61689]
+    Module ‘A’ does not export ‘fint’.
+    Suggested fix:
+      Notice that ‘fint’ is a field selector belonging to the type ‘A.Foo’
+      that has been suppressed by NoFieldSelectors.
+  |
+3 | import A (Foo (MkFoo), fint)
+  |                        ^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>With <code>FieldSelectors</code> (the default), field selectors are exported such that the following two imports are equivalent:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">A</span> (<span class="dt">Foo</span> (<span class="dt">MkFoo</span>, fint))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">A</span> (<span class="dt">Foo</span> (<span class="dt">MkFoo</span>), fint)</span></code></pre></div>
+<p>With <code>NoFieldSelectors</code> at the <em>definition site</em> (<code>A.hs</code>), the second example is always an error:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">A</span> (<span class="dt">Foo</span> (<span class="dt">MkFoo</span>), fint)</span></code></pre></div>
+<p>The fix is to move the selector import to the type or remove it altogether.</p>
+
+<pre class="filename">A.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoFieldSelectors #-}
+
+module A (Foo (..)) where
+
+data Foo = MkFoo { fint :: Int, fchar :: Char }
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NoFieldSelectors #-}
+
+module A (Foo (..)) where
+
+data Foo = MkFoo { fint :: Int, fchar :: Char }
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">NoFieldSelectors.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module NoFieldSelectors where
+
+import A (Foo (MkFoo), fint)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module NoFieldSelectors where
+
+import A (Foo (MkFoo, fint))
+</code></pre>
+    </div>
+  </div>
+</div>
+
