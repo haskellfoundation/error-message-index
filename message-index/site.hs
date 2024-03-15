@@ -12,7 +12,7 @@ import Data.Data (Typeable)
 import Data.Foldable (for_)
 import Data.Function (on)
 import Data.Functor ((<&>))
-import Data.List (find, isPrefixOf, lookup, nub, sort, sortBy)
+import Data.List (find, lookup, nub, sort, sortBy, stripPrefix)
 import Data.List.NonEmpty (NonEmpty (..))
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
@@ -54,10 +54,6 @@ main = hakyll $ do
       route idRoute
       compile copyFileCompiler
 
-  match "messages/*/*/index.md" $
-    version "nav" $ do
-      compile getResourceBody
-
   match "messages/*/*/index.md" $ do
     route $ setExtension "html"
     compile $ do
@@ -66,7 +62,6 @@ main = hakyll $ do
         getUnderlying
           <&> \ident ->
             fromFilePath $ takeDirectory (takeDirectory (toFilePath ident)) </> "index.md"
-      bread <- breadcrumbField ["index.html", thisMessage]
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/example.html"
@@ -91,15 +86,11 @@ main = hakyll $ do
           )
         >>= relativizeUrls
 
-  match "messages/*/index.md" $
-    version "nav" $ do
-      compile pandocCompiler
-
   match "messages/*/index.md" $ do
     route $ setExtension "html"
     compile $ do
       examples <- getExamples
-      bread <- breadcrumbField ["index.html"]
+      let bread = breadcrumbCtx ["index.html"]
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/message.html"
@@ -111,7 +102,7 @@ main = hakyll $ do
                 defaultContext
               ]
           )
-        >>= loadAndApplyTemplate "templates/default.html" (bread <> defaultContext)
+        >>= loadAndApplyTemplate "templates/default.html" (bread <> messageTitleField <> defaultContext)
         >>= relativizeUrls
 
   match "messages/index.md" $ do
@@ -121,22 +112,18 @@ main = hakyll $ do
   match "404.html" $ do
     route idRoute
     compile $ do
-      bread <- breadcrumbField ["index.html"]
-      let ctx = mconcat [constField "title" "Not Found", bread, defaultContext]
+      let bread = breadcrumbCtx ["index.html"]
+          ctx = mconcat [constField "title" "Not Found", bread, defaultContext]
       getResourceBody
         >>= applyAsTemplate ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
-
-  match "index.html" $
-    version "nav" $ do
-      compile getResourceBody
 
   match "index.html" $ do
     route idRoute
     compile $ do
       messages <- loadAll ("messages/*/index.md" .&&. hasNoVersion)
-      bread <- breadcrumbField []
-      let indexCtx =
+      let bread = breadcrumbCtx []
+          indexCtx =
             mconcat
               [ listField "messages" (messageCtx <> defaultContext) (pure messages),
                 bread,
@@ -161,21 +148,15 @@ main = hakyll $ do
 exampleExtensions :: NonEmpty String
 exampleExtensions = "hs" :| ["yaml", "cabal"]
 
-breadcrumbField :: [Identifier] -> Compiler (Context String)
-breadcrumbField idents =
-  (messageTitleField <>) . breadcrumbCtx <$> traverse (load @String . setVersion (Just "nav")) idents
-
-breadcrumbCtx :: [Item String] -> Context String
+breadcrumbCtx :: [Identifier] -> Context String
 breadcrumbCtx parents =
-  listField "parents" (mconcat [indexlessUrlField "url", messageTitleField, defaultContext]) (pure parents)
+  let parents' = (`Item` ()) <$> parents
+   in listField "parents" (indexlessUrlField "url" <> messageTitleField) (pure parents')
 
 indexlessUrlField :: String -> Context a
-indexlessUrlField key = field key $ \i ->
-  let id = itemIdentifier i
-      empty' = fail $ "No route url found for item " ++ show id
-   in maybe empty' (indexless . toUrl) <$> getRoute id
+indexlessUrlField = mapContext indexless . urlField
 
-messageTitleField :: Context String
+messageTitleField :: Context a
 messageTitleField = field "title" getTitle
   where
     getTitle item = do
@@ -301,9 +282,7 @@ flagSetFields =
     ]
 
 indexless :: String -> String
-indexless url
-  | reverse toDrop `isPrefixOf` lru = reverse $ drop (length toDrop) lru
-  | otherwise = url
-  where
-    lru = reverse url
-    toDrop = "index.html"
+indexless url = fromMaybe url (stripSuffix "index.html" url)
+
+stripSuffix :: String -> String -> Maybe String
+stripSuffix suffix src = reverse <$> stripPrefix (reverse suffix) (reverse src)
