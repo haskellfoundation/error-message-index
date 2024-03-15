@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Messages from WARNING and DEPRECATED pragmas [GHC-63394] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href>The Haskell Error Index</a>&nbsp;»
+      
+      Messages from WARNING and DEPRECATED pragmas [GHC-63394]
+    </nav>
+    <h1>Messages from WARNING and DEPRECATED pragmas [GHC-63394]</h1>
+    
+
+<p>Libraries may attach warning messages to functions and other entities they
+export to appear when they are used. Common use cases include deprecated
+functions and partial functions (such as <code>head</code> and <code>tail</code>).</p>
+<p>Those messages are declared using the pragmas <code>{-# WARNING ... #-}</code> and
+<code>{-# DEPRECATED ... #-}</code>.
+For more information, <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/pragmas.html#warning-and-deprecated-pragmas">see the GHC user’s guide</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# WARNING in &quot;x-partial&quot; head &quot;This function is partial...&quot; #-}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a</span></code></pre></div>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>`head` is a partial function</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>before/PartialHead.hs:6:3: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    &quot;This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty.&quot;
+  |
+6 |   head list
+  |   ^^^^</code></pre>
+
+<pre class="filename">PartialHead.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialHead where
+
+example :: Int
+example =
+  let list = 1 : 2 : 3 : [] in
+  head list
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialHead where
+
+import Data.List.NonEmpty (NonEmpty((:|)))
+import qualified Data.List.NonEmpty as NonEmpty
+import Data.Maybe (listToMaybe)
+
+-- Use pattern-matching, handling the empty case explicitly.
+example1 :: Int
+example1  =
+  let list = 1 : 2 : 3 : [] in
+  case list of
+    [] -> 0
+    hd : _ -> hd
+
+-- Use listToMaybe.
+example2 :: Maybe Int
+example2 =
+  let list = 1 : 2 : 3 : [] in
+  listToMaybe list
+
+-- Refactor to use NonEmpty.head.
+example3 :: Int
+example3 =
+  let list :: NonEmpty Int
+      list = 1 :| 2 : 3 : [] in
+  NonEmpty.head list
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>`tail` is a partial function</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>PartialTail.hs:6:3: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘tail’
+    (imported from Prelude, but defined in GHC.List):
+    &quot;This is a partial function, it throws an error on empty lists. Replace it with drop 1, or use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty.&quot;
+  |
+6 |   tail list
+  |   ^^^^</code></pre>
+
+<pre class="filename">PartialTail.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialTail where
+
+example :: [Int]
+example =
+  let list = 1 : 2 : 3 : [] in
+  tail list
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialTail where
+
+import Data.List.NonEmpty (NonEmpty((:|)))
+import qualified Data.List.NonEmpty as NonEmpty
+
+-- Replace `tail` with `drop 1`.
+example1 :: [Int]
+example1 =
+  let list = 1 : 2 : 3 : [] in
+  drop 1 list
+
+-- Use pattern-matching.
+example2 :: [Int]
+example2  =
+  let list = 1 : 2 : 3 : [] in
+  case list of
+    [] -> []
+    _ : xs -> xs
+
+-- Refactor to use NonEmpty.tail.
+example3 :: [Int]
+example3 =
+  let list :: NonEmpty Int
+      list = 1 :| 2 : 3 : [] in
+  NonEmpty.tail list
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>before/PartialHead.hs:6:3: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    &quot;This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty.&quot;
+  |
+6 |   head list
+  |   ^^^^</code></pre>
+
+<pre class="filename">PartialHead.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialHead where
+
+example :: Int
+example =
+  let list = 1 : 2 : 3 : [] in
+  head list
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module PartialHead where
+
+import Data.List.NonEmpty (NonEmpty((:|)))
+import qualified Data.List.NonEmpty as NonEmpty
+import Data.Maybe (listToMaybe)
+
+-- Use pattern-matching, handling the empty case explicitly.
+example1 :: Int
+example1  =
+  let list = 1 : 2 : 3 : [] in
+  case list of
+    [] -> 0
+    hd : _ -> hd
+
+-- Use listToMaybe.
+example2 :: Maybe Int
+example2 =
+  let list = 1 : 2 : 3 : [] in
+  listToMaybe list
+
+-- Refactor to use NonEmpty.head.
+example3 :: Int
+example3 =
+  let list :: NonEmpty Int
+      list = 1 :| 2 : 3 : [] in
+  NonEmpty.head list
+</code></pre>
+    </div>
+  </div>
+</div>
+
