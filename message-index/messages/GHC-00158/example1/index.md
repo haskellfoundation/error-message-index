@@ -6,7 +6,7 @@ GHC cannot derive an instance for `MyClass`, as it is not stock deriveable. Enab
 
 ## Error Message
 
-```haskell
+```
 NotStockDeriveable.hs:6:12: error: [GHC-00158]
     • Can't make a derived instance of ‘MyClass MyType’:
         ‘MyClass’ is not a stock derivable class (Eq, Show, etc.)

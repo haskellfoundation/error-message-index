@@ -20,11 +20,13 @@ import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
 import qualified Data.Text as T
 import Data.Traversable
+import Debug.Trace
 import Hakyll
 import Lens.Micro (_1, _2, _3)
 import Lens.Micro.Extras (view)
 import System.FilePath
-import Text.Pandoc.Definition (Meta (..), MetaValue (..), Pandoc (..))
+import qualified Text.Pandoc as Pandoc
+import qualified Text.Pandoc.Definition as Pandoc
 
 main :: IO ()
 main = hakyll $ do
@@ -67,6 +69,7 @@ main = hakyll $ do
           <&> \ident ->
             fromFilePath $ takeDirectory (takeDirectory (toFilePath ident)) </> "index.md"
       bread <- breadcrumbField ["index.html", thisMessage]
+
       pandocCompiler
         >>= loadAndApplyTemplate
           "templates/example.html"
@@ -74,16 +77,29 @@ main = hakyll $ do
               [ listField
                   "files"
                   ( mconcat
-                      [ indexlessUrlField "url",
-                        field "name" (pure . view _1 . itemBody),
-                        -- Set the language that highlight.js should use for syntax highlighting
-                        field "language" $ \(itemBody -> (filename, _, _)) ->
-                          pure $ case dropWhile (== '.') $ takeExtension filename of
-                            "hs" -> "haskell"
-                            other -> other,
-                        field "before" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _2 . itemBody),
-                        field "after" (maybe (pure "<not present>") (fmap itemBody . load . itemIdentifier) . view _3 . itemBody)
-                      ]
+                      ( let getName = view _1 . itemBody
+                            nameField = field "name" (pure . getName)
+
+                            highlightField ident lens = field ident $ \item -> do
+                              let name = getName item
+                              case view lens $ itemBody item of
+                                Nothing -> pure "<not present>"
+                                Just exampleItem -> do
+                                  exampleText <- fmap itemBody $ load $ itemIdentifier exampleItem
+                                  let language =
+                                        case takeExtension name of
+                                          ".hs" -> "haskell"
+                                          _ -> ""
+                                  pure $ T.unpack $ highlight language $ T.pack $ exampleText
+
+                            beforeField = highlightField "beforeHighlighted" _2
+                            afterField = highlightField "afterHighlighted" _3
+                         in [ indexlessUrlField "url",
+                              nameField,
+                              beforeField,
+                              afterField
+                            ]
+                      )
                   )
                   (return files),
                 defaultContext
@@ -307,3 +323,13 @@ indexless url
   where
     lru = reverse url
     toDrop = "index.html"
+
+highlight :: T.Text -> T.Text -> T.Text
+highlight language code =
+  let writerOptions = Pandoc.def
+      -- We make a fake Pandoc document that's just the code embedded in a code block.
+      document =
+        Pandoc.Pandoc mempty [Pandoc.CodeBlock ("", [language], []) code]
+   in case Pandoc.runPure $ Pandoc.writeHtml5String writerOptions document of
+        Left err -> error $ "Unexpected Pandoc error: " ++ show err
+        Right html -> html

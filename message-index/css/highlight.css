@@ -1,67 +1,41 @@
-pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 1em
-}
-
-code.hljs {
-  padding: 3px 5px
-}
-
-.hljs {
+/* This is based on the output of running Pandoc with the `--standalone` flag and
+ * `--highlight-style pygments`, with hardcoded colors replaced with CSS
+ * variables.
+ *
+ * The names referred to in the comments are from: https://docs.kde.org/trunk5/en/kate/katepart/highlight.html
+ * (See header "Available Default Styles".)
+ */
+div.sourceCode {
   color: var(--code-color);
   background: var(--code-bg-color);
 }
 
-.hljs-comment, .hljs-quote {
-  color: var(--code-comment-color);
-  font-style: italic
-}
-
-.hljs-doctag, .hljs-formula, .hljs-keyword {
-  color: var(--code-kw-color);
-}
-
-.hljs-deletion, .hljs-name, .hljs-section, .hljs-selector-tag, .hljs-subst {
-  color: var(--code-name-color);
-}
-
-.hljs-literal, .hljs-number {
-  color: var(--code-literal-color);
-}
-
-.hljs-addition, .hljs-attribute, .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
-  color: var(--code-string-color);
-}
-
-.hljs-type  {
-  color: var(--code-constructor-color);
-}
-
-.hljs-attr, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-pseudo, .hljs-template-variable, .hljs-variable {
-  color: var(--code-attr-color);
-}
-
-.hljs-meta  {
-  color: var(--code-pragma-color);
-}
-
-.hljs-bullet, .hljs-link, .hljs-selector-id, .hljs-symbol, .hljs-title {
-  color: var(--code-symbol-color);
-}
-
-.hljs-built_in, .hljs-class .hljs-title, .hljs-title.class_ {
-  color: var(--record-field-color);
-}
-
-.hljs-emphasis {
-  font-style: italic
-}
-
-.hljs-strong {
-  font-weight: 700
-}
-
-.hljs-link {
-  text-decoration: underline
-}
+code span.al { color: var(); font-weight: bold; } /* Alert */
+code span.an { color: var(--code-comment-color); font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: var(--code-pragma-color); } /* Attribute */
+code span.bn { color: var(--code-literal-color); } /* BaseN */
+code span.bu { color: var(--code-name-color); } /* BuiltIn */
+code span.cf { color: var(--code-kw-color); font-weight: bold; } /* ControlFlow */
+code span.ch { color: var(--code-literal-color); } /* Char */
+code span.cn { color: var(--code-symbol-color); } /* Constant */
+code span.co { color: var(--code-comment-color); font-style: italic; } /* Comment */
+code span.cv { color: var(--code-comment-color); font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: var(--code-comment-color); font-style: italic; } /* Documentation */
+code span.dt { color: var(--code-constructor-color); } /* DataType */
+code span.dv { color: var(--code-literal-color); } /* DecVal */
+code span.er { color: var(); font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: var(--code-literal-color); } /* Float */
+code span.fu { color: var(--code-color); } /* Function */
+code span.im { color: var(--code-kw-color); font-weight: bold; } /* Import */
+code span.in { color: var(); font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: var(--code-kw-color); font-weight: bold; } /* Keyword */
+code span.op { color: var(--code-symbol-color); } /* Operator */
+code span.ot { color: var(--code-color); } /* Other */
+code span.pp { color: var(--code-comment-color); } /* Preprocessor */
+code span.sc { color: var(--code-literal-color); } /* SpecialChar */
+code span.ss { color: var(--code-string-color); } /* SpecialString */
+code span.st { color: var(--code-string-color); } /* String */
+code span.va { color: var(--code-attr-color); } /* Variable */
+code span.vs { color: var(--code-string-color); } /* VerbatimString */
+code span.wa { color: var(); font-weight: bold; font-style: italic; } /* Warning */
