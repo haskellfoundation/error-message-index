@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Ambiguous record update [GHC-02256] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Ambiguous record update [GHC-02256]
+    </nav>
+    <h1>Ambiguous record update [GHC-02256]</h1>
+    
+<p>
+  <i>Flag: <code>-Wambiguous-fields</code></i><br />
+  
+  <i>Enabled by default</i>
+  
+</p>
+
+
+<p>The <code>DuplicateRecordFields</code> extension lets you use the same field name in multiple records within the same module.
+This can lead to problems when using field accessors to access a field of a record.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Ambiguous Record Update</summary>
+  <div class="details-inner">
+    <p>In this example we declare two records <code>BusinessAccount</code> and <code>PersonalAccount</code> which each contain a field <code>balance</code> which stores the current balance. In the function <code>resetPersonalAccount</code> we use this record field to reset the account balance of a personal account to 0.
+The compiler can successfully detect that the field <code>balance</code> that we mention refers to the field of the record <code>PersonalAccount</code> and not to the field of the record <code>BusinessAccount</code>, but the mechanism that GHC uses for this is brittle and will be deprecated in a future release.
+For this reason GHC emits a warning.</p>
+<pre><code>before/Accounting.hs:9:42: warning: [GHC-02256] [-Wambiguous-fields]
+    The record update account
+                        {balance = 0} with type PersonalAccount is ambiguous.
+    This will not be supported by -XDuplicateRecordFields in future releases of GHC.
+  |
+9 | resetPersonalAccount account = account { balance = 0 }
+  |  </code></pre>
+<p>In order to make your code compile without warnings you can put the record declarations in a separate module and use qualified imports and names to make it unambiguous which record field you mean.</p>
+
+<pre class="filename">Accounting.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DuplicateRecordFields #-}
+module Accounting where
+
+data BusinessAccount = MkBusinessAccount { balance :: Int }
+
+data PersonalAccount = MkPersonalAccount { balance :: Int }
+
+resetPersonalAccount :: PersonalAccount -> PersonalAccount
+resetPersonalAccount account = account { balance = 0 }
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Accounting where
+
+import qualified AccountingRecords as Personal (PersonalAccount(..))
+import qualified AccountingRecords as Business (BusinessAccount(..))
+
+resetPersonalAccount :: Personal.PersonalAccount -> Personal.PersonalAccount
+resetPersonalAccount account = account { Personal.balance = 0 }
+</code></pre>
+    </div>
+  </div>
+</div>
+
+<pre class="filename">AccountingRecords.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell"><not present></code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DuplicateRecordFields #-}
+module AccountingRecords where
+
+data BusinessAccount = MkBusinessAccount { balance :: Int }
+
+data PersonalAccount = MkPersonalAcccount { balance :: Int }
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
