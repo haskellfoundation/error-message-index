@@ -13,4 +13,4 @@ awk '{print substr($1, 2, length($1) - 2)}' codes.stdout > untested_error_codes.
 grep -v -f untested_error_codes.txt undocumented_error_codes.txt > good_candidates.txt
 
 # Generate the content.tex from good_candidates.tex
-awk 'NF > 0 {print "\\ghcerror{" substr($1, 2, length($1) -2) "}"}' good_candidates.txt > content.tex
+awk 'NF > 0 {print "\\ghcerror{" substr($1, 2, length($1) -2) "}{" substr($2, 2, length($2) -2) "}"}' good_candidates.txt > content.tex

@@ -18,15 +18,16 @@
 
 %% Frontside of the card
 \newcommand{\errorfrontside}{%
-  Please help document this undocumented error message:
+  Please help us document this error:
       \begin{enumerate}
       \item \url{github.com/haskellfoundation/error-message-index}
-      \item Read CONTRIBUTING.md
+      \item Read the CONTRIBUTING.md
+      \item Write some documentation
       \item Open a Pull Request
     \end{enumerate}
   }
 
-\newcommand{\ghcerror}[1]{\begin{flashcard}[Error Message Index]{\errorfrontside}#1\end{flashcard}}
+\newcommand{\ghcerror}[2]{\begin{flashcard}[Error Message Index]{\errorfrontside}#1\\{\small#2}\end{flashcard}}
 
 \begin{document}
 \input{content.tex}
