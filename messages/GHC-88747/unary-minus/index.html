@@ -1,0 +1,29 @@
+<pre><code>Main.hs:1:8: error: [GHC-88747]
+    Precedence parsing error
+        cannot mix ‘*’ [infixl 7] and prefix `-' [infixl 6] in the same infix expression
+  |
+1 | main = print $ 5 * -3
+  |        ^^^^^^^^^^^^^^</code></pre>
+<p>The most general solution is to add brackets: <code>5 * (-3)</code>.</p>
+<p>If one of the clashing operators is unary minus, consider replacing it with <code>negate</code>: <code>5 * negate 3</code>. Another possibility is to enable <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/lexical_negation.html"><code>{-# LANGUAGE LexicalNegation #-}</code></a> or <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/negative_literals.html"><code>{-# LANGUAGE NegativeLiterals #-}</code></a>, which makes <code>-</code> bind to <code>3</code> as early as possible, eliminating the ambiguity.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">main = print $ 5 * -3
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">main = print $ 5 * (-3)
+</code></pre>
+    </div>
+  </div>
+</div>
+
