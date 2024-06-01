@@ -1,0 +1,34 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>Main.hs:1:16: error: [GHC-39999]
+    • No instance for ‘Num String’ arising from the literal ‘5’
+    • In the first argument of ‘(+)’, namely ‘5’
+      In the second argument of ‘($)’, namely ‘5 + &quot;4&quot;’
+      In the expression: print $ 5 + &quot;4&quot;
+  |
+1 | main = print $ 5 + &quot;4&quot;
+  |                ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Given that Haskell is a strong statically typed language, it is not a surprise that adding numbers to strings gives a compile-time error. However, one could expect GHC to be unhappy about <code>"4"</code>, not about <code>5</code> as above! Let’s take a deeper look on how the type checker works.</p>
+<p>The compiler first encounters the operator <code>(+)</code> which has type <code>Num a =&gt; a -&gt; a -&gt; a</code>. Thus it infers that both arguments of <code>(+)</code> should be of the same type <code>a</code>. Looking at the first argument <code>5</code> does not reveal us what <code>a</code> is: it could be <code>Int</code>, could be <code>Double</code>, etc. But the second argument <code>4</code> is certainly <code>String</code>, so the compiler concludes that <code>a</code> should be <code>String</code>.</p>
+<p>Now the compiler looks again at the first argument <code>5</code>. Since the second argument of <code>(+)</code> is <code>String</code>, it infers that <code>5</code> must be <code>String</code> as well. In Haskell a numeric literal could be anything which has <code>instance Num</code>, so GHC searches for <code>instance Num String</code> but could not find one and bails out with an error.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">main = print $ 5 + "4"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">main = print $ 5 + 4
+</code></pre>
+    </div>
+  </div>
+</div>
+
