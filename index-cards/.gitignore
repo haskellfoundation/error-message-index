@@ -6,3 +6,8 @@
 *.pdf
 *.out
 *.synctex.gz
+documented_error_codes.txt
+undocumented_error_codes.txt
+untested_error_codes.txt
+good_candidates.txt
+content.tex
