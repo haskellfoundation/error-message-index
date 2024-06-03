@@ -14,6 +14,7 @@ Today, the Haskell Message Index supports three tools. Any user-facing Haskell-r
 | GHC   | 9.6.1                      | `GHC-`    |
 | Stack | 2.9.3                      | `S-`      |
 | GHCup | 0.1.19.0                   | `GHCup-`  |
+| Cabal | 3.12                       | `Cabal-`  |
 
 ## Contributing to the Message Index
 
