@@ -1,7 +1,5 @@
 module InvalidPrecedence where
 
-module InvalidPrecedence where
-
 (⊚‿⊚) :: Int -> Int -> Int
 (⊚‿⊚) = (+)
 
