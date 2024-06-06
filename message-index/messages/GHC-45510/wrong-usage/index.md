@@ -1,3 +1,3 @@
 ---
-title: <insert a title for this example here>
+title: Explicit quantification of the type variable
 ---
