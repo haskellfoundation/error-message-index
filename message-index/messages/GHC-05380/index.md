@@ -5,7 +5,7 @@ severity: error
 introduced: 9.6.1
 ---
 
-A newtype constructor can only have a single constructor. If you want multiple
+A newtype can only have a single constructor. If you want multiple
 constructors, you should use `data` instead of `newtype`.
 
 The reason that you need exactly one constructor is that `newtype` constructors
