@@ -5,6 +5,7 @@ You can leave any of the text fields blank and fill them in by hand later.
  1) GHC
  2) GHCup
  3) Stack
+ 4) Cabal
 Input (Default = GHC): 
 · What is the numeric code that you want to document?
 For example, enter "01234" if you want to document GHC-01234.

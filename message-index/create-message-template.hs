@@ -27,7 +27,7 @@ normalize = fmap toLower . strip
 
 -- Querying for the tool: GHC / GHCup / Stack
 
-data Tool = GHC | GHCup | Stack deriving (Show)
+data Tool = GHC | GHCup | Stack | Cabal deriving (Show)
 
 readTool :: IO Tool
 readTool = do
@@ -35,6 +35,7 @@ readTool = do
   putStrLn " 1) GHC"
   putStrLn " 2) GHCup"
   putStrLn " 3) Stack"
+  putStrLn " 4) Cabal"
   putStr "Input (Default = GHC): "
   ln <- getLine
   case normalize ln of
@@ -44,6 +45,8 @@ readTool = do
     "ghcup" -> pure GHCup
     "3" -> pure Stack
     "stack" -> pure Stack
+    "4" -> pure Cabal
+    "cabal" -> pure Cabal
     "" -> pure GHC
     _ -> do
       putStrLn "Didn't understand input. Please type a tool name or a number."
@@ -202,7 +205,7 @@ createFiles tmpl = do
   putStrLn "· Creating scaffolding..."
 
   -- Create the new directory "messages/XXX-NNNNNN/" and "messages/XXX-NNNNNN/index.md"
-  let message_dir = "messages" </> case tool tmpl of { GHC -> "GHC-"; GHCup -> "GHCup-"; Stack -> "S-" } ++ code tmpl
+  let message_dir = "messages" </> case tool tmpl of { GHC -> "GHC-"; GHCup -> "GHCup-"; Stack -> "S-"; Cabal -> "Cabal-" } ++ code tmpl
   createDirectoryIfMissing True message_dir
   let index_filename = message_dir </> "index.md"
   let toplvl_index =
