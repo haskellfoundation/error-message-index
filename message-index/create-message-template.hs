@@ -1,6 +1,6 @@
 #!/usr/bin/env cabal
 {- cabal:
-build-depends: base, haskeline, directory, filepath
+build-depends: base, haskeline >=0.8, directory >= 1.3, filepath >= 1.4
 -}
 module Main where
 
