@@ -15,6 +15,11 @@ import Text.Read (readMaybe)
 
 type ToolM a = InputT IO a
 
+getInputLine' :: String -> ToolM String
+getInputLine' s = do
+  ln <- getInputLine s
+  pure (maybe "" id ln)
+
 -------------------------------------------------------------------------------
 -- Querying the user about the diagnostic
 -------------------------------------------------------------------------------
@@ -37,8 +42,7 @@ readTool = do
   outputStrLn " 2) GHCup"
   outputStrLn " 3) Stack"
   outputStrLn " 4) Cabal"
-  outputStr "Input (Default = GHC): "
-  ln <- liftIO $ getLine
+  ln <- getInputLine' "Input (Default = GHC): "
   case normalize ln of
     "1" -> pure GHC
     "ghc" -> pure GHC
@@ -63,8 +67,7 @@ readCode :: ToolM ErrorCode
 readCode = do
   outputStrLn "· What is the numeric code that you want to document?"
   outputStrLn "For example, enter \"01234\" if you want to document GHC-01234."
-  outputStr "Input: "
-  ln <- liftIO getLine
+  ln <- getInputLine' "Input: "
   case readMaybe ln :: Maybe Int of
     Nothing -> do
       outputStrLn "Could not parse the input as an integer. Only enter the numeric part of the error."
@@ -78,8 +81,7 @@ readTitle :: ToolM Title
 readTitle = do
   outputStrLn "· What is the title of the error message?"
   outputStrLn "This is used as the title of the documentation page as well as in links to the page."
-  outputStr "Input: "
-  liftIO getLine
+  getInputLine' "Input: "
 
 -- Summary
 type Summary = String
@@ -88,8 +90,7 @@ readSummary :: ToolM Summary
 readSummary = do
   outputStrLn "· Give a short summary of the error message."
   outputStrLn "This appears on the overview page that lists all the documented errors and warnings."
-  outputStr "Input: "
-  liftIO getLine
+  getInputLine' "Input: "
 
 -- Severity
 data Severity = Error | Warning deriving (Show)
@@ -99,8 +100,7 @@ readSeverity = do
   outputStrLn "· What is the severity of the diagnostic?"
   outputStrLn " 1) Error"
   outputStrLn " 2) Warning"
-  outputStr "Input (Default = Error): "
-  ln <- liftIO getLine
+  ln <- getInputLine' "Input (Default = Error): "
   case normalize ln of
     "1" -> pure Error
     "error" -> pure Error
@@ -120,8 +120,7 @@ readWarningFlag Warning = do
   outputStrLn "· What is the warning flag which enables this warning?"
   outputStrLn "For example, enter \"-Wtabs\" if you are documenting GHC's warning about tabs in your source file."
   outputStrLn "You can leave this blank if you're not sure."
-  outputStr "Input: "
-  Just <$> liftIO getLine
+  Just <$> getInputLine' "Input: "
 readWarningFlag _ = pure Nothing
 
 -- Version
@@ -131,8 +130,7 @@ readVersion :: ToolM Version
 readVersion = do
   outputStrLn "· Which version of the tool emitted the numeric code (not the message) for the first time?"
   outputStrLn "Note: For GHC this is most likely 9.6.1."
-  outputStr "Input: "
-  liftIO getLine
+  getInputLine' "Input: "
 
 -- Examples
 type Examples = [String]
@@ -145,8 +143,7 @@ validateExampleName str@(s : _) = not (any isSpace str) && isLower s
 readExamples :: Tool -> ToolM Examples
 readExamples GHC = do
   outputStrLn "· How many examples should be generated?"
-  outputStr "Input: "
-  ln <- liftIO getLine
+  ln <- getInputLine' "Input: "
   case readMaybe ln :: Maybe Int of
     Nothing -> pure []
     Just n -> forM [1 .. n] readExample
@@ -157,8 +154,7 @@ readExample i = do
   outputStrLn ""
   outputStrLn ("· Give a name for example " <> show i)
   outputStrLn "The name should not contain spaces and begin with a lowercase letter."
-  outputStr "Input: "
-  ln <- liftIO getLine
+  ln <- getInputLine' "Input: "
   if validateExampleName ln then pure ln else readExample i
 
 -- Template
