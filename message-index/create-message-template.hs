@@ -1,3 +1,7 @@
+#!/usr/bin/env cabal
+{- cabal:
+build-depends: base, haskeline, directory, filepath
+-}
 module Main where
 
 import Control.Monad (forM, forM_)
