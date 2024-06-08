@@ -154,7 +154,7 @@ readExample :: Int -> ToolM String
 readExample i = do
   outputStrLn ""
   outputStrLn ("· Give a name for example " <> show i)
-  outputStrLn "The name should not contain spaces and begin with a lowercase letter."
+  outputStrLn "The name should begin with a lowercase letter and should not contain any spaces."
   ln <- getInputLine' "Input: "
   if validateExampleName ln then pure ln else readExample i
 
