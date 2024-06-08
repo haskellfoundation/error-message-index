@@ -12,4 +12,3 @@ Can be resolved by either:
 - Using deriving with a tuple (`deriving (Eq, Ord)`)
 - Using the `DerivingStrategies` language extension
 
-
