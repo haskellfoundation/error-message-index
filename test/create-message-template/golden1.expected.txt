@@ -27,10 +27,10 @@ Input:
 · How many examples should be generated?
 Input: 
 · Give a name for example 1
-The name should not contain spaces and begin with a lowercase letter.
+The name should begin with a lowercase letter and should not contain any spaces.
 Input: 
 · Give a name for example 2
-The name should not contain spaces and begin with a lowercase letter.
+The name should begin with a lowercase letter and should not contain any spaces.
 Input: 
 · Creating scaffolding...
 ·· Created file messages/GHC-101010/index.md with these contents:
