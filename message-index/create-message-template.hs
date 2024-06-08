@@ -5,18 +5,15 @@ build-depends: base, haskeline, directory, filepath
 module Main where
 
 import Control.Monad (forM, forM_)
+import Control.Monad.IO.Class (liftIO)
 import Data.Char (isLower, isSpace, toLower, toUpper)
 import System.Directory (createDirectory, createDirectoryIfMissing)
 import System.FilePath ((<.>), (</>))
+import System.Console.Haskeline
 import System.IO (BufferMode (..), hSetBuffering, stdout)
 import Text.Read (readMaybe)
 
--------------------------------------------------------------------------------
--- Run this tool with `runghc` on the commandline:
-
--- $ runghc create-message-template.hs
-
--------------------------------------------------------------------------------
+type ToolM a = InputT IO a
 
 -------------------------------------------------------------------------------
 -- Querying the user about the diagnostic
@@ -33,15 +30,15 @@ normalize = fmap toLower . strip
 
 data Tool = GHC | GHCup | Stack | Cabal deriving (Show)
 
-readTool :: IO Tool
+readTool :: ToolM Tool
 readTool = do
-  putStrLn "· Which tool's error code do you want to document?"
-  putStrLn " 1) GHC"
-  putStrLn " 2) GHCup"
-  putStrLn " 3) Stack"
-  putStrLn " 4) Cabal"
-  putStr "Input (Default = GHC): "
-  ln <- getLine
+  outputStrLn "· Which tool's error code do you want to document?"
+  outputStrLn " 1) GHC"
+  outputStrLn " 2) GHCup"
+  outputStrLn " 3) Stack"
+  outputStrLn " 4) Cabal"
+  outputStr "Input (Default = GHC): "
+  ln <- liftIO $ getLine
   case normalize ln of
     "1" -> pure GHC
     "ghc" -> pure GHC
@@ -53,7 +50,7 @@ readTool = do
     "cabal" -> pure Cabal
     "" -> pure GHC
     _ -> do
-      putStrLn "Didn't understand input. Please type a tool name or a number."
+      outputStrLn "Didn't understand input. Please type a tool name or a number."
       readTool
 
 -- Querying for the error code
@@ -62,48 +59,48 @@ readTool = do
 --   to preserve leading 0's.
 type ErrorCode = String
 
-readCode :: IO ErrorCode
+readCode :: ToolM ErrorCode
 readCode = do
-  putStrLn "· What is the numeric code that you want to document?"
-  putStrLn "For example, enter \"01234\" if you want to document GHC-01234."
-  putStr "Input: "
-  ln <- getLine
+  outputStrLn "· What is the numeric code that you want to document?"
+  outputStrLn "For example, enter \"01234\" if you want to document GHC-01234."
+  outputStr "Input: "
+  ln <- liftIO getLine
   case readMaybe ln :: Maybe Int of
     Nothing -> do
-      putStrLn "Could not parse the input as an integer. Only enter the numeric part of the error."
+      outputStrLn "Could not parse the input as an integer. Only enter the numeric part of the error."
       readCode
     Just _ -> pure ln
 
 -- Title
 type Title = String
 
-readTitle :: IO Title
+readTitle :: ToolM Title
 readTitle = do
-  putStrLn "· What is the title of the error message?"
-  putStrLn "This is used as the title of the documentation page as well as in links to the page."
-  putStr "Input: "
-  getLine
+  outputStrLn "· What is the title of the error message?"
+  outputStrLn "This is used as the title of the documentation page as well as in links to the page."
+  outputStr "Input: "
+  liftIO getLine
 
 -- Summary
 type Summary = String
 
-readSummary :: IO Summary
+readSummary :: ToolM Summary
 readSummary = do
-  putStrLn "· Give a short summary of the error message."
-  putStrLn "This appears on the overview page that lists all the documented errors and warnings."
-  putStr "Input: "
-  getLine
+  outputStrLn "· Give a short summary of the error message."
+  outputStrLn "This appears on the overview page that lists all the documented errors and warnings."
+  outputStr "Input: "
+  liftIO getLine
 
 -- Severity
 data Severity = Error | Warning deriving (Show)
 
-readSeverity :: IO Severity
+readSeverity :: ToolM Severity
 readSeverity = do
-  putStrLn "· What is the severity of the diagnostic?"
-  putStrLn " 1) Error"
-  putStrLn " 2) Warning"
-  putStr "Input (Default = Error): "
-  ln <- getLine
+  outputStrLn "· What is the severity of the diagnostic?"
+  outputStrLn " 1) Error"
+  outputStrLn " 2) Warning"
+  outputStr "Input (Default = Error): "
+  ln <- liftIO getLine
   case normalize ln of
     "1" -> pure Error
     "error" -> pure Error
@@ -111,31 +108,31 @@ readSeverity = do
     "warning" -> pure Warning
     "" -> pure Error
     _ -> do
-      putStrLn "Please type \"error\" or \"warning\" or a number."
+      outputStrLn "Please type \"error\" or \"warning\" or a number."
       readSeverity
 
 -- Warning flag
 type WarningFlag = String
 
 -- | Only ask for a warning flag if Severity = Warning.
-readWarningFlag :: Severity -> IO (Maybe WarningFlag)
+readWarningFlag :: Severity -> ToolM (Maybe WarningFlag)
 readWarningFlag Warning = do
-  putStrLn "· What is the warning flag which enables this warning?"
-  putStrLn "For example, enter \"-Wtabs\" if you are documenting GHC's warning about tabs in your source file."
-  putStrLn "You can leave this blank if you're not sure."
-  putStr "Input: "
-  Just <$> getLine
+  outputStrLn "· What is the warning flag which enables this warning?"
+  outputStrLn "For example, enter \"-Wtabs\" if you are documenting GHC's warning about tabs in your source file."
+  outputStrLn "You can leave this blank if you're not sure."
+  outputStr "Input: "
+  Just <$> liftIO getLine
 readWarningFlag _ = pure Nothing
 
 -- Version
 type Version = String
 
-readVersion :: IO Version
+readVersion :: ToolM Version
 readVersion = do
-  putStrLn "· Which version of the tool emitted the numeric code (not the message) for the first time?"
-  putStrLn "Note: For GHC this is most likely 9.6.1."
-  putStr "Input: "
-  getLine
+  outputStrLn "· Which version of the tool emitted the numeric code (not the message) for the first time?"
+  outputStrLn "Note: For GHC this is most likely 9.6.1."
+  outputStr "Input: "
+  liftIO getLine
 
 -- Examples
 type Examples = [String]
@@ -145,23 +142,23 @@ validateExampleName "" = False
 validateExampleName str@(s : _) = not (any isSpace str) && isLower s
 
 -- | Only ask for examples if the system is GHC.
-readExamples :: Tool -> IO Examples
+readExamples :: Tool -> ToolM Examples
 readExamples GHC = do
-  putStrLn "· How many examples should be generated?"
-  putStr "Input: "
-  ln <- getLine
+  outputStrLn "· How many examples should be generated?"
+  outputStr "Input: "
+  ln <- liftIO getLine
   case readMaybe ln :: Maybe Int of
     Nothing -> pure []
     Just n -> forM [1 .. n] readExample
 readExamples _ = pure []
 
-readExample :: Int -> IO String
+readExample :: Int -> ToolM String
 readExample i = do
-  putStrLn ""
-  putStrLn ("· Give a name for example " <> show i)
-  putStrLn "The name should not contain spaces and begin with a lowercase letter."
-  putStr "Input: "
-  ln <- getLine
+  outputStrLn ""
+  outputStrLn ("· Give a name for example " <> show i)
+  outputStrLn "The name should not contain spaces and begin with a lowercase letter."
+  outputStr "Input: "
+  ln <- liftIO getLine
   if validateExampleName ln then pure ln else readExample i
 
 -- Template
@@ -177,25 +174,25 @@ data Template = MkTemplate
   }
   deriving (Show)
 
-readTemplate :: IO Template
+readTemplate :: ToolM Template
 readTemplate = do
-  putStrLn "This tool helps you create the scaffolding for a new error message on the error-message-index."
-  putStrLn "You can leave any of the text fields blank and fill them in by hand later."
-  putStrLn ""
+  outputStrLn "This tool helps you create the scaffolding for a new error message on the error-message-index."
+  outputStrLn "You can leave any of the text fields blank and fill them in by hand later."
+  outputStrLn ""
   sys <- readTool
-  putStrLn ""
+  outputStrLn ""
   code <- readCode
-  putStrLn ""
+  outputStrLn ""
   title <- readTitle
-  putStrLn ""
+  outputStrLn ""
   summary <- readSummary
-  putStrLn ""
+  outputStrLn ""
   severity <- readSeverity
-  putStrLn ""
+  outputStrLn ""
   warningflag <- readWarningFlag severity
-  putStrLn ""
+  outputStrLn ""
   version <- readVersion
-  putStrLn ""
+  outputStrLn ""
   examples <- readExamples sys
   pure (MkTemplate sys code title summary severity warningflag version examples)
 
@@ -204,7 +201,7 @@ readTemplate = do
 -------------------------------------------------------------------------------
 
 createFiles :: Template -> IO ()
-createFiles tmpl = do
+createFiles tmpl = liftIO $ do
   putStrLn ""
   putStrLn "· Creating scaffolding..."
 
@@ -272,5 +269,5 @@ createFiles tmpl = do
 main :: IO ()
 main = do
   hSetBuffering stdout NoBuffering
-  tmpl <- readTemplate
+  tmpl <- runInputT defaultSettings readTemplate
   createFiles tmpl
