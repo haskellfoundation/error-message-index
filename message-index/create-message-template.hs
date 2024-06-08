@@ -7,9 +7,10 @@ module Main where
 import Control.Monad (forM, forM_)
 import Control.Monad.IO.Class (liftIO)
 import Data.Char (isLower, isSpace, toLower, toUpper)
+import Data.Maybe (fromMaybe)
+import System.Console.Haskeline
 import System.Directory (createDirectory, createDirectoryIfMissing)
 import System.FilePath ((<.>), (</>))
-import System.Console.Haskeline
 import System.IO (BufferMode (..), hSetBuffering, stdout)
 import Text.Read (readMaybe)
 
@@ -18,7 +19,7 @@ type ToolM a = InputT IO a
 getInputLine' :: String -> ToolM String
 getInputLine' s = do
   ln <- getInputLine s
-  pure (maybe "" id ln)
+  pure (fromMaybe "" ln)
 
 -------------------------------------------------------------------------------
 -- Querying the user about the diagnostic

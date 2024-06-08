@@ -26,7 +26,7 @@ issue][new-issue] and someone will help you out.)*
 [new-issue]: https://github.com/haskellfoundation/error-message-index/issues/new
 
 1. Change to the `message-index` directory.
-2. Execute `runghc create-message-template.hs` and answer the questions.
+2. Execute the cabal script `./create-message-template.hs` and answer the questions.
 3. Optionally commit the new files and create a draft pull request right away.
 
 The files created by the tool will need further editing, but it's never too
