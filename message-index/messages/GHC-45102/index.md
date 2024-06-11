@@ -34,7 +34,13 @@ import Tomatoes
 The solution is to be specific with package imports: 
 
 ```
+
 {-# LANGUAGE PackageImports #-}
+
 module Salad where
-import "fruits" Tomatoes
+
+import "vegetables" Tomatoes
 ```
+
+alternatively you could patch the upstream libraries,
+but package imports is usually easiest.
