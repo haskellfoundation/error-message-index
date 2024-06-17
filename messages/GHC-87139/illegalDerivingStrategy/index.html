@@ -1,0 +1,47 @@
+<p>In this example, there is a deriving clause instructing GHC
+to derive a <code>Show</code> instance for the newtype <code>Year</code>.</p>
+<p>There are (at least) two different ways to derive such a <code>Show</code>
+instance. The <code>stock</code> strategy is the standard generic way of
+deriving <code>Show</code> instances for datatypes. The <code>newtype</code> strategy
+is available for <code>newtype</code>s and simply uses the existing instance
+of the underlying type, in this case <code>Int</code>.</p>
+<p>The difference in the current example is that the <code>stock</code>-derived
+<code>show</code> includes the constructor name, the <code>newtype</code>-derived does
+not.</p>
+<p>If multiple strategies are available, GHC chooses a default. In
+the case of <code>deriving</code> for classes for which <code>stock</code>-deriving is
+available, such as <code>Show</code>, <code>stock</code> is the default. If you want to
+be explicit about this or explicitly deviate from the default,
+you can specify a strategy explicitly.</p>
+<p>This, however, requires the <code>DerivingStrategies</code> language extension
+to be enabled, and if it is not, you will get an error. The fix in
+this case is to enable the language extension, for example via a
+compiler pragma.</p>
+
+<pre class="filename">IllegalDerivingStrategy.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IllegalDerivingStrategy where
+
+newtype Year = MkYear Int
+  deriving newtype Show
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DerivingStrategies #-}
+module IllegalDerivingStrategy where
+
+newtype Year = MkYear Int
+  deriving newtype Show
+</code></pre>
+    </div>
+  </div>
+</div>
+
