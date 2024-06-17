@@ -1,0 +1,40 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>DoubleRoleAnnotationOnData.hs:6:1: error: [GHC-97170]
+    Duplicate role annotations for ‘Foo’:
+      type role Foo nominal
+          -- written at DoubleRoleAnnotationOnData.hs:5:1-21
+      type role Foo representational
+          -- written at DoubleRoleAnnotationOnData.hs:6:1-30
+  |
+6 | type role Foo representational
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">DoubleRoleAnnotationOnData.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RoleAnnotations #-}
+module DoubleRoleAnnotationOnData where
+
+data Foo a = MkFoo a
+type role Foo nominal
+type role Foo representational
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RoleAnnotations #-}
+module DoubleRoleAnnotationOnData where
+
+data Foo a = MkFoo a
+type role Foo nominal
+</code></pre>
+    </div>
+  </div>
+</div>
+
