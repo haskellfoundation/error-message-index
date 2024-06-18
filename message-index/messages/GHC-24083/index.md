@@ -1,6 +1,6 @@
 ---
 title: Scoped type variables only appears non-injectively in declaration header
-summary: a data declaration has a kind signature, where the implictly bound type variables cannot be matched up unambiguosly with the ones from the signature itself
+summary: A data declaration has a kind signature, where the implictly bound type variables cannot be matched up unambiguosly with the ones from the signature itself
 severity: error
 introduced: 9.6.4
 ---
