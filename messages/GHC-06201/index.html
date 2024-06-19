@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Missing method in type class instance [GHC-06201] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Missing method in type class instance [GHC-06201]
+    </nav>
+    <h1>Missing method in type class instance [GHC-06201]</h1>
+    
+<p>
+  <i>Flag: <code>-Wmissing-methods</code></i><br />
+  
+  <i>Enabled by default</i>
+  
+</p>
+
+
+<p>This warning means that a type class instance is missing some required method implementations.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>No explicit implementation for method instance</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>A.hs:7:10: warning: [GHC-06201] [-Wmissing-methods]
+    • No explicit implementation for
+        ‘multiply’
+    • In the instance declaration for ‘Calculator Int’
+  |
+7 | instance Calculator Int where</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The type class <code>Calculator</code> requires you to implement two methods: <code>add</code> and <code>multiply</code>.
+However, the example instance <code>instance Calculator Int</code> only implements the method <code>add</code> and not <code>multiply</code>
+To fix this, implement the method <code>multiply</code>!</p>
+
+<pre class="filename">A.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+class Calculator a where
+    add :: a -> a -> a
+    multiply :: a -> a -> a
+
+instance Calculator Int where
+    add a b = a + b
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+class Calculator a where
+    add :: a -> a -> a
+    multiply :: a -> a -> a
+
+instance Calculator Int where
+    add a b = a + b
+    multiply a b = a * b
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>No explicit implementation for method instance 2</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>A.hs:8:10: warning: [GHC-06201] [-Wmissing-methods]
+    • No explicit implementation for
+        either ‘&lt;*&gt;’ or ‘liftA2’
+    • In the instance declaration for ‘Applicative Box’
+  |
+8 | instance Applicative Box where
+  |          ^^^^^^^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The type class <code>Applicative</code> requires you to implement at least two methods:</p>
+<ul>
+<li><code>pure</code>, and</li>
+<li><code>liftA2</code> or <code>multiply</code> (can also be both).</li>
+</ul>
+<p>Such <code>or</code> constraints can be expressed via the <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/pragmas.html#minimal-pragma"><code>{-# MINIMAL #-}</code></a> pragma.</p>
+<p>To fix this, either implement the method <code>liftA2</code> or <code>&lt;*&gt;</code>. For this example, we implemented <code>&lt;*&gt;</code>, but either or both is fine, too.</p>
+
+<pre class="filename">A.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+data Box t = SomeBox t
+
+instance Functor Box where
+    fmap f (SomeBox a) = SomeBox (f a)
+
+instance Applicative Box where
+    pure a = SomeBox a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+data Box t = SomeBox t
+
+instance Functor Box where
+    fmap f (SomeBox a) = SomeBox (f a)
+
+instance Applicative Box where
+    pure a = SomeBox a
+    SomeBox f <*> SomeBox a = SomeBox (f a)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

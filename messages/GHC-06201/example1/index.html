@@ -1,0 +1,47 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>A.hs:7:10: warning: [GHC-06201] [-Wmissing-methods]
+    • No explicit implementation for
+        ‘multiply’
+    • In the instance declaration for ‘Calculator Int’
+  |
+7 | instance Calculator Int where</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>The type class <code>Calculator</code> requires you to implement two methods: <code>add</code> and <code>multiply</code>.
+However, the example instance <code>instance Calculator Int</code> only implements the method <code>add</code> and not <code>multiply</code>
+To fix this, implement the method <code>multiply</code>!</p>
+
+<pre class="filename">A.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+class Calculator a where
+    add :: a -> a -> a
+    multiply :: a -> a -> a
+
+instance Calculator Int where
+    add a b = a + b
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module A where
+
+class Calculator a where
+    add :: a -> a -> a
+    multiply :: a -> a -> a
+
+instance Calculator Int where
+    add a b = a + b
+    multiply a b = a * b
+</code></pre>
+    </div>
+  </div>
+</div>
+
