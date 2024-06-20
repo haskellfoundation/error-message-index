@@ -5,12 +5,12 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE ViewPatterns #-}
 
-import qualified Data.Aeson as JSON
 import Data.Aeson ((.=))
+import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
-import Data.Foldable (for_, foldl')
+import Data.Foldable (foldl', for_)
 import Data.Function (on)
 import Data.Functor ((<&>))
 import Data.List (find, lookup, nub, sort, sortBy, stripPrefix)
@@ -154,11 +154,12 @@ main = hakyll $ do
                   case splitDirectories $ toFilePath $ itemIdentifier exampleItem of
                     ["messages", _, name, "index.md"] -> name
                     other -> error "is not an example"
-            pure $ JSON.object
-              [ "name" .= name
-              , "route" .= route
-              , "metadata" .= meta
-              ]
+            pure $
+              JSON.object
+                [ "name" .= name
+                , "route" .= route
+                , "metadata" .= meta
+                ]
 
       let errorItemToJSON :: Item String -> Compiler JSON.Value
           errorItemToJSON errorItem = do
@@ -170,12 +171,13 @@ main = hakyll $ do
                     other -> error "is not a message"
             exampleItems <- getExamples (itemIdentifier errorItem)
             examples <- traverse exampleItemToJSON exampleItems
-            pure $ JSON.object
-              [ "code" .= code
-              , "route" .= route
-              , "metadata" .= meta
-              , "examples" .= examples
-              ]
+            pure $
+              JSON.object
+                [ "code" .= code
+                , "route" .= route
+                , "metadata" .= meta
+                , "examples" .= examples
+                ]
 
       errorItems <- loadAll $ "messages/*/index.md" .&&. hasNoVersion
       encoded <- traverse errorItemToJSON errorItems
