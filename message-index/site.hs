@@ -156,9 +156,9 @@ main = hakyll $ do
                     other -> error "is not an example"
             pure $
               JSON.object
-                [ "name" .= name
-                , "route" .= route
-                , "metadata" .= meta
+                [ "name" .= name,
+                  "route" .= route,
+                  "metadata" .= meta
                 ]
 
       let errorItemToJSON :: Item String -> Compiler JSON.Value
@@ -173,16 +173,15 @@ main = hakyll $ do
             examples <- traverse exampleItemToJSON exampleItems
             pure $
               JSON.object
-                [ "code" .= code
-                , "route" .= route
-                , "metadata" .= meta
-                , "examples" .= examples
+                [ "code" .= code,
+                  "route" .= route,
+                  "metadata" .= meta,
+                  "examples" .= examples
                 ]
 
       errorItems <- loadAll $ "messages/*/index.md" .&&. hasNoVersion
       encoded <- traverse errorItemToJSON errorItems
       makeItem $ JSON.encode encoded
-
 
 --------------------------------------------------------------------------------
 
