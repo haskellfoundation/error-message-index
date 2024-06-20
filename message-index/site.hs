@@ -6,10 +6,11 @@
 {-# LANGUAGE ViewPatterns #-}
 
 import qualified Data.Aeson as JSON
+import Data.Aeson ((.=))
 import qualified Data.Aeson.KeyMap as KM
 import Data.Binary (Binary)
 import Data.Data (Typeable)
-import Data.Foldable (for_)
+import Data.Foldable (for_, foldl')
 import Data.Function (on)
 import Data.Functor ((<&>))
 import Data.List (find, lookup, nub, sort, sortBy, stripPrefix)
@@ -89,7 +90,7 @@ main = hakyll $ do
   match "messages/*/index.md" $ do
     route $ setExtension "html"
     compile $ do
-      examples <- getExamples
+      examples <- getExamples =<< getUnderlying
       let bread = breadcrumbCtx ["index.html"]
       pandocCompiler
         >>= loadAndApplyTemplate
@@ -141,6 +142,45 @@ main = hakyll $ do
     compile getResourceBody
 
   match "templates/*" $ compile templateBodyCompiler
+
+  create ["api/errors.json"] $ do
+    route idRoute
+    compile $ do
+      let exampleItemToJSON :: Item String -> Compiler JSON.Value
+          exampleItemToJSON exampleItem = do
+            meta <- getMetadata (itemIdentifier exampleItem)
+            route <- getRoute (itemIdentifier exampleItem)
+            let name =
+                  case splitDirectories $ toFilePath $ itemIdentifier exampleItem of
+                    ["messages", _, name, "index.md"] -> name
+                    other -> error "is not an example"
+            pure $ JSON.object
+              [ "name" .= name
+              , "route" .= route
+              , "metadata" .= meta
+              ]
+
+      let errorItemToJSON :: Item String -> Compiler JSON.Value
+          errorItemToJSON errorItem = do
+            meta <- getMetadata (itemIdentifier errorItem)
+            route <- getRoute (itemIdentifier errorItem)
+            let code =
+                  case splitDirectories (toFilePath (itemIdentifier errorItem)) of
+                    ["messages", code, "index.md"] -> code
+                    other -> error "is not a message"
+            exampleItems <- getExamples (itemIdentifier errorItem)
+            examples <- traverse exampleItemToJSON exampleItems
+            pure $ JSON.object
+              [ "code" .= code
+              , "route" .= route
+              , "metadata" .= meta
+              , "examples" .= examples
+              ]
+
+      errorItems <- loadAll $ "messages/*/index.md" .&&. hasNoVersion
+      encoded <- traverse errorItemToJSON errorItems
+      makeItem $ JSON.encode encoded
+
 
 --------------------------------------------------------------------------------
 
@@ -199,9 +239,8 @@ getIdentId ident =
     [_, x, _] -> Just x
     _ -> Nothing
 
-getExamples :: Compiler [Item String]
-getExamples = do
-  me <- getUnderlying
+getExamples :: Identifier -> Compiler [Item String]
+getExamples me = do
   code <- case splitDirectories $ toFilePath me of
     ["messages", code, "index.md"] -> pure code
     other -> fail $ "Not processing a message: " ++ show other
