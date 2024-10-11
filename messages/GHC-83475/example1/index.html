@@ -1,0 +1,43 @@
+<p>None of the fields bound by <code>Foo{..}</code> are used in <code>f</code>, so the pattern may be safely removed.</p>
+<h2 id="warning">Warning</h2>
+<pre><code>GHC-83475/example1/before/Example1.hs:7:7: warning: [-Wunused-record-wildcards]
+    No variables bound in the record wildcard match are used
+      Possible fix: omit the ‘..’
+  |
+7 | f Foo{..} = &quot;Hello&quot;
+  |       ^^</code></pre>
+
+<pre class="filename">Example1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS_GHC -fwarn-unused-record-wildcards #-}
+{-# LANGUAGE RecordWildCards #-}
+module Example1 where
+
+data Foo = Foo { x :: Int, y :: Int, name :: String }
+
+f :: Foo -> String
+f Foo{..} = "Hello"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# OPTIONS_GHC -fwarn-unused-record-wildcards #-}
+{-# LANGUAGE RecordWildCards #-}
+module Example1 where
+
+data Foo = Foo { x :: Int, y :: Int, name :: String }
+
+f :: Foo -> String
+f Foo{} = "Hello"
+</code></pre>
+    </div>
+  </div>
+</div>
+
