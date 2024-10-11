@@ -13,17 +13,17 @@ jobs:
       matrix:
         ghc: ["9.2.5"]
         cabal: ["3.10.1"]
-    
+
     defaults:
       run:
         working-directory: message-index
 
     steps:
     - name: Check out repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install Haskell Toolchain
-      uses: haskell/actions/setup@v2
+      uses: haskell-actions/setup@v2
       with:
         ghc-version: ${{ matrix.ghc }}
         cabal-version: ${{ matrix.cabal }}
@@ -35,9 +35,9 @@ jobs:
       # cabal build --dry-run creates dist-newstyle/cache/plan.json
       # Keep a watch on this `cabal-3.9 build --dry-run` bug:
       # https://github.com/haskell/cabal/issues/8706
-      
+
     - name: Read the Cabal cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cabal/store

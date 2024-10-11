@@ -21,7 +21,7 @@ jobs:
     name: Ormolu
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Check if site.hs is formatted using ormolu
       uses: mrkkrp/ormolu-action@v11
       with:
