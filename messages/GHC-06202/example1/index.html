@@ -1,0 +1,46 @@
+<h2 id="error-message">Error message</h2>
+<p>Type signatures are only allowed to be in instance declarations when the <code>InstanceSigs</code> language extension is enabled.</p>
+<pre><code>Example1.hs:6:13: error: [GHC-06202]
+    • Illegal type signature in instance declaration:
+        (==) :: A -&gt; A -&gt; Bool
+    • In the instance declaration for ‘Eq A’
+    Suggested fix: Perhaps you intended to use InstanceSigs
+  |
+6 |     (==) :: A -&gt; A -&gt; Bool</code></pre>
+
+<pre class="filename">Example1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+module Example1 where
+
+data A = A | B
+instance Eq A where
+    (==) :: A -> A -> Bool
+    A == A = True
+    B == B = True
+    _ == _ = False
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010, InstanceSigs #-}
+module Example1 where
+
+data A = A | B
+instance Eq A where
+    (==) :: A -> A -> Bool
+    A == A = True
+    B == B = True
+    _ == _ = False
+</code></pre>
+    </div>
+  </div>
+</div>
+
