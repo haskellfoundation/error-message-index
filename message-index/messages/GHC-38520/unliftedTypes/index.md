@@ -1,5 +1,5 @@
 ---
-title: Unlifted and Unboxed Types
+title: Unlifted and unboxed types
 ---
 
 ## Warning messages
@@ -29,7 +29,6 @@ UnliftedTypes.hs:17:12: warning: [-Wredundant-bang-patterns]
 
 ## Explanation
 
-Forcing the evaluation of a value up to WHNF breaks down with unlifted and
-unboxed types, which explicitly lack a wrapping thunk (there is no *box*),
-and so values of such types are already always strict.
+Forcing the evaluation of a value up to WHNF does not make sense for unlifted and
+unboxed types, because these types can never be represented by an unevaluated expression at runtime.
 Thus, trying to enforce strictness via a bang pattern has no effect.
