@@ -23,7 +23,7 @@ jobs:
     name: Stack CI
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: freckle/stack-action@v4
       with:
         working-directory: message-index
