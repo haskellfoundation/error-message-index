@@ -1,0 +1,78 @@
+<h2 id="warning-messages">Warning messages</h2>
+<pre><code>UnliftedTypes.hs:17:6: warning: [-Wredundant-bang-patterns]
+    Pattern match has redundant bang
+    In an equation for ‘foo’: foo a = ...
+   |
+17 | foo !a !b !c = ()
+   |      ^
+
+UnliftedTypes.hs:17:9: warning: [-Wredundant-bang-patterns]
+    Pattern match has redundant bang
+    In an equation for ‘foo’: foo b = ...
+   |
+17 | foo !a !b !c = ()
+   |         ^
+
+UnliftedTypes.hs:17:12: warning: [-Wredundant-bang-patterns]
+    Pattern match has redundant bang
+    In an equation for ‘foo’: foo c = ...
+   |
+17 | foo !a !b !c = ()
+   |            ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Forcing the evaluation of a value up to WHNF does not make sense for unlifted and
+unboxed types, because these types can never be represented by an unevaluated expression at runtime.
+Thus, trying to enforce strictness via a bang pattern has no effect.</p>
+
+<pre class="filename">UnliftedTypes.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE MagicHash #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE UnboxedTuples #-}
+{-# LANGUAGE UnliftedNewtypes #-}
+
+module UnliftedTypes where
+
+import GHC.Exts
+
+newtype MyInt :: TYPE 'IntRep where
+  MkMyInt :: Int# -> MyInt
+
+foo :: Int# -> MyInt -> (# Int, Int #) -> ()
+foo !a !b !c = ()
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE MagicHash #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE UnboxedTuples #-}
+{-# LANGUAGE UnliftedNewtypes #-}
+
+module UnliftedTypes where
+
+import GHC.Exts
+
+newtype MyInt :: TYPE 'IntRep where
+  MkMyInt :: Int# -> MyInt
+
+foo :: Int# -> MyInt -> (# Int, Int #) -> ()
+foo a b c = ()
+</code></pre>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,44 @@
+<h2 id="warning-message">Warning message</h2>
+<pre><code>UnliftedTypes.hs:17:6: warning: [-Wredundant-bang-patterns]
+    Pattern match has redundant bang
+    In an equation for ‘foo’: foo a = ...
+   |
+17 | foo !a !b !c = ()
+   |      ^  </code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Haskell allows a user to annotate fields of a datatype as strict, by prepending
+their type with an exclamation mark.
+Pattern matching on such a constructor forces it to WHNF, but this also automatically
+forces any strict fields to evaluate to WHNF as well.
+Thus, a Bang Pattern has no effect on a strict field.</p>
+
+<pre class="filename">StrictField.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module StrictField where
+
+data Foo = MkFoo !Int Int
+
+foo :: Foo -> Foo -> ()
+foo !a (MkFoo !b !c) = ()
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module StrictField where
+
+data Foo = MkFoo !Int Int
+
+foo :: Foo -> Foo -> ()
+foo !a (MkFoo b !c) = ()
+</code></pre>
+    </div>
+  </div>
+</div>
+

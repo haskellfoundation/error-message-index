@@ -1,0 +1,40 @@
+<h2 id="warning-message">Warning message</h2>
+<pre><code>AlreadyDeconstructed.hs:5:15: warning: [-Wredundant-bang-patterns]
+    Pattern match has redundant bang
+    In an equation for ‘doubleIfTrue’: doubleIfTrue x = ...
+  |
+5 | doubleIfTrue !x         = fst x
+  |               ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>It is possible that a previous clause already forced the evaluation of an expression.
+For example, <code>doubleIfTrue</code>’s first clause already deconstructs the pair tuple, so
+a bang pattern on the tuple as a whole has no effect in the second clause.</p>
+
+<pre class="filename">AlreadyDeconstructed.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module AlreadyDeconstructed where
+
+doubleIfTrue :: (Int, Bool) -> Int
+doubleIfTrue (x, y) | y = x * 2
+doubleIfTrue !x         = fst x
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module AlreadyDeconstructed where
+
+doubleIfTrue :: (Int, Bool) -> Int
+doubleIfTrue (x, y) | y = x * 2
+doubleIfTrue x          = fst x
+</code></pre>
+    </div>
+  </div>
+</div>
+
