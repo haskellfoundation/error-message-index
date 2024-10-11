@@ -1,0 +1,44 @@
+<p>For example, <code>sequence :: (Traversable t, Monad m) =&gt; t (m a) -&gt; m (t a)</code>
+performs all actions in a traversable container and returns the container with
+the return values. In a similar manner, <code>sequence_</code> performs all actions but
+indicates that the we want to ignore the return value.</p>
+<h1 id="error-message">Error message</h1>
+<pre><code>sequence/before/GetLine.hs:5:3: warning: [GHC-81995] [-Wunused-do-bind]
+    A do-notation statement discarded a result of type ‘[()]’
+    Suggested fix:
+      Suppress this warning by saying
+        ‘_ &lt;- sequence [putStrLn &quot;First line&quot;, putStrLn &quot;Second line&quot;]’
+  |
+5 |   sequence [putStrLn &quot;First line&quot;, putStrLn &quot;Second line&quot;]
+  |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">GetLine.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module GetLine where
+
+main :: IO ()
+main = do
+  sequence [putStrLn "First line", putStrLn "Second line"]
+  putStrLn "Done."
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module GetLine where
+
+main :: IO ()
+main = do
+  sequence_ [putStrLn "First line", putStrLn "Second line"]
+  putStrLn "Done."
+</code></pre>
+    </div>
+  </div>
+</div>
+
