@@ -1,0 +1,4 @@
+.direnv
+result*
+dist-newstyle
+.pre-commit-config.yaml
