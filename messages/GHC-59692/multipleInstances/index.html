@@ -1,0 +1,39 @@
+<p>Haskell does not allow to give more than one definition of <code>Semigroup Int</code>, even though we might want to provide both an instance for the semigroup given by multiplication and the semigroup given by addition.
+If we require both instances, then we should define two <code>newtype</code> wrappers for <code>Int</code>.</p>
+
+<pre class="filename">MultipleInstances.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module MultipleInstances where
+
+instance Semigroup Int where
+    (<>) = (+)
+
+instance Semigroup Int where
+    (<>) = (*)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module MultipleInstances where
+
+newtype Sum = Sum { getSum :: Int }
+
+instance Semigroup Sum where
+    (<>) x y = Sum (getSum x + getSum y)
+
+newtype Product = Product { getProduct :: Int }
+
+instance Semigroup Product where
+    (<>) x y = Product (getProduct x * getProduct y)
+</code></pre>
+    </div>
+  </div>
+</div>
+
