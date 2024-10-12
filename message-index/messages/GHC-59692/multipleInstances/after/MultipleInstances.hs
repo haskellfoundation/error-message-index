@@ -1,4 +1,4 @@
-module DivergingInstances where
+module MultipleInstances where
 
 newtype Sum = Sum { getSum :: Int }
 
