@@ -23,7 +23,7 @@
     <h1>Multiple newtype constructors [GHC-05380]</h1>
     
 
-<p>A newtype constructor can only have a single constructor. If you want multiple
+<p>A newtype can only have a single constructor. If you want multiple
 constructors, you should use <code>data</code> instead of <code>newtype</code>.</p>
 <p>The reason that you need exactly one constructor is that <code>newtype</code> constructors
 are removed at runtime.
