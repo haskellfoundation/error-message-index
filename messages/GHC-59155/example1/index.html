@@ -1,0 +1,40 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>IllegalTupleSection.hs:6:7: error: [GHC-59155]
+    Illegal tuple section
+    Suggested fix:
+      Perhaps you intended to use the ‘TupleSections’ extension
+  |
+6 | foo = (1,)
+  |       ^^^^</code></pre>
+
+<pre class="filename">IllegalTupleSection.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+-- TupleSections not enabled
+
+module IllegalTupleSection where
+
+foo = (1,)
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+{-# LANGUAGE TupleSections #-}
+
+module IllegalTupleSection where
+
+foo = (1,)
+</code></pre>
+    </div>
+  </div>
+</div>
+
