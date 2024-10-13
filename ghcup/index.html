@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Haskell Error Index | GHCup — Haskell Error Index</title>
+  <link rel="stylesheet" href="../css/highlight.css">
+  <script src="../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../css/default.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      The Haskell Error Index | GHCup
+    </nav>
+    <h1>The Haskell Error Index | GHCup</h1>
+    <h2>Welcome</h2>
+
+<p>
+  This site describes error messages that can be returned by <a href="https://www.haskell.org/ghcup/">GHCup</a>, including both errors and warnings.
+  Every error and warning has a code that GHCup emits when you run into it—you can look them up below.
+</p>
+
+<p>
+  So far, 7 GHCup errors and warnings are documented here.
+  If you encounter a message that is not yet documented, please
+  <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
+  <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
+  Pull requests with additional examples and improved explanations for
+  existing messages are also very welcome, as are
+  <a href="https://github.com/haskellfoundation/error-message-index/issues?q=is%3Aissue+is%3Aopen+label%3Acss">improvements to the generated site</a>.
+</p>
+
+<p>
+This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
+Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopener noreferrer">get in touch</a> if you have feedback or if you'd like to get involved!
+</p>
+
+<h2>The Messages</h2>
+
+<script src="../js/tablefilter.js"></script>
+
+<table class="message-list" width="100%">
+    <tr><th>Nr.</th><th>Message</th><th>Summary</th><th>Since</th></tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00010</td>
+            <td><a href="../messages/GHCup-00010/">Unable to find a download for the requested version/distro</a></td>
+            <td>GHCup wasn't able to find a binary distribution for the requested tool for the current platform</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00110</td>
+            <td><a href="../messages/GHCup-00110/">The tool is already installed with that version</a></td>
+            <td>GHCup has already installed the requested version of the tool</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00160</td>
+            <td><a href="../messages/GHCup-00160/">JSON decoding failed</a></td>
+            <td>GHCup was unable to decode a JSON or YAML document (e.g. metadata file)</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00200</td>
+            <td><a href="../messages/GHCup-00200/">File digest verification failed</a></td>
+            <td>GHCup tried to verify the integrity/authenticity of a downloaded file, but the verification failed</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00210</td>
+            <td><a href="../messages/GHCup-00210/">GPG verify failed</a></td>
+            <td>GHCup tried to verify the authenticity of a software channel using GPG, but failed</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-00841</td>
+            <td><a href="../messages/GHCup-00841/">A process exited prematurely</a></td>
+            <td>GHCup executed a subprocess that did not complete successfully</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHCup-05841</td>
+            <td><a href="../messages/GHCup-05841/">A download failed</a></td>
+            <td>GHCup tried to download a tool, but the download failed with a subprocess exiting prematurely</td>
+            <td>0.1.19.0</td>
+        </tr>
+    
+</table>
+
+
+<script>
+var filtersConfig = {
+    base_path: '/wrong-on-purpose/',
+    auto_filter: {
+        delay: 75 //milliseconds
+    },
+    single_filter: true
+};
+var tf = new TableFilter(document.querySelector('.message-list'), filtersConfig);
+tf.init();
+
+var input = document.querySelector('.single_flt');
+
+if (input) {
+  input.setAttribute("placeholder", "🔍 Type here to filter ...");
+  input.focus();
+  
+  //Autofill the search from the URL 
+  let url = new URL(document.location.href);
+  let query = url.searchParams.get('q');
+  if(query !== null)
+  {
+    input.setAttribute('value',query)
+    //Move cursor to end
+    input.setSelectionRange(query.length,query.length);
+
+    //Make sure that the list gets filtered as if the query had been typed manually
+    input.dispatchEvent(new KeyboardEvent('keyup'));
+
+  }
+}
+
+</script>
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

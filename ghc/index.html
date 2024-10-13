@@ -5,31 +5,29 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Haskell Error Index — Haskell Error Index</title>
-  <link rel="stylesheet" href="./css/highlight.css">
-  <script src="./js/highlight.min.js"></script>
-  <link rel="stylesheet" href="./css/default.css" />
-  <link rel="stylesheet" href="./css/theme.css" />
+  <title>The Haskell Error Index | GHC — Haskell Error Index</title>
+  <link rel="stylesheet" href="../css/highlight.css">
+  <script src="../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../css/default.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
 </head>
 
 <body>
   <main role="main">
     <nav class="breadcrumb">
       
-      The Haskell Error Index
+      The Haskell Error Index | GHC
     </nav>
-    <h1>The Haskell Error Index</h1>
+    <h1>The Haskell Error Index | GHC</h1>
     <h2>Welcome</h2>
 
 <p>
-  This site describes the various messages that can be returned by Haskell-related tools, including both errors and warnings.
-  For example GHC, the most-commonly-used Haskell implementation, started emiting a code with the format <code>[GHC-12345]</code> for its
-  messages in version 9.6.1.
-  These codes can be looked up below for further information.
+  This site describes error messages that can be returned by <a href="https://www.haskell.org/ghc/">GHC</a>, including both errors and warnings.
+  Every error and warning has a code that GHC emits when you run into it—you can look them up below.
 </p>
 
 <p>
-  So far, 124 errors and warnings are documented here.
+  So far, 114 GHC errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -38,7 +36,6 @@
   <a href="https://github.com/haskellfoundation/error-message-index/issues?q=is%3Aissue+is%3Aopen+label%3Acss">improvements to the generated site</a>.
 </p>
 
-
 <p>
 This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The Haskell Foundation</a>.
 Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopener noreferrer">get in touch</a> if you have feedback or if you'd like to get involved!
@@ -46,877 +43,807 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
 
 <h2>The Messages</h2>
 
-<script src="./js/tablefilter.js"></script>
+<script src="../js/tablefilter.js"></script>
 
 <table class="message-list" width="100%">
     <tr><th>Nr.</th><th>Message</th><th>Summary</th><th>Since</th></tr>
     
         <tr>
-            <td class="nowrap">Cabal-7070</td>
-            <td><a href="./messages/Cabal-7070/">Run whole executable</a></td>
-            <td>Cabal runs executables but not modules</td>
-            <td>3.12.1.0</td>
-        </tr>
-    
-        <tr>
             <td class="nowrap">GHC-00158</td>
-            <td><a href="./messages/GHC-00158/">Cannot derive instance for non-stock-deriveable class</a></td>
+            <td><a href="../messages/GHC-00158/">Cannot derive instance for non-stock-deriveable class</a></td>
             <td>An instance cannot be derived because the class is not stock deriveable.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-00482</td>
-            <td><a href="./messages/GHC-00482/">Lambda syntax in pattern</a></td>
+            <td><a href="../messages/GHC-00482/">Lambda syntax in pattern</a></td>
             <td>Lambda syntax appears in a pattern match.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-00711</td>
-            <td><a href="./messages/GHC-00711/">Duplicate warning declarations</a></td>
+            <td><a href="../messages/GHC-00711/">Duplicate warning declarations</a></td>
             <td>Duplicate deprecation warnings are illegal</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-01239</td>
-            <td><a href="./messages/GHC-01239/">Unexpected if expression in function application</a></td>
+            <td><a href="../messages/GHC-01239/">Unexpected if expression in function application</a></td>
             <td>If expression used as function argument</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-01629</td>
-            <td><a href="./messages/GHC-01629/">Too many type arguments in constructor pattern</a></td>
+            <td><a href="../messages/GHC-01629/">Too many type arguments in constructor pattern</a></td>
             <td>Too many type applications to a constructor in a pattern.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-02256</td>
-            <td><a href="./messages/GHC-02256/">Ambiguous record update</a></td>
+            <td><a href="../messages/GHC-02256/">Ambiguous record update</a></td>
             <td>Record update with duplicate field names is ambiguous</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-03272</td>
-            <td><a href="./messages/GHC-03272/">Bidirectional formatting warning</a></td>
+            <td><a href="../messages/GHC-03272/">Bidirectional formatting warning</a></td>
             <td>The source file contains Unicode bidirectional formatting instructions</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-04584</td>
-            <td><a href="./messages/GHC-04584/">Expression syntax in pattern</a></td>
+            <td><a href="../messages/GHC-04584/">Expression syntax in pattern</a></td>
             <td>There has been an attempt to pattern match on expression syntax.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-04924</td>
-            <td><a href="./messages/GHC-04924/">Unknown flag in GHC options pragma</a></td>
+            <td><a href="../messages/GHC-04924/">Unknown flag in GHC options pragma</a></td>
             <td>Unknown flag in  {-# OPTIONS_GHC #-} pragma.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-04956</td>
-            <td><a href="./messages/GHC-04956/">Can't derive instances of nullary classes</a></td>
+            <td><a href="../messages/GHC-04956/">Can't derive instances of nullary classes</a></td>
             <td>It is not possible to derive instances of argumentless type classes without the DeriveAnyClass extension.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-05380</td>
-            <td><a href="./messages/GHC-05380/">Multiple newtype constructors</a></td>
+            <td><a href="../messages/GHC-05380/">Multiple newtype constructors</a></td>
             <td>More than 1 constructor for a newtype</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-05641</td>
-            <td><a href="./messages/GHC-05641/">Multiple Haddock comments</a></td>
+            <td><a href="../messages/GHC-05641/">Multiple Haddock comments</a></td>
             <td>Multiple Haddock comments for a single entity are not allowed</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-05661</td>
-            <td><a href="./messages/GHC-05661/">Cannot use qualified both before and after the module</a></td>
+            <td><a href="../messages/GHC-05661/">Cannot use qualified both before and after the module</a></td>
             <td>A module cannot be imported using the qualified modifier both before and after the name of the module</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-05989</td>
-            <td><a href="./messages/GHC-05989/">Too many type binders</a></td>
+            <td><a href="../messages/GHC-05989/">Too many type binders</a></td>
             <td>A type constructor is declared with more arguments than its kind annotation specifies.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-06201</td>
-            <td><a href="./messages/GHC-06201/">Missing method in type class instance</a></td>
+            <td><a href="../messages/GHC-06201/">Missing method in type class instance</a></td>
             <td>A required method is missing from the instance declaration.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-06202</td>
-            <td><a href="./messages/GHC-06202/">Illegal type signature in instance declaration</a></td>
+            <td><a href="../messages/GHC-06202/">Illegal type signature in instance declaration</a></td>
             <td>Method in class instance has type signature, but extension InstanceSigs is not enabled</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-06446</td>
-            <td><a href="./messages/GHC-06446/">Do notation in pattern match</a></td>
+            <td><a href="../messages/GHC-06446/">Do notation in pattern match</a></td>
             <td>Do notation in pattern match.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-07626</td>
-            <td><a href="./messages/GHC-07626/">Parse error in pattern</a></td>
+            <td><a href="../messages/GHC-07626/">Parse error in pattern</a></td>
             <td>Compiler not able to parse pattern.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-08838</td>
-            <td><a href="./messages/GHC-08838/">Wrong do bind</a></td>
+            <td><a href="../messages/GHC-08838/">Wrong do bind</a></td>
             <td>Returning a monadic computation in a do block and not binding it will not run it</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-09009</td>
-            <td><a href="./messages/GHC-09009/">Illegal role name.</a></td>
+            <td><a href="../messages/GHC-09009/">Illegal role name.</a></td>
             <td>Type roles should be one of representational, nominal, or phantom.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-09646</td>
-            <td><a href="./messages/GHC-09646/">Tuple section in pattern</a></td>
+            <td><a href="../messages/GHC-09646/">Tuple section in pattern</a></td>
             <td>There has been an attempt to pattern match on a tuple section.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-10190</td>
-            <td><a href="./messages/GHC-10190/">Empty enumeration</a></td>
+            <td><a href="../messages/GHC-10190/">Empty enumeration</a></td>
             <td>An enumeration would be empty.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-10333</td>
-            <td><a href="./messages/GHC-10333/">Generalized newtype deriving doesn't work on non-newtypes</a></td>
+            <td><a href="../messages/GHC-10333/">Generalized newtype deriving doesn't work on non-newtypes</a></td>
             <td>Generalized newtype deriving works only for types declared with the newtype keyword.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-11861</td>
-            <td><a href="./messages/GHC-11861/">Empty single quotes</a></td>
+            <td><a href="../messages/GHC-11861/">Empty single quotes</a></td>
             <td>No character literal provided within single quotes.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-11913</td>
-            <td><a href="./messages/GHC-11913/">Illegal deriving item</a></td>
+            <td><a href="../messages/GHC-11913/">Illegal deriving item</a></td>
             <td>Something other than a type class appears in a deriving statement.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-12003</td>
-            <td><a href="./messages/GHC-12003/">Type equality not in scope</a></td>
+            <td><a href="../messages/GHC-12003/">Type equality not in scope</a></td>
             <td>The type equality operator has not been imported into the current module.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-13218</td>
-            <td><a href="./messages/GHC-13218/">Illegal linear function in kind</a></td>
+            <td><a href="../messages/GHC-13218/">Illegal linear function in kind</a></td>
             <td>A linear function was used for a higher kind, which is not allowed</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-19244</td>
-            <td><a href="./messages/GHC-19244/">Module is annotated as trustworthy, but is inferred as safe</a></td>
+            <td><a href="../messages/GHC-19244/">Module is annotated as trustworthy, but is inferred as safe</a></td>
             <td>The module is annotated to be trustworthy, but it could be annotated as safe</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-20125</td>
-            <td><a href="./messages/GHC-20125/">Missing field(s)</a></td>
+            <td><a href="../messages/GHC-20125/">Missing field(s)</a></td>
             <td>Initialization of record with missing field(s).</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-20825</td>
-            <td><a href="./messages/GHC-20825/">Empty record update</a></td>
+            <td><a href="../messages/GHC-20825/">Empty record update</a></td>
             <td>Record update syntax requires that at least one field be specified.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-21231</td>
-            <td><a href="./messages/GHC-21231/">Numeric escape sequence out of range</a></td>
+            <td><a href="../messages/GHC-21231/">Numeric escape sequence out of range</a></td>
             <td>The numeric escape sequence represents a number that is too large</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-24180</td>
-            <td><a href="./messages/GHC-24180/">Too few arguments to infix type operator</a></td>
+            <td><a href="../messages/GHC-24180/">Too few arguments to infix type operator</a></td>
             <td>A type operator was not provided with both arguments.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-25078</td>
-            <td><a href="./messages/GHC-25078/">Precedence out of range</a></td>
+            <td><a href="../messages/GHC-25078/">Precedence out of range</a></td>
             <td>An invalid operator precedence was provided.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-25897</td>
-            <td><a href="./messages/GHC-25897/">GADT pattern match must have a known result type</a></td>
+            <td><a href="../messages/GHC-25897/">GADT pattern match must have a known result type</a></td>
             <td>A pattern match on a GADT cannot succeed unless GHC knows the result type of the pattern match.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-27207</td>
-            <td><a href="./messages/GHC-27207/">Missing space after tilde `~`</a></td>
+            <td><a href="../messages/GHC-27207/">Missing space after tilde `~`</a></td>
             <td>Lazy pattern in expression context.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-28007</td>
-            <td><a href="./messages/GHC-28007/">Misplaced LANGUAGE pragma</a></td>
+            <td><a href="../messages/GHC-28007/">Misplaced LANGUAGE pragma</a></td>
             <td>LANGUAGE pragmas should come before the module declaration.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-30606</td>
-            <td><a href="./messages/GHC-30606/">Redundant constraints</a></td>
+            <td><a href="../messages/GHC-30606/">Redundant constraints</a></td>
             <td>A binding has constraints that are redundant.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-31574</td>
-            <td><a href="./messages/GHC-31574/">Illegal use of linear functions</a></td>
+            <td><a href="../messages/GHC-31574/">Illegal use of linear functions</a></td>
             <td>The linear function type is used, but LinearTypes are not enabled</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-38520</td>
-            <td><a href="./messages/GHC-38520/">Redundant Bang Patterns</a></td>
+            <td><a href="../messages/GHC-38520/">Redundant Bang Patterns</a></td>
             <td>Used a bang pattern that has no effect</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-39999</td>
-            <td><a href="./messages/GHC-39999/">No instance arising</a></td>
+            <td><a href="../messages/GHC-39999/">No instance arising</a></td>
             <td>An expression requires a type class instance which is not provided by the context.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-40798</td>
-            <td><a href="./messages/GHC-40798/">Operator whitespace</a></td>
+            <td><a href="../messages/GHC-40798/">Operator whitespace</a></td>
             <td>An optional warning for detecting usage of infix, suffix or prefix operators that could be parsed differently in future due to whitespace.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-42044</td>
-            <td><a href="./messages/GHC-42044/">Unrecognised pragma</a></td>
+            <td><a href="../messages/GHC-42044/">Unrecognised pragma</a></td>
             <td>GHC didn't recognize pragma and will thus ignore it</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-44360</td>
-            <td><a href="./messages/GHC-44360/">Cannot import unsafe modules in Safe Haskell</a></td>
+            <td><a href="../messages/GHC-44360/">Cannot import unsafe modules in Safe Haskell</a></td>
             <td>Only safe modules can be imported in modules which are declared safe</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-44432</td>
-            <td><a href="./messages/GHC-44432/">Type signature lacks an accompanying binding</a></td>
+            <td><a href="../messages/GHC-44432/">Type signature lacks an accompanying binding</a></td>
             <td>A type signature was provided, but no binding was given.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-45696</td>
-            <td><a href="./messages/GHC-45696/">If-Then-Else in pattern match</a></td>
+            <td><a href="../messages/GHC-45696/">If-Then-Else in pattern match</a></td>
             <td>If-Then-Else expression in pattern match.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-46537</td>
-            <td><a href="./messages/GHC-46537/">Unsupported extension</a></td>
+            <td><a href="../messages/GHC-46537/">Unsupported extension</a></td>
             <td>GHC failed to recognize name of a language extension</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-46956</td>
-            <td><a href="./messages/GHC-46956/">Kind variable would escape its scope</a></td>
+            <td><a href="../messages/GHC-46956/">Kind variable would escape its scope</a></td>
             <td>A local kind variable was used to classify a type from a scope in which the kind variable is not available.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-47535</td>
-            <td><a href="./messages/GHC-47535/">Identifier is not a record selector</a></td>
+            <td><a href="../messages/GHC-47535/">Identifier is not a record selector</a></td>
             <td>An identifier does not refer to a record selector but is used as such.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-47854</td>
-            <td><a href="./messages/GHC-47854/">Duplicate Exports</a></td>
+            <td><a href="../messages/GHC-47854/">Duplicate Exports</a></td>
             <td>An identifier appears twice in an export list.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-48099</td>
-            <td><a href="./messages/GHC-48099/">Top-level strict or unlifted binds not allowed</a></td>
+            <td><a href="../messages/GHC-48099/">Top-level strict or unlifted binds not allowed</a></td>
             <td>Top-level bindings may not be strict, and they may not have unlifted types.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-48361</td>
-            <td><a href="./messages/GHC-48361/">Binding type variables is not allowed in pattern bindings</a></td>
+            <td><a href="../messages/GHC-48361/">Binding type variables is not allowed in pattern bindings</a></td>
             <td>You can only bind value-level variables in a pattern, not type variables.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-49957</td>
-            <td><a href="./messages/GHC-49957/">Unticked promoted constructors</a></td>
+            <td><a href="../messages/GHC-49957/">Unticked promoted constructors</a></td>
             <td>A promoted data constructor was used as a type without it being indicated with a tick mark.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-51179</td>
-            <td><a href="./messages/GHC-51179/">Missing LambdaCase</a></td>
+            <td><a href="../messages/GHC-51179/">Missing LambdaCase</a></td>
             <td>Missing LambdaCase language extension</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-53633</td>
-            <td><a href="./messages/GHC-53633/">Redundant patterns</a></td>
+            <td><a href="../messages/GHC-53633/">Redundant patterns</a></td>
             <td>A pattern is impossible to reach due to earlier patterns</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-53786</td>
-            <td><a href="./messages/GHC-53786/">Case expression included in pattern</a></td>
+            <td><a href="../messages/GHC-53786/">Case expression included in pattern</a></td>
             <td>A pattern contains case-of syntax.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-54540</td>
-            <td><a href="./messages/GHC-54540/">Cannot derive instance without constructors in scope</a></td>
+            <td><a href="../messages/GHC-54540/">Cannot derive instance without constructors in scope</a></td>
             <td>It is not possible to derive a typeclass instance if the constructors of the type are not in scope</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-55666</td>
-            <td><a href="./messages/GHC-55666/">Strictness annotation on unlifted type</a></td>
+            <td><a href="../messages/GHC-55666/">Strictness annotation on unlifted type</a></td>
             <td>Using a strictness annotation (bang) on an unlifted type is redudant as unlifted values are strict by definition</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-56147</td>
-            <td><a href="./messages/GHC-56147/">Rewrite rules are ignored in Safe Haskell</a></td>
+            <td><a href="../messages/GHC-56147/">Rewrite rules are ignored in Safe Haskell</a></td>
             <td>Rewrite rules are not allowed in Safe Haskell and are therefore ignored</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-56538</td>
-            <td><a href="./messages/GHC-56538/">Instance head is not headed by a class</a></td>
+            <td><a href="../messages/GHC-56538/">Instance head is not headed by a class</a></td>
             <td>A type class instance declaration is declared for something that is not a type class.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-57396</td>
-            <td><a href="./messages/GHC-57396/">Linear types are not supported in FFI</a></td>
+            <td><a href="../messages/GHC-57396/">Linear types are not supported in FFI</a></td>
             <td>Linear types are not supported when using GHC's FFI functionality</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-58008</td>
-            <td><a href="./messages/GHC-58008/">Pattern matching on GADTs without MonoLocalBinds is fragile</a></td>
+            <td><a href="../messages/GHC-58008/">Pattern matching on GADTs without MonoLocalBinds is fragile</a></td>
             <td>Pattern matching on GADTs without MonoLocalBinds is fragile</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-58481</td>
-            <td><a href="./messages/GHC-58481/">Parse error on input</a></td>
+            <td><a href="../messages/GHC-58481/">Parse error on input</a></td>
             <td>Generic parsing error.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-58656</td>
-            <td><a href="./messages/GHC-58656/">Module is inferred to be safe</a></td>
+            <td><a href="../messages/GHC-58656/">Module is inferred to be safe</a></td>
             <td>If a module is inferred as safe, then it should be annotated as safe</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-59155</td>
-            <td><a href="./messages/GHC-59155/">Illegal tuple section</a></td>
+            <td><a href="../messages/GHC-59155/">Illegal tuple section</a></td>
             <td>A tuple section is used, but the TupleSections extension is not enabled</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-59692</td>
-            <td><a href="./messages/GHC-59692/">Duplicate Instances</a></td>
+            <td><a href="../messages/GHC-59692/">Duplicate Instances</a></td>
             <td>Multiple instances defined for the same type class and type.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-59840</td>
-            <td><a href="./messages/GHC-59840/">GHC does not support GADTs or type families which witness equality of multiplicities</a></td>
+            <td><a href="../messages/GHC-59840/">GHC does not support GADTs or type families which witness equality of multiplicities</a></td>
             <td>GHC does not support GADTs or type families which witness equality of multiplicities</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-61689</td>
-            <td><a href="./messages/GHC-61689/">Bad import not exported</a></td>
+            <td><a href="../messages/GHC-61689/">Bad import not exported</a></td>
             <td>Module does not export the imported symbol.</td>
             <td>9.8.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-62016</td>
-            <td><a href="./messages/GHC-62016/">Cannot derive well-kinded instance</a></td>
+            <td><a href="../messages/GHC-62016/">Cannot derive well-kinded instance</a></td>
             <td>An instance cannot be derived because the kinds cannot be made to match.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-62161</td>
-            <td><a href="./messages/GHC-62161/">Incomplete patterns</a></td>
+            <td><a href="../messages/GHC-62161/">Incomplete patterns</a></td>
             <td>Pattern match(es) are non-exhaustive.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-62330</td>
-            <td><a href="./messages/GHC-62330/">Underscores not allowed in float and integer literals</a></td>
+            <td><a href="../messages/GHC-62330/">Underscores not allowed in float and integer literals</a></td>
             <td>Float and integer literals cannot contain underscores.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-63394</td>
-            <td><a href="./messages/GHC-63394/">Messages from WARNING and DEPRECATED pragmas</a></td>
+            <td><a href="../messages/GHC-63394/">Messages from WARNING and DEPRECATED pragmas</a></td>
             <td>Warning or deprecation message attached to a function, class, type, or module in a library</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-64088</td>
-            <td><a href="./messages/GHC-64088/">Use of "forall" as an identifier</a></td>
+            <td><a href="../messages/GHC-64088/">Use of "forall" as an identifier</a></td>
             <td>Use of "forall" as an identifier is discouraged</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-64725</td>
-            <td><a href="./messages/GHC-64725/">User-defined type error</a></td>
+            <td><a href="../messages/GHC-64725/">User-defined type error</a></td>
             <td>An invalid constraint or type family reduces to a custom type error.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-66228</td>
-            <td><a href="./messages/GHC-66228/">View pattern in expression context</a></td>
+            <td><a href="../messages/GHC-66228/">View pattern in expression context</a></td>
             <td>A view pattern was used in an expression, rather than a pattern.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-68686</td>
-            <td><a href="./messages/GHC-68686/">Cannot parse LANGUAGE pragma</a></td>
+            <td><a href="../messages/GHC-68686/">Cannot parse LANGUAGE pragma</a></td>
             <td>The arguments to the LANGUAGE pragma could not be parsed</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-69158</td>
-            <td><a href="./messages/GHC-69158/">Conflicting exports</a></td>
+            <td><a href="../messages/GHC-69158/">Conflicting exports</a></td>
             <td>Different identifiers with the same name are (re-)exported from the same module.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-69925</td>
-            <td><a href="./messages/GHC-69925/">Illegal unboxed string literal in pattern</a></td>
+            <td><a href="../messages/GHC-69925/">Illegal unboxed string literal in pattern</a></td>
             <td>Illegal unboxed string literal in pattern.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-70712</td>
-            <td><a href="./messages/GHC-70712/">Double dots in record update</a></td>
+            <td><a href="../messages/GHC-70712/">Double dots in record update</a></td>
             <td>Double-dot syntax is not allowed in a record update.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-71614</td>
-            <td><a href="./messages/GHC-71614/">Lambda requires at least one parameter</a></td>
+            <td><a href="../messages/GHC-71614/">Lambda requires at least one parameter</a></td>
             <td>A lambda expression must have at least one parameter.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-75356</td>
-            <td><a href="./messages/GHC-75356/">Export item suggests constructors/methods</a></td>
+            <td><a href="../messages/GHC-75356/">Export item suggests constructors/methods</a></td>
             <td>An export item suggests that (in-scope) constructors or class methods exist when they do not.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-76037</td>
-            <td><a href="./messages/GHC-76037/">Not in scope</a></td>
+            <td><a href="../messages/GHC-76037/">Not in scope</a></td>
             <td>An identifier is not in scope.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-77037</td>
-            <td><a href="./messages/GHC-77037/">No explicit import list</a></td>
+            <td><a href="../messages/GHC-77037/">No explicit import list</a></td>
             <td>Items brought into scope are not listed explicitly.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-77539</td>
-            <td><a href="./messages/GHC-77539/">Illegal tuple constraint</a></td>
+            <td><a href="../messages/GHC-77539/">Illegal tuple constraint</a></td>
             <td>A tuple of constraints was used without enabling the ConstraintKinds extension</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-78892</td>
-            <td><a href="./messages/GHC-78892/">let-syntax in pattern</a></td>
+            <td><a href="../messages/GHC-78892/">let-syntax in pattern</a></td>
             <td>An attempt has been made to use a let expression whilst pattern matching.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-80768</td>
-            <td><a href="./messages/GHC-80768/">Class kind signatures need to be constraints</a></td>
+            <td><a href="../messages/GHC-80768/">Class kind signatures need to be constraints</a></td>
             <td>It is an error to use type families in the return kind of a class</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-81995</td>
-            <td><a href="./messages/GHC-81995/">Unused "do" bind</a></td>
+            <td><a href="../messages/GHC-81995/">Unused "do" bind</a></td>
             <td>A return value of a monadic action is ignored</td>
             <td>9.6.1.</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-83475</td>
-            <td><a href="./messages/GHC-83475/">Unused Record Wildcard</a></td>
+            <td><a href="../messages/GHC-83475/">Unused Record Wildcard</a></td>
             <td>Pattern contains record wildcard that is not used</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-83865</td>
-            <td><a href="./messages/GHC-83865/">Type Mismatch</a></td>
+            <td><a href="../messages/GHC-83865/">Type Mismatch</a></td>
             <td>You provided a value of a given type, whereas GHC expected a different type.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-84077</td>
-            <td><a href="./messages/GHC-84077/">Type application without space</a></td>
+            <td><a href="../messages/GHC-84077/">Type application without space</a></td>
             <td>A type application with @ does not have a space before.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-87139</td>
-            <td><a href="./messages/GHC-87139/">Illegal deriving strategy</a></td>
+            <td><a href="../messages/GHC-87139/">Illegal deriving strategy</a></td>
             <td>Use of a deriving strategy without enabling the corresponding language extension</td>
             <td>9.8.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-87429</td>
-            <td><a href="./messages/GHC-87429/">Illegal datatype context</a></td>
+            <td><a href="../messages/GHC-87429/">Illegal datatype context</a></td>
             <td>Constraints present in datatype declaration without DatatypeContexts.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-87491</td>
-            <td><a href="./messages/GHC-87491/">Found 'qualified' after the module</a></td>
+            <td><a href="../messages/GHC-87491/">Found 'qualified' after the module</a></td>
             <td>qualified after the module requires the ImportQualifiedPost extension.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-88464</td>
-            <td><a href="./messages/GHC-88464/">Variable not in scope</a></td>
+            <td><a href="../messages/GHC-88464/">Variable not in scope</a></td>
             <td>An unknown variable name was referenced.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-88747</td>
-            <td><a href="./messages/GHC-88747/">Precedence parsing error</a></td>
+            <td><a href="../messages/GHC-88747/">Precedence parsing error</a></td>
             <td>Cannot determine the order of operators in an expression</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-88933</td>
-            <td><a href="./messages/GHC-88933/">Non-numeric type in default declaration</a></td>
+            <td><a href="../messages/GHC-88933/">Non-numeric type in default declaration</a></td>
             <td>Default declarations may only mention types which implement the Num type class</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-89347</td>
-            <td><a href="./messages/GHC-89347/">Constraint tuple arity too large</a></td>
+            <td><a href="../messages/GHC-89347/">Constraint tuple arity too large</a></td>
             <td>A constraint cannot be defined on a tuple with a big arity</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-90177</td>
-            <td><a href="./messages/GHC-90177/">Orphan instance</a></td>
+            <td><a href="../messages/GHC-90177/">Orphan instance</a></td>
             <td>An instance was defined separately from its type or class.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-90584</td>
-            <td><a href="./messages/GHC-90584/">Deriving `Typeable` has no effect</a></td>
+            <td><a href="../messages/GHC-90584/">Deriving `Typeable` has no effect</a></td>
             <td>The type class `Typeable` does not need to be derived.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-91028</td>
-            <td><a href="./messages/GHC-91028/">Cannot equate polymorphic types with type variables</a></td>
+            <td><a href="../messages/GHC-91028/">Cannot equate polymorphic types with type variables</a></td>
             <td>During type inference, GHC can't instantiate a type variable with a type that is itself polymorphic.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-91938</td>
-            <td><a href="./messages/GHC-91938/">Equations have different number of arguments</a></td>
+            <td><a href="../messages/GHC-91938/">Equations have different number of arguments</a></td>
             <td>Each equation in a function definition must have the same number of arguments.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-92994</td>
-            <td><a href="./messages/GHC-92994/">Unexpected nested forall in foreign declaration</a></td>
+            <td><a href="../messages/GHC-92994/">Unexpected nested forall in foreign declaration</a></td>
             <td>A foreign function import uses a higher-rank type.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-93557</td>
-            <td><a href="./messages/GHC-93557/">Illegal typeclass instance</a></td>
+            <td><a href="../messages/GHC-93557/">Illegal typeclass instance</a></td>
             <td>Illegal typeclass instance</td>
             <td>9.8.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-94458</td>
-            <td><a href="./messages/GHC-94458/">Illegal position of Haddock comment</a></td>
+            <td><a href="../messages/GHC-94458/">Illegal position of Haddock comment</a></td>
             <td>A Haddock comment appears in an illegal position</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-94817</td>
-            <td><a href="./messages/GHC-94817/">Tab character</a></td>
+            <td><a href="../messages/GHC-94817/">Tab character</a></td>
             <td>A tab character occurred in the input file.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-95644</td>
-            <td><a href="./messages/GHC-95644/">Missing space after exclamation mark `!`</a></td>
+            <td><a href="../messages/GHC-95644/">Missing space after exclamation mark `!`</a></td>
             <td>Bang pattern in expression context.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-95781</td>
-            <td><a href="./messages/GHC-95781/">Invalid type application</a></td>
+            <td><a href="../messages/GHC-95781/">Invalid type application</a></td>
             <td>The expression cannot be applied to the given type argument.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-95909</td>
-            <td><a href="./messages/GHC-95909/">Missing strict fields</a></td>
+            <td><a href="../messages/GHC-95909/">Missing strict fields</a></td>
             <td>Constructor was not instantiated with required strict field(s).</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-97044</td>
-            <td><a href="./messages/GHC-97044/">User-specified instance is not allowed</a></td>
+            <td><a href="../messages/GHC-97044/">User-specified instance is not allowed</a></td>
             <td>Type class does not allow user-specified instances</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-97170</td>
-            <td><a href="./messages/GHC-97170/">Duplicate role annotations</a></td>
+            <td><a href="../messages/GHC-97170/">Duplicate role annotations</a></td>
             <td>A type declaration has more than one accompanying role annotation</td>
             <td>9.8.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-97441</td>
-            <td><a href="./messages/GHC-97441/">Overflowed Literals</a></td>
+            <td><a href="../messages/GHC-97441/">Overflowed Literals</a></td>
             <td>Literal overflowing range of supported values</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-97739</td>
-            <td><a href="./messages/GHC-97739/">Kind and type arguments out of dependency order</a></td>
+            <td><a href="../messages/GHC-97739/">Kind and type arguments out of dependency order</a></td>
             <td>Kind arguments must occur prior to the types that they classify.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-98980</td>
-            <td><a href="./messages/GHC-98980/">Command syntax in pattern</a></td>
+            <td><a href="../messages/GHC-98980/">Command syntax in pattern</a></td>
             <td>Arrow command syntax was used in a pattern.</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-99565</td>
-            <td><a href="./messages/GHC-99565/">Multiple default declarations</a></td>
+            <td><a href="../messages/GHC-99565/">Multiple default declarations</a></td>
             <td>Multiple default declarations are not allowed</td>
             <td>9.6.1</td>
         </tr>
     
         <tr>
             <td class="nowrap">GHC-99623</td>
-            <td><a href="./messages/GHC-99623/">Import item suggests constructors/methods</a></td>
+            <td><a href="../messages/GHC-99623/">Import item suggests constructors/methods</a></td>
             <td>An import item suggests that (in-scope) constructors or class methods exist when they do not.</td>
             <td>9.6.1</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00010</td>
-            <td><a href="./messages/GHCup-00010/">Unable to find a download for the requested version/distro</a></td>
-            <td>GHCup wasn't able to find a binary distribution for the requested tool for the current platform</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00110</td>
-            <td><a href="./messages/GHCup-00110/">The tool is already installed with that version</a></td>
-            <td>GHCup has already installed the requested version of the tool</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00160</td>
-            <td><a href="./messages/GHCup-00160/">JSON decoding failed</a></td>
-            <td>GHCup was unable to decode a JSON or YAML document (e.g. metadata file)</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00200</td>
-            <td><a href="./messages/GHCup-00200/">File digest verification failed</a></td>
-            <td>GHCup tried to verify the integrity/authenticity of a downloaded file, but the verification failed</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00210</td>
-            <td><a href="./messages/GHCup-00210/">GPG verify failed</a></td>
-            <td>GHCup tried to verify the authenticity of a software channel using GPG, but failed</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-00841</td>
-            <td><a href="./messages/GHCup-00841/">A process exited prematurely</a></td>
-            <td>GHCup executed a subprocess that did not complete successfully</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">GHCup-05841</td>
-            <td><a href="./messages/GHCup-05841/">A download failed</a></td>
-            <td>GHCup tried to download a tool, but the download failed with a subprocess exiting prematurely</td>
-            <td>0.1.19.0</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">S-4804</td>
-            <td><a href="./messages/S-4804/">Stack failed to construct a build plan</a></td>
-            <td>The package with the given name or version could not be found in the snapshot</td>
-            <td>2.9.3</td>
-        </tr>
-    
-        <tr>
-            <td class="nowrap">S-6602</td>
-            <td><a href="./messages/S-6602/">Could not parse YAML configuration file</a></td>
-            <td>A YAML configuration file was either not well-formed YAML or didn't contain the expected data</td>
-            <td>2.9.3</td>
         </tr>
     
 </table>
