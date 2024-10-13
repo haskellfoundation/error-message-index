@@ -177,7 +177,7 @@ compileFilteredIndex :: String -> Rules ()
 compileFilteredIndex prefix = do
   route idRoute
   compile $ do
-    messages <- loadAll (fromGlob ("messages/" <> prefix <> "*/index.md") .&&. hasNoVersion )
+    messages <- loadAll (fromGlob ("messages/" <> prefix <> "*/index.md") .&&. hasNoVersion)
     let bread = breadcrumbCtx []
         indexCtx =
           mconcat
