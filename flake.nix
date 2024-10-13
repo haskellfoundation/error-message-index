@@ -10,7 +10,7 @@
   };
   outputs = inputs:
     inputs.parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+      systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
       imports = [
         inputs.devshell.flakeModule
         inputs.haskell-flake.flakeModule
@@ -19,8 +19,7 @@
 
       perSystem = {
         config,
-        # pkgs,
-        # lib,
+        pkgs,
         ...
       }: {
         devshells.default = {
@@ -37,24 +36,15 @@
           settings.hooks = {
             cabal-fmt.enable = true;
             hlint.enable = true;
+            ormolu.enable = true;
 
             alejandra.enable = true;
-            statix.enable = true;
             deadnix.enable = true;
           };
         };
         haskellProjects.ghc96 = {
-          # packages = {};
-          # settings = {};
+          basePackages = pkgs.haskell.packages.ghc96;
           projectRoot = ./message-index;
-          # devShell.mkShellArgs = {
-          #   packages = [
-          #     # pkgs.zlib.dev
-          #     # pkgs.haskellPackages.zlib
-          #     # pkgs.haskellPackages.zlib_0_7_1_0.dev
-          #   ];
-          #   # shellHook = config.pre-commit.installationScript;
-          # };
         };
       };
     };
