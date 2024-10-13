@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scoped type variables only appears non-injectively in declaration header [GHC-59738] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Scoped type variables only appears non-injectively in declaration header [GHC-59738]
+    </nav>
+    <h1>Scoped type variables only appears non-injectively in declaration header [GHC-59738]</h1>
+    
+
+<p>The disconnected type variables error applies when kind-checking the header of a type/class declaration that has a
+separate, standalone kind signature.</p>
+<p>For this consider:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">S</span> a <span class="ot">=</span> <span class="dt">Type</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">C</span><span class="ot"> ::</span> <span class="kw">forall</span> k<span class="op">.</span> <span class="dt">S</span> k <span class="ot">-&gt;</span> <span class="dt">Constraint</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">C</span> (<span class="ot">a ::</span> <span class="dt">S</span> kk) <span class="kw">where</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ot"> op ::</span> <span class="op">..</span> kk <span class="op">..</span></span></code></pre></div>
+<p>Note that the class has a separate kind signature, so the elaborated decl should
+look like</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">C</span> <span class="op">@</span>kk (<span class="ot">a ::</span> <span class="dt">S</span> kk) <span class="kw">where</span> <span class="op">..</span></span></code></pre></div>
+<p>But how can we “connect up” the scoped variable <code>kk</code> with the skolem kind from the
+standalone kind signature for <code>C</code>? In general we do this by unifying the two.
+For example</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">T</span> k <span class="ot">=</span> (k,<span class="dt">Type</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">W</span><span class="ot"> ::</span> <span class="kw">forall</span> k<span class="op">.</span> <span class="dt">T</span> k <span class="ot">-&gt;</span> <span class="dt">Type</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">W</span> (<span class="ot">a ::</span> (x,<span class="dt">Type</span>)) <span class="ot">=</span> <span class="op">..</span></span></code></pre></div>
+<p>When we encounter <code>(a :: (x,Type))</code> we unify the kind <code>(x,Type)</code> with the kind <code>(T k)</code>
+from the standalone kind signature. Of course, unification looks through synonyms
+so we end up with the mapping <code>[x :-&gt; k]</code> that connects the scoped type variable <code>x</code>
+with the kind from the signature.</p>
+<p>But in our earlier example this unification is ineffective, because <code>S</code> is a
+phantom synonym (and hence non-injective) that just discards its argument. So our answer to this issue is:</p>
+<blockquote>
+<p>if matchUpSigWithDecl fails to connect <code>kk</code> with <code>k</code>, by unification,
+we give up and complain about a “disconnected” type variable.</p>
+</blockquote>
+<p>The fix is easy: just add an explicit <code>@kk</code> parameter to the declaration, to bind <code>kk</code>
+explicitly, rather than binding it implicitly via unification.</p>
+<p>More discussion can be found <a href="https://gitlab.haskell.org/ghc/ghc/-/issues/24083">at ghc issue #24083</a>.</p>
+<p>This text was adapted from <a href="https://gitlab.haskell.org/ghc/ghc/-/blob/2eee65e1a4f441e99b79f3dc6e7d60492e4cad78/compiler/GHC/Tc/Gen/HsType.hs#L3092-3147">Simon Peyton Jones’ note on disconnected type variable, please refer to this note for more technical insight</a>.</p>
+
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

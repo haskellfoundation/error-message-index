@@ -29,7 +29,7 @@
 </p>
 
 <p>
-  So far, 124 errors and warnings are documented here.
+  So far, 125 errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -511,6 +511,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
             <td><a href="./messages/GHC-59692/">Duplicate Instances</a></td>
             <td>Multiple instances defined for the same type class and type.</td>
             <td>9.6.1</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHC-59738</td>
+            <td><a href="./messages/GHC-59738/">Scoped type variables only appears non-injectively in declaration header</a></td>
+            <td>A data declaration has a kind signature, where the implictly bound type variables cannot be matched up unambiguosly with the ones from the signature itself</td>
+            <td>9.6.4</td>
         </tr>
     
         <tr>
