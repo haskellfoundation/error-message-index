@@ -119,23 +119,11 @@ main = hakyll $ do
         >>= applyAsTemplate ctx
         >>= loadAndApplyTemplate "templates/default.html" ctx
 
-  match "index.html" $ do
-    route idRoute
-    compile $ do
-      messages <- loadAll ("messages/*/index.md" .&&. hasNoVersion)
-      let bread = breadcrumbCtx []
-          indexCtx =
-            mconcat
-              [ listField "messages" (messageCtx <> defaultContext) (pure messages),
-                bread,
-                constField "messageCount" (show (length messages)),
-                defaultContext
-              ]
-
-      getResourceBody
-        >>= applyAsTemplate indexCtx
-        >>= loadAndApplyTemplate "templates/default.html" indexCtx
-        >>= relativizeUrls
+  match "index.html" $ compileFilteredIndex ""
+  match "cabal/index.html" $ compileFilteredIndex "Cabal-"
+  match "ghc/index.html" $ compileFilteredIndex "GHC-"
+  match "ghcup/index.html" $ compileFilteredIndex "GHCup-"
+  match "stack/index.html" $ compileFilteredIndex "S-"
 
   -- Needed for flagInfo below
   match "warning-sets/warning-sets-9.5.txt" $ do
@@ -184,6 +172,25 @@ main = hakyll $ do
       makeItem $ JSON.encode encoded
 
 --------------------------------------------------------------------------------
+
+compileFilteredIndex :: String -> Rules ()
+compileFilteredIndex prefix = do
+  route idRoute
+  compile $ do
+    messages <- loadAll (fromGlob ("messages/" <> prefix <> "*/index.md") .&&. hasNoVersion)
+    let bread = breadcrumbCtx []
+        indexCtx =
+          mconcat
+            [ listField "messages" (messageCtx <> defaultContext) (pure messages),
+              bread,
+              constField "messageCount" (show (length messages)),
+              defaultContext
+            ]
+
+    getResourceBody
+      >>= applyAsTemplate indexCtx
+      >>= loadAndApplyTemplate "templates/default.html" indexCtx
+      >>= relativizeUrls
 
 -- | The file extensions to be shown in example lists
 exampleExtensions :: NonEmpty String

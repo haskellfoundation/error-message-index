@@ -9,12 +9,12 @@ Haskell tooling emits a variety of errors, warnings, and other messages. In rece
 
 Today, the Haskell Message Index supports three tools. Any user-facing Haskell-related programming tools are welcome to join the effort!
 
-| Tool  | Earliest supported version | Namespace |
-|-------|----------------------------|-----------|
-| GHC   | 9.6.1                      | `GHC-`    |
-| Stack | 2.9.3                      | `S-`      |
-| GHCup | 0.1.19.0                   | `GHCup-`  |
-| Cabal | 3.12                       | `Cabal-`  |
+| Tool  | Earliest supported version | Namespace | Link to subpage |
+|-------|----------------------------|-----------|-----------------|
+| GHC   | 9.6.1                      | `GHC-`    | [/ghc](https://errors.haskell.org/ghc) |
+| Stack | 2.9.3                      | `S-`      | [/stack](https://errors.haskell.org/stack) |
+| GHCup | 0.1.19.0                   | `GHCup-`  | [/ghcup](https://errors.haskell.org/ghcup) |
+| Cabal | 3.12                       | `Cabal-`  | [/cabal](https://errors.haskell.org/cabal) |
 
 ## Contributing to the Message Index
 
