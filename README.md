@@ -16,6 +16,51 @@ Today, the Haskell Message Index supports three tools. Any user-facing Haskell-r
 | GHCup | 0.1.19.0                   | `GHCup-`  |
 | Cabal | 3.12                       | `Cabal-`  |
 
+## Setup
+
+This site is built with [Haskell](https://haskell.org) using the static-site generator [Hakyll](https://jaspervdj.be/hakyll/).
+
+### 'Normal' Install
+
+To run the site locally, you need to
+0. [install Haskell & Cabal](https://www.haskell.org/ghcup/):
+```shell
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+```
+1. Clone the Repo
+```shell
+git clone https://github.com/haskellfoundation/error-message-index.git
+```
+2. Run it
+```shell
+cd error-message-index    # yes, 
+cd message-index          # both of those are needed
+cabal update
+cabal run -- site watch   # Starts a web server on http://localhost:8000
+```
+
+### with Nix
+
+To run the site with Nix, you need to have [Nix](https://nixos.org/) installed. You can install it via the [Determinate Systems installer](https://zero-to-nix.com/start/install):
+```shell
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+1. Clone the Repo
+```shell
+git clone https://github.com/haskellfoundation/error-message-index.git
+```
+2. Run it
+```shell
+cd error-message-index    # yes, 
+cd message-index          # both of those are needed
+nix develop
+cabal run -- site watch   # Starts a web server on http://localhost:8000
+```
+
+For more on the Nix flake, have a look [here](./CONTRIBUTING.md#nix-flake). 
+
+And now, since you're up and running, you can start [contributing](./CONTRIBUTING.md)! :)
+
 ## Contributing to the Message Index
 
 Contributions may come in the form of changes to the code base, as well as opening or commenting on issues and pull requests. You are warmly invited to participate!
