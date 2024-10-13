@@ -1,0 +1,37 @@
+<p>In this example, there is a nested return whose result is not bound to a variable. Therefore the computation <code>return 10</code> is not used and can be removed.</p>
+<pre><code>messages/GHC-08838/WrongDoBind/before/WrongDoBind.hs:5:4: warning: [GHC-08838] [-Wwrong-do-bind]
+    A do-notation statement discarded a result of type ‘m Int’
+    Suggested fix:
+      Suppress this warning by saying ‘_ &lt;- return (return 10 :: m Int)’
+  |
+5 |    return (return 10 :: m Int)
+  |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">WrongDoBind.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module WrongDoBind where
+
+doubleReturn :: forall m. Monad m => m Int
+doubleReturn = do
+  return (return 10 :: m Int)
+  return 10
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module WrongDoBind where
+
+doubleReturn :: forall m. Monad m => m Int
+doubleReturn = return 10
+</code></pre>
+    </div>
+  </div>
+</div>
+
