@@ -24,8 +24,9 @@
     
 
 <p>This is a generic error, indicating that GHC could not parse the code.</p>
-<p>GHC contains many more explicit parsing errors with more verbose descriptions of the problem. However if the error is not separately defined there, a problem with parsing is reported with error code 58481.</p>
-<p>There may be many different reasons why error 58481 was given, ranging from an incorrect syntax that needs additional Haskell Language Extensions, to a expression mistakenly put in the same line as other.</p>
+<p>GHC contains many more explicit parsing errors with more verbose descriptions of the problem.
+However if the error is not separately defined there, a problem with parsing is reported with error code <code>GHC-58481</code>.</p>
+<p>There may be many different reasons why the error <code>GHC-58481</code> was emitted, ranging from incorrect syntax that requires additional language extensions, to an expression mistakenly put in the same line as another.</p>
 <p>Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via <a href="https://github.com/haskell/error-messages">error-messages github</a>.</p>
 
 
@@ -183,6 +184,47 @@ module NoHeader where
 import Data (static)
 
 f = $(static)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Use of pattern synonyms without enabled language extension</summary>
+  <div class="details-inner">
+    <p>In this example the user declared a pattern synonym without enabling the <code>PatternSynonym</code> extension, which leads to this generic parsing error.</p>
+<pre><code>messages/GHC-58481/example4/before/Pattern.hs:3:16: error: [GHC-58481]
+    parse error on input ‘&lt;-’
+    Suggested fix: Possibly caused by a missing 'do'?
+  |
+3 | pattern Head x &lt;- x:xs
+  |                ^^</code></pre>
+
+<pre class="filename">Pattern.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">
+module Pattern where
+
+pattern Head x <- x:xs
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE PatternSynonyms #-}
+module Pattern where
+
+pattern Head x <- x:xs
 </code></pre>
     </div>
   </div>

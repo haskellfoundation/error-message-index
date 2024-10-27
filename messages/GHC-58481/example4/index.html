@@ -1,0 +1,34 @@
+<p>In this example the user declared a pattern synonym without enabling the <code>PatternSynonym</code> extension, which leads to this generic parsing error.</p>
+<pre><code>messages/GHC-58481/example4/before/Pattern.hs:3:16: error: [GHC-58481]
+    parse error on input ‘&lt;-’
+    Suggested fix: Possibly caused by a missing 'do'?
+  |
+3 | pattern Head x &lt;- x:xs
+  |                ^^</code></pre>
+
+<pre class="filename">Pattern.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">
+module Pattern where
+
+pattern Head x <- x:xs
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE PatternSynonyms #-}
+module Pattern where
+
+pattern Head x <- x:xs
+</code></pre>
+    </div>
+  </div>
+</div>
+
