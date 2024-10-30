@@ -11,6 +11,8 @@ In Haskell, every variable comes into existence at a specific location. Examples
 
 A common situation where this error occurs is when the programmer forgets to import some name from a module. In that case, the solution is to add the missing import declaration.
 
+Another situation where this error may occur is when you used an explicit _hole_, which is a single underscore (`_`) or a variable name starting with an underscore (e.g. `_foo`).
+
 ## Example error text
 
 ```
