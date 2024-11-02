@@ -6,3 +6,7 @@ severity: error
 ---
 
 This error occurs during kind inference. When inferring a kind for a type variable, GHC creates a fresh metavariable to stand for the kind. Later, if something forces this kind metavariable to be equal to some other kind, unification equates them. However, local kind quantification can lead to the existence of kinds that are only valid in the scope of the quantifier. If a kind metavariable that originated outside this scope were unified with the locally-bound kind, then the resulting program would contain an ill-scoped kind signature.
+
+This situation can arise for multiple reasons.
+- In the first example, the cause is a manually-specified type signature with the kind variable in the wrong position.
+- In the second example, the cause is a pattern match on a GADT constructor in a `let` binding (use `case` instead).

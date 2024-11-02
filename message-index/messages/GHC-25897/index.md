@@ -11,3 +11,6 @@ signature, or by type inference due to the context in which the pattern match oc
 
 To solve the problem you must somehow tell GHC the type of the pattern
 match.
+
+A related situation where this error can arise is when binding a GADT constructor with
+a `let` binding; see the second example.
