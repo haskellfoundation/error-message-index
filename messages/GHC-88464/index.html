@@ -26,6 +26,7 @@
 <p>This error means that a variable name used in a program can’t be matched up with a corresponding <em>binding site</em>.</p>
 <p>In Haskell, every variable comes into existence at a specific location. Examples include function argument names, local definitions with <code>let</code>, and module-level definitions. Creating a new name like this is called <em>binding</em> it, and the area of the program that can refer to the new name is called its <em>scope</em>. The message means that the provided name is not available for reference right where it is referred to.</p>
 <p>A common situation where this error occurs is when the programmer forgets to import some name from a module. In that case, the solution is to add the missing import declaration.</p>
+<p>Another situation where this error may occur is when you used an explicit <em>hole</em>, which is a single underscore (<code>_</code>) or a variable name starting with an underscore (e.g. <code>_foo</code>).</p>
 <h2 id="example-error-text">Example error text</h2>
 <pre><code>error: [GHC-88464] Variable not in scope: x</code></pre>
 <pre><code>error: [GHC-88464] Variable not in scope: sort :: [Int] -&gt; [Int]</code></pre>
@@ -216,6 +217,67 @@ mkFoo =
 
 setFooInt :: Foo -> Int -> Foo
 setFooInt f x = f { fint = x }
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Used a typed hole</summary>
+  <div class="details-inner">
+    <h2 id="error-message">Error Message</h2>
+<pre><code>Example4.hs:4:7: error: [GHC-88464]
+    • Found hole: _ :: a -&gt; Bool
+      Where: ‘a’ is a rigid type variable bound by
+               the type signature for:
+                 foo :: forall a. Eq a =&gt; a -&gt; Bool
+               at Example4.hs:3:1-24
+    • In an equation for ‘foo’: foo = _
+    • Relevant bindings include
+        foo :: a -&gt; Bool (bound at Example4.hs:4:1)
+      Constraints include Eq a (from Example4.hs:3:1-24)
+      Valid hole fits include foo :: a -&gt; Bool (bound at Example4.hs:4:1)
+  |
+4 | foo = _
+  |       ^</code></pre>
+<h2 id="description">Description</h2>
+<p>Typed holes are very useful! They work in <em>expressions</em> (i.e. not in patterns or types). They generate an error, ensuring that you don’t forget to put some code there, but the error message is designed to give you information about what kind of code fits here.</p>
+<p>Here is the <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/typed_holes.html">GHC user’s guide on typed holes</a>.</p>
+<p>In the error message, the most important parts are:</p>
+<ul>
+<li>The type of the hole: <code>a -&gt; Bool</code> in this case.</li>
+<li>Where the type variables come from that appear in this type; <code>a</code> here comes from <code>foo</code>’s type signature.</li>
+<li>Relevant constraints: in this case, we know that <code>Eq a</code> holds. This list is in general not exhaustive; sometimes there are many possibly (indirectly) relevant constraints, and GHC has to make some selection of what to show.</li>
+<li>Valid hole fits: these are suggestions from GHC of names that would typecheck in the hole. This is also in general not an exhaustive list, and typically you’ll want to write code that is not quite as simple as a single variable. In this case, GHC sees that <code>foo</code> fits — which is not terribly helpful.</li>
+</ul>
+<p>Typed holes can be used for what is sometimes called <em>type-driven programming</em>: ask GHC what type it wants in a particular place, decide that the code should then look roughly like so (with the parts you don’t yet know filled in with holes <code>_</code> again), ask GHC for the types of those holes, etc. This is mostly useful when you have very precise types in your code, typically involving some type-level programming.</p>
+<p>If you want to test your code while you still have typed holes in your code, pass the <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/defer_type_errors.html#ghc-flag--fdefer-typed-holes"><code>-fdefer-typed-holes</code></a> flag to GHC. More generally, there is also the much more aggressive <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/defer_type_errors.html#ghc-flag--fdefer-type-errors"><code>-fdefer-type-errors</code></a>.</p>
+
+<pre class="filename">Example4.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example4 where
+
+foo :: Eq a => a -> Bool
+foo = _
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example4 where
+
+foo :: Eq a => a -> Bool
+foo x = x == x
 </code></pre>
     </div>
   </div>
