@@ -28,6 +28,8 @@ type of the pattern match. This information might, for example, be derived from 
 signature, or by type inference due to the context in which the pattern match occurs.</p>
 <p>To solve the problem you must somehow tell GHC the type of the pattern
 match.</p>
+<p>A related situation where this error can arise is when binding a GADT constructor with
+a <code>let</code> binding; see the second example.</p>
 
 
 
@@ -173,6 +175,77 @@ foo :: F x -> G x
 foo = \case
   FA -> True
   FB -> False
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Binding a `GADT` constructor in `let`</summary>
+  <div class="details-inner">
+    <p>In this example, we use a <code>let</code> binding to unpack the constructor of a GADT. Naively, this should work fine, because there is only one constructor. Yet GHC does not accept this code!</p>
+<p>The fix is to use pattern-matching, either with a <code>case</code> or by pattern-matching in a function argument.</p>
+<p>For more details about why this is necessary, see the <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/existential_quantification.html#restrictions">GHC user guide on ExistentialQuantification</a>.</p>
+<p>Note: if the <code>TypeFamilies</code> extension is active, <a href="../../../messages/GHC-46956">GHC-46956</a> is generated instead.</p>
+<h2 id="message">Message</h2>
+<pre><code>Let.hs:8:18: error: [GHC-25897]
+    • Couldn't match expected type ‘p’ with actual type ‘a’
+      ‘a’ is a rigid type variable bound by
+        a pattern with constructor:
+          MkShowable :: forall a. Show a =&gt; a -&gt; Showable,
+        in a pattern binding
+        at Let.hs:8:7-18
+      ‘p’ is a rigid type variable bound by
+        the inferred type of x :: p
+        at Let.hs:8:7-29
+    • In the pattern: MkShowable x
+      In a pattern binding: MkShowable x = showable
+      In the expression: let MkShowable x = showable in show x
+  |
+8 |   let MkShowable x = showable
+  |                  ^</code></pre>
+
+<pre class="filename">Let.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+data Showable where
+  MkShowable :: Show a => a -> Showable
+
+showShowable :: Showable -> String
+showShowable showable =
+  let MkShowable x = showable
+  in show x
+
+main :: IO ()
+main = putStrLn $ showShowable (MkShowable 42)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Main where
+
+data Showable where
+  MkShowable :: Show a => a -> Showable
+
+showShowable :: Showable -> String
+showShowable showable =
+  case showable of
+    MkShowable x -> show x
+
+main :: IO ()
+main = putStrLn $ showShowable (MkShowable 42)
 </code></pre>
     </div>
   </div>
