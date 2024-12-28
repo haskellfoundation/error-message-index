@@ -145,7 +145,8 @@ main = hakyll $ do
           pageCtx =
             mconcat
               [ modificationTimeField "lastmod" "%Y-%m-%d",
-                constField "host" host
+                constField "host" host,
+                defaultContext
               ]
       let sitemapCtx =
             mconcat
