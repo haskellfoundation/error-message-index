@@ -34,6 +34,11 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
+  -- Necessary to point webcrawlers to the correct sitemap
+  match "robots.txt" $ do
+    route idRoute
+    compile copyFileCompiler
+
   match "images/*" $ do
     route idRoute
     compile copyFileCompiler
