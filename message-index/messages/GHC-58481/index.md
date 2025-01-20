@@ -12,4 +12,4 @@ However if the error is not separately defined there, a problem with parsing is 
 
 There may be many different reasons why the error `GHC-58481` was emitted, ranging from incorrect syntax that requires additional language extensions, to an expression mistakenly put in the same line as another.
 
-Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via [error-messages github](https://github.com/haskell/error-messages).
+Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via [error-message-index github](https://github.com/haskell/error-message-index).
