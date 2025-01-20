@@ -7,7 +7,7 @@ Haskell tooling emits a variety of errors, warnings, and other messages. In rece
 
 ## Supported Tools
 
-Today, the Haskell Message Index supports three tools. Any user-facing Haskell-related programming tools are welcome to join the effort!
+Today, the Haskell Message Index supports four tools. Any user-facing Haskell-related programming tools are welcome to join the effort!
 
 | Tool  | Earliest supported version | Namespace | Link to subpage |
 |-------|----------------------------|-----------|-----------------|
