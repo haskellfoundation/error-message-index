@@ -1,0 +1,38 @@
+<p>Cannot specify functional dependencies for a class - <code>FunctionalDependencies</code> language extension is missing.</p>
+<h2 id="error-message">Error Message</h2>
+<pre><code>FunDepsDisabled.hs:1:1: error: [GHC-15708]
+    • Fundeps in class ‘Convert’
+    • In the class declaration for ‘Convert’
+    Suggested fix: Perhaps you intended to use FunctionalDependencies
+  |
+1 | class Convert a b | a -&gt; b where
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^...</code></pre>
+
+<pre class="filename">FunDepsDisabled.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module FunDepsDisabled where
+
+class Convert a b | a -> b where
+  convert :: a -> b
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE FunctionalDependencies #-}
+
+module FunDepsDisabled where
+
+class Convert a b | a -> b where
+  convert :: a -> b
+</code></pre>
+    </div>
+  </div>
+</div>
+
