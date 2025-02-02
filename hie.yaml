@@ -1,0 +1,21 @@
+cradle:
+  multi:
+    - path: "./message-index/create-message-template.hs"
+      config:
+        cradle:
+          direct:
+            arguments: []
+    - path: "./message-index/site.hs"
+      config:
+        cradle:
+          cabal:
+            - path: "./message-index/site.hs"
+              component: "message-index:exe:site"
+    - path: "./message-index/messages"
+      config:
+        cradle:
+          # TODO We could use a `bios` cradle instead, to get the precise flags necessary to trigger the message.
+          # e.g. by parsing the `flag:` field from `index.md` if that were used consistently.
+          # But `-Wall` is a decent approximation.
+          direct:
+            arguments: [ -Wall ]
