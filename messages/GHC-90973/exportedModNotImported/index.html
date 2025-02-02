@@ -1,0 +1,30 @@
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ExportedModNotImported.hs<span class="op">:</span><span class="dv">1</span><span class="op">:</span><span class="dv">32</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">The</span> export item ‘module <span class="dt">Data.List</span>’ is <span class="fu">not</span> imported</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">|</span> <span class="kw">module</span> <span class="dt">ExportedModNotImported</span> (<span class="kw">module</span> <span class="dt">Data.List</span>) <span class="kw">where</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span></span></code></pre></div>
+<p>We’re trying to reexport a module which has not been imported.
+In this case we fix it by adding the missing import statement.</p>
+
+<pre class="filename">ExportedModNotImported.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module ExportedModNotImported (module Data.List) where
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module ExportedModNotImported (module Data.List) where
+
+import Data.List
+</code></pre>
+    </div>
+  </div>
+</div>
+
