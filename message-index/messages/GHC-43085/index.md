@@ -6,7 +6,7 @@ introduced: 9.6.1
 ---
 
 Type class methods that make use of
-[overlapping instances](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/instances.html#overlapping-instances)
+[overlapping instances](https://downloads.haskell.org/ghc/9.12.1/docs/users_guide/exts/instances.html#overlapping-instances)
 lead may lead to an error because the resolved candidates would lead to indeterministic program behavior.
 
 We can solve this by annotating the instances with the `{-# OVERLAPS #-}`, `{-# OVERLAPPING #-}`, `{-# OVERLAPPABLE #-}` and `{-# INCOHERENT #-}` pragma.
