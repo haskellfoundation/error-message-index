@@ -6,7 +6,7 @@ introduced: 9.6.1
 ---
 
 An *Export List* of a Haskell module identifies the entities (functions, types, etc.) to be exported by a module declaration.
-The syntax for export lists is describe in the [section 5.2](https://www.haskell.org/onlinereport/modules.html) of the **Haskell 98 Language and Libraries** report. Apart from exporting individual functions and data types, the specification also allows you to re-export entire modules as in this example:
+The syntax for export lists is described in the [section 5.2](https://www.haskell.org/onlinereport/modules.html) of the **Haskell 98 Language and Libraries** report. Apart from exporting individual functions and data types, the specification also allows you to re-export entire modules as in this example:
 
 ```haskell
 module My.List.Reexport (module Data.List) where
