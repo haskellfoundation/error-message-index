@@ -27,7 +27,7 @@
 </p>
 
 <p>
-  So far, 116 GHC errors and warnings are documented here.
+  So far, 117 GHC errors and warnings are documented here.
   If you encounter a message that is not yet documented, please
   <a href="https://github.com/haskellfoundation/error-message-index/issues">open an issue</a> or
   <a href="https://github.com/haskellfoundation/error-message-index/pulls">submit a pull request with documentation</a>.
@@ -410,6 +410,13 @@ Please <a href="https://haskell.foundation/contact/" target="_blank" rel="noopen
             <td><a href="../messages/GHC-49957/">Unticked promoted constructors</a></td>
             <td>A promoted data constructor was used as a type without it being indicated with a tick mark.</td>
             <td>9.6.1</td>
+        </tr>
+    
+        <tr>
+            <td class="nowrap">GHC-50928</td>
+            <td><a href="../messages/GHC-50928/">Noncanonical `mappend` definition</a></td>
+            <td>A Monoid instance uses a custom `mappend` implementation rather than re-using the default `(<>)` operation from its Semigroup instance.</td>
+            <td>9.8.1</td>
         </tr>
     
         <tr>
