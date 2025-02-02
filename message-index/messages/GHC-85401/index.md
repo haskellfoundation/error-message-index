@@ -6,4 +6,4 @@ flag: -Wmissing-export-lists
 introduced: 9.6.1
 ---
 
-GHC issues a warning if he module declaration does not contain an export list. When an export list is missing, all definitions in the module are exported.
+If enabled by `-Wmissing-export-lists` or `-Weverything`, GHC issues a warning when the `module` declaration does not contain an export list. When an export list is missing, all definitions in the module are exported.
