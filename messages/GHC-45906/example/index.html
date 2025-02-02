@@ -1,0 +1,42 @@
+<p>Module fails to compile because it contains a standalone type
+signature.</p>
+<h2 id="error-message">Error Message</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SAKS.hs<span class="op">:</span><span class="dv">7</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span> [<span class="dt">GHC</span><span class="op">-</span><span class="dv">45906</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Illegal</span> standalone kind signature</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Suggested</span> fix<span class="op">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">Perhaps</span> you intended to use the ‘<span class="dt">StandaloneKindSignatures</span>’ extension (implied by ‘<span class="dt">UnliftedDatatypes</span>’)</span></code></pre></div>
+
+<pre class="filename">SAKS.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE Haskell2010 #-}
+
+module SAKS where
+
+import Data.Kind (Type)
+
+type T :: Type
+data T
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE GHC2021 #-}
+
+module SAKS where
+
+import Data.Kind (Type)
+
+type T :: Type
+data T
+</code></pre>
+    </div>
+  </div>
+</div>
+
