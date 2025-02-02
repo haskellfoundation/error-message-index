@@ -21,4 +21,4 @@ extension to be enabled.  This extension is implied by
 `UnliftedDatatypes`, and included in the `GHC2021` and `GHC2024`
 language editions.
 
-[Standalone kind signatures]: https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/poly_kinds.html?highlight=standalonekindsignatures#extension-StandaloneKindSignatures
+[Standalone kind signatures]: https://downloads.haskell.org/ghc/9.12.1/docs/users_guide/exts/poly_kinds.html#standalone-kind-signatures-and-polymorphic-recursion
