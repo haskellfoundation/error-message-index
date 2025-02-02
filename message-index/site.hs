@@ -34,6 +34,11 @@ main = hakyll $ do
     route idRoute
     compile copyFileCompiler
 
+  -- Necessary to point webcrawlers to the correct sitemap
+  match "robots.txt" $ do
+    route idRoute
+    compile copyFileCompiler
+
   match "images/*" $ do
     route idRoute
     compile copyFileCompiler
@@ -130,6 +135,27 @@ main = hakyll $ do
     compile getResourceBody
 
   match "templates/*" $ compile templateBodyCompiler
+
+  create ["sitemap.xml"] $ do
+    route idRoute
+    compile $ do
+      let messages = loadAll "messages/*/*"
+      let host = "https://errors.haskell.org"
+      let pageCtx :: Context String
+          pageCtx =
+            mconcat
+              [ modificationTimeField "lastmod" "%Y-%m-%d",
+                constField "host" host,
+                defaultContext
+              ]
+      let sitemapCtx =
+            mconcat
+              [ listField "entries" pageCtx messages,
+                constField "host" host,
+                defaultContext
+              ]
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/sitemap.xml" sitemapCtx
 
   create ["api/errors.json"] $ do
     route idRoute
