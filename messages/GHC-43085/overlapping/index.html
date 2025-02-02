@@ -1,0 +1,57 @@
+<p>Here, the two instances <code>Formatter (Maybe a)</code> and <code>Formatter (Maybe Int)</code> are overlapping.
+Since the latter is more specific, we can solve this by annotating the instances with the <code>{-# OVERLAPPABLE #-}</code> and <code>{-# OVERLAPS #-}</code>.</p>
+
+<pre class="filename">Overlapping.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
+
+class Formatter a where
+  format :: a -> String
+
+instance Formatter Int where
+  format = show
+
+instance (Formatter a) => Formatter (Maybe a) where
+  format (Just x) = format x
+  format Nothing = ""
+
+instance Formatter (Maybe Int) where
+  format (Just x) = format x
+  format Nothing = "NaN"
+
+main :: IO ()
+main = putStrLn $ format (Nothing :: Maybe Int)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Overlapping where
+
+class Formatter a where
+  format :: a -> String
+
+instance Formatter Int where
+  format = show
+
+instance {-# OVERLAPPABLE #-} (Formatter a) => Formatter (Maybe a) where
+  format (Just x) = format x
+  format Nothing = ""
+
+instance {-# OVERLAPS #-} Formatter (Maybe Int) where
+  format (Just x) = format x
+  format Nothing = "NaN"
+
+main :: IO ()
+main = putStrLn $ format (Nothing :: Maybe Int)
+</code></pre>
+    </div>
+  </div>
+</div>
+

@@ -317,6 +317,13 @@
     </url>
 
     <url>
+        <loc>https://errors.haskell.org/messages/GHC-43085/index.html</loc>
+        <changefreq>weekly</changefreq>
+        <lastmod>2025-02-02</lastmod>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://errors.haskell.org/messages/GHC-44360/index.html</loc>
         <changefreq>weekly</changefreq>
         <lastmod>2025-02-02</lastmod>
