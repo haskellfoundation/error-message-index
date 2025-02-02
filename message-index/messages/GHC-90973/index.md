@@ -21,5 +21,6 @@ This tells GHC to include all the symbols exported by the module `Data.List` to 
 The error message `GHC-90973` occurs when module's export list contains a module export of a module, which hasn't been imported.
 
 The usual way to fix it is to either:
+
 1. add the missing module import
 2. remove the `module <MISSING-MODULE>` export from the export list
