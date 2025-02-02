@@ -27,7 +27,7 @@
 <p>GHC contains many more explicit parsing errors with more verbose descriptions of the problem.
 However if the error is not separately defined there, a problem with parsing is reported with error code <code>GHC-58481</code>.</p>
 <p>There may be many different reasons why the error <code>GHC-58481</code> was emitted, ranging from incorrect syntax that requires additional language extensions, to an expression mistakenly put in the same line as another.</p>
-<p>Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via <a href="https://github.com/haskell/error-messages">error-messages github</a>.</p>
+<p>Below are some examples of code that generate this generic parsing error. Please be encouraged to report more or contribute via <a href="https://github.com/haskell/error-message-index">error-message-index github</a>.</p>
 
 
 
@@ -225,6 +225,52 @@ pattern Head x <- x:xs
 module Pattern where
 
 pattern Head x <- x:xs
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Use of overloaded labels without enabled language extension</summary>
+  <div class="details-inner">
+    <p>In this example the user attempted to use an overloaded label without enabling the <code>OverloadedLabels</code> extension, which leads to this generic parsing error. <a href="https://downloads.haskell.org/ghc/latest/docs/users_guide/exts/overloaded_labels.html#extension-OverloadedLabels">Overloaded Labels</a> assign a special meaning to the <code>#</code> character in front of an identifier, or (since GHC 9.6) any non-empty double-quoted string.</p>
+<pre><code>messages/GHC-58481/example5/before/Label.hs:4:7: error: [GHC-58481] parse error on input ‘#’
+  |
+4 | foo = #foo
+  |       ^</code></pre>
+
+<pre class="filename">Label.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Label where
+
+import GHC.OverloadedLabels (IsLabel)
+
+foo :: (IsLabel "foo" ()) => ()
+foo = #foo
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE OverloadedLabels #-}
+
+module Label where
+
+import GHC.OverloadedLabels (IsLabel)
+
+foo :: (IsLabel "foo" ()) => ()
+foo = #foo
 </code></pre>
     </div>
   </div>
