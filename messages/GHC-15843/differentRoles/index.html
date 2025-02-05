@@ -1,0 +1,57 @@
+<p>The <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/roles.html">roles</a>
+of the type constructor arguments do not match. A typical reason for the roles
+not to match is that, in <code>.hs-boot</code> and <code>.hsig</code> modules, the role of arguments
+in the forward type declarations defaults to <code>representional</code>.</p>
+<p>In the following example, the role of the type argument in the actual module is
+<code>phantom</code>, because it doesn’t occur in the RHS of the data declaration. Since
+<code>representational</code> is inferred for the <code>hs-boot</code> declaration.</p>
+<h2 id="example-error-text">Example error text</h2>
+<pre><code>T9204.hs:7:1: error: [GHC-15843]
+    • Type constructor ‘D’ has conflicting definitions in the module
+      and its hs-boot file.
+      Main module: type role D phantom
+                   type D :: * -&gt; *
+                   data D a
+        Boot file: type D :: * -&gt; *
+                   data D a
+      The roles do not match.
+      NB: roles on abstract types default to ‘representational’ in hs-boot files.
+    • In the data type declaration for ‘D’</code></pre>
+
+<pre class="filename">DifferentRoles.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentRoles where
+
+data D a
+
+-- .hs-boot or .hsig boot
+module DifferentRoles where
+
+data D a
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentRoles where
+
+data D a
+
+-- .hs-boot or .hsig boot
+{-# LANGUAGE RoleAnnotations #-}
+module DifferentRoles where
+
+type role D phantom
+data D a
+</code></pre>
+    </div>
+  </div>
+</div>
+

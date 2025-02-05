@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Type constructor has conflicting definitions in the module and its hs-boot/hsig file [GHC-15843] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Type constructor has conflicting definitions in the module and its hs-boot/hsig file [GHC-15843]
+    </nav>
+    <h1>Type constructor has conflicting definitions in the module and its hs-boot/hsig file [GHC-15843]</h1>
+    
+
+<p>The type constructor definitions in modules must agree with the cycle-breaking
+<code>hs-boot</code> modules as well as with the Backpack <code>hsig</code> module interface files, if
+any of the two exist.</p>
+<p>Type constructor definitions in <a href="https://downloads.haskell.org/ghc/9.12.1/docs/users_guide/separate_compilation.html#mutually-recursive-modules-and-hs-boot-files"><code>hs-boot</code> modules</a>
+and <a href="https://downloads.haskell.org/ghc/9.12.1/docs/users_guide/separate_compilation.html#module-signatures"><code>hsig</code> files</a> are typically
+given by forward data declarations (data declarations without any data
+constructors, only the type constructor is declared), as that is the whole
+purpose of those two “interface-like modules”.</p>
+<p>Therefore, this error message likely comes up in one of two situations:</p>
+<ol type="1">
+<li>The kinds of type constructors differ in the interface module and in the
+actual module.</li>
+<li>The type constructor kinds match, but the <em>roles</em> of some of the type
+arguments don’t match.</li>
+</ol>
+<p>The first situation can be typically be easily fixed by making sure the type
+declaration in the boot/sig module has the same number of type arguments as the
+declaration in the module and making sure any kind declarations are equal. The
+second situation can normally be solved by given a type role declaration to the
+type constructor. See the two examples below.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>The types have different kinds</summary>
+  <div class="details-inner">
+    <p>The types have different kinds. If you are using kind declarations or
+annotations, make sure these match. Alternatively, you may have given different
+numbers of type arguments to the same type constructor – make sure the number
+of arguments match.</p>
+<h2 id="example-error-text">Example error text</h2>
+<pre><code>X.hs:3:1: error: [GHC-15843]
+    • Type constructor ‘X’ has conflicting definitions in the module
+      and its hs-boot file.
+      Main module: type X :: * -&gt; *
+                   data X a = X a
+        Boot file: type X :: *
+                   data X
+      The types have different kinds.
+    • In the data type declaration for ‘X’
+  |
+3 | data X a = X a
+  | ^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">DifferentKinds.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentKinds where
+
+data ATypeConstructor a b c = ATC a b c
+
+-- The .hs-boot or .hsig module
+module DifferentKinds where
+
+data ATypeConstructor a b
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentKinds where
+
+data ATypeConstructor a b c = ATC a b c
+
+-- The .hs-boot or .hsig module
+module DifferentKinds where
+
+data ATypeConstructor a b c
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>The roles do not match</summary>
+  <div class="details-inner">
+    <p>The <a href="https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/roles.html">roles</a>
+of the type constructor arguments do not match. A typical reason for the roles
+not to match is that, in <code>.hs-boot</code> and <code>.hsig</code> modules, the role of arguments
+in the forward type declarations defaults to <code>representional</code>.</p>
+<p>In the following example, the role of the type argument in the actual module is
+<code>phantom</code>, because it doesn’t occur in the RHS of the data declaration. Since
+<code>representational</code> is inferred for the <code>hs-boot</code> declaration.</p>
+<h2 id="example-error-text">Example error text</h2>
+<pre><code>T9204.hs:7:1: error: [GHC-15843]
+    • Type constructor ‘D’ has conflicting definitions in the module
+      and its hs-boot file.
+      Main module: type role D phantom
+                   type D :: * -&gt; *
+                   data D a
+        Boot file: type D :: * -&gt; *
+                   data D a
+      The roles do not match.
+      NB: roles on abstract types default to ‘representational’ in hs-boot files.
+    • In the data type declaration for ‘D’</code></pre>
+
+<pre class="filename">DifferentRoles.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentRoles where
+
+data D a
+
+-- .hs-boot or .hsig boot
+module DifferentRoles where
+
+data D a
+
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DifferentRoles where
+
+data D a
+
+-- .hs-boot or .hsig boot
+{-# LANGUAGE RoleAnnotations #-}
+module DifferentRoles where
+
+type role D phantom
+data D a
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>
