@@ -1,8 +1,9 @@
 ---
 title: Version number or non-alphanumeric character in package name
-summary: Package imports may only consist of alphanumeric characters, and must omit the version
+summary: Package imports may only consist of alphanumeric characters, and must omit the version.
 severity: error
 introduced: 9.6.1
+extension: PackageImports
 ---
 
 Version number or non-alphanumeric character in the package. Alphanumeric characters are letters and numbers, as defined by `Data.Char.isAlphaNum`.
