@@ -1,3 +1,3 @@
 ---
-title: Version number in package
+title: Version number in package name
 ---
