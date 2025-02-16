@@ -1,0 +1,29 @@
+
+
+<pre class="filename">Higher_rank.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RankNTypes #-}
+
+module Higher_rank where
+
+data Bad = MkBad (forall a. a) deriving Eq
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Higher_rank where
+
+-- unfortunately we just need a rank 1 type
+data Bad a = MkBad a deriving Eq
+</code></pre>
+    </div>
+  </div>
+</div>
+

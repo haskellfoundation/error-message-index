@@ -1,0 +1,34 @@
+
+
+<pre class="filename">Deriving_gadt.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Deriving_gadt where
+
+data T a b where
+     Mk :: Int -> b -> T Int b
+     deriving (Functor)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE GADTs #-}
+{-# LANGUAGE StandaloneDeriving #-}
+
+module Deriving_gadt where
+
+data T a b where
+     Mk :: Int -> b -> T Int b
+
+deriving instance Functor (T a)
+</code></pre>
+    </div>
+  </div>
+</div>
+
