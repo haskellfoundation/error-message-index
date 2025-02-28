@@ -1,5 +1,5 @@
 ---
-title: `main` has wrong name
+title: main has wrong name
 ---
 
 In this example, the `notMain` value is the intended entry point of the program,
