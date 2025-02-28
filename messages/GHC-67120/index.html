@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Missing main [GHC-67120] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Missing main [GHC-67120]
+    </nav>
+    <h1>Missing main [GHC-67120]</h1>
+    
+
+<p>GHC expects the <code>Main</code> module to define a function called <code>main</code> which it can
+use as the entry point of your program.</p>
+<p>This error can also occur in unnamed modules, because GHC will default to the
+module name <code>Main</code> for such modules.</p>
+<p>If you just want GHC to produce an object file without an entry point, then you
+can give your module a name other than <code>Main</code> by putting a module header at the
+top of your file (below language pragmas and compiler options), for example as
+follows:</p>
+<pre><code>module Foo where</code></pre>
+<p>The conventions around <code>main</code> are defined in the second paragraph of Chapter 5
+of <a href="https://www.haskell.org/onlinereport/haskell2010/haskellch5.html#x11-980005">The Haskell 2010 Report</a>,</p>
+<blockquote>
+<p>A Haskell program is a collection of modules, one of which, by convention,
+must be called <code>Main</code> and must export the value <code>main</code>. The value of the
+program is the value of the identifier <code>main</code> in module <code>Main</code>, which must be
+a computation of type <code>IO t</code> for some type <code>t</code> (see Chapter 7). When the
+program is executed, the computation <code>main</code> is performed, and its result (of
+type <code>t</code>) is discarded.</p>
+</blockquote>
+<h2 id="example-error-text">Example error text</h2>
+<pre><code>example1/before/Lib.hs:1:1: error: [GHC-67120]
+    The IO action ‘main’ is not defined in module ‘Main’
+  |
+1 | factorial :: Int -&gt; Int
+  | ^</code></pre>
+<pre><code>example2/before/Main.hs:1:1: error: [GHC-67120]
+    The IO action ‘main’ is not defined in module ‘Main’
+  |
+1 | notMain :: IO ()
+  | ^</code></pre>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Missing module header</summary>
+  <div class="details-inner">
+    <p>In this example, the file <code>Lib.hs</code> is intended to contain a module called <code>Lib</code>
+which is not supposed to be the main module. However, the file is missing a
+module header, so GHC defaults to the module name <code>Main</code> and expects the <code>main</code>
+function. Adding an explicit module header with the name <code>Lib</code> solves this
+issue.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">factorial :: Int -> Int
+factorial n = product [1..n]
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+factorial :: Int -> Int
+factorial n = product [1..n]
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>main has wrong name</summary>
+  <div class="details-inner">
+    <p>In this example, the <code>notMain</code> value is the intended entry point of the program,
+but it is not called <code>main</code> so GHC does not find it. Renaming <code>notMain</code> to
+<code>main</code> solves the issue.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">notMain :: IO ()
+notMain = putStrLn "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">main :: IO ()
+main = putStrLn "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

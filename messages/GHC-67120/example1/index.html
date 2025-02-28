@@ -1,0 +1,30 @@
+<p>In this example, the file <code>Lib.hs</code> is intended to contain a module called <code>Lib</code>
+which is not supposed to be the main module. However, the file is missing a
+module header, so GHC defaults to the module name <code>Main</code> and expects the <code>main</code>
+function. Adding an explicit module header with the name <code>Lib</code> solves this
+issue.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">factorial :: Int -> Int
+factorial n = product [1..n]
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+factorial :: Int -> Int
+factorial n = product [1..n]
+</code></pre>
+    </div>
+  </div>
+</div>
+

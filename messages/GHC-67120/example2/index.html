@@ -1,0 +1,26 @@
+<p>In this example, the <code>notMain</code> value is the intended entry point of the program,
+but it is not called <code>main</code> so GHC does not find it. Renaming <code>notMain</code> to
+<code>main</code> solves the issue.</p>
+
+<pre class="filename">Main.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">notMain :: IO ()
+notMain = putStrLn "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">main :: IO ()
+main = putStrLn "Hello, World!"
+</code></pre>
+    </div>
+  </div>
+</div>
+
