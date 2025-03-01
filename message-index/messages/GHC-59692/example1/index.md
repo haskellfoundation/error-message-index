@@ -1,3 +1,7 @@
+---
+title: Identical Instance Heads
+---
+
 Even though the instances have different constraints, they are still considered the same.
 
 ## Error message
