@@ -1,0 +1,45 @@
+<p>Even though the instances have different constraints, they are still considered the same.</p>
+<h2 id="error-message">Error message</h2>
+<pre><code>messages/GHC-59692/example1/before/Example1.hs:3:10: error: [GHC-59692]
+    Duplicate instance declarations:
+      instance Eq a =&gt; Eq (T a)
+        -- Defined at messages/GHC-59692/example1/before/Example1.hs:3:10
+      instance Show a =&gt; Eq (T a)
+        -- Defined at messages/GHC-59692/example1/before/Example1.hs:6:10
+  |
+3 | instance Eq a =&gt; Eq (T a) where
+  |          ^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">Example1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example1 where
+
+data T a
+
+instance Eq a => Eq (T a) where
+  (==) = (==)
+
+instance Show a => Eq (T a) where
+  (==) = (==)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example1 where
+
+data T a
+
+instance Eq a => Eq (T a) where
+  (==) = (==)
+</code></pre>
+    </div>
+  </div>
+</div>
+

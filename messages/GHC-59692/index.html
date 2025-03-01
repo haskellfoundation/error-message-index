@@ -23,13 +23,67 @@
     <h1>Duplicate Instances [GHC-59692]</h1>
     
 
-<p>For type class coherence, at most one instance may be defined for each type for the same type class.</p>
-<p>Identical instances should simply be removed.
-If multiple instances for the same type are required, circumventing this restriction is possible by introducing a <code>newtype</code> wrapper.</p>
+<p>You can only define a single instance for every type, because it must be possible to automatically resolve class constraints without any ambiguity.</p>
+<p>If the instances are identical, you should simply remove one.
+If you want multiple instances for the same type, you can circumvent this restriction by introducing a <code>newtype</code> wrapper. An example of this is shown in the solution for the “Multiple Instances for Semigroup Int” example.</p>
+<p>Note that instances are considered the same even if they have different constraints. Only the arguments of the class are considered when matching instances. This issue is shown in the “Identical Instance Heads” example.</p>
+<p>See the <a href="https://downloads.haskell.org/~ghc/9.12.1/docs/users_guide/exts/instances.html">GHC User Guide</a> for more information on instance declarations and resolution.</p>
 
 
 
 <h2>Examples</h2>
+
+<details open="open">
+  <summary>Identical Instance Heads</summary>
+  <div class="details-inner">
+    <p>Even though the instances have different constraints, they are still considered the same.</p>
+<h2 id="error-message">Error message</h2>
+<pre><code>messages/GHC-59692/example1/before/Example1.hs:3:10: error: [GHC-59692]
+    Duplicate instance declarations:
+      instance Eq a =&gt; Eq (T a)
+        -- Defined at messages/GHC-59692/example1/before/Example1.hs:3:10
+      instance Show a =&gt; Eq (T a)
+        -- Defined at messages/GHC-59692/example1/before/Example1.hs:6:10
+  |
+3 | instance Eq a =&gt; Eq (T a) where
+  |          ^^^^^^^^^^^^^^^^</code></pre>
+
+<pre class="filename">Example1.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Example1 where
+
+data T a
+
+instance Eq a => Eq (T a) where
+  (==) = (==)
+
+instance Show a => Eq (T a) where
+  (==) = (==)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Example1 where
+
+data T a
+
+instance Eq a => Eq (T a) where
+  (==) = (==)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
 
 <details open="open">
   <summary>Multiple Instances for Semigroup Int</summary>
