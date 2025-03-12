@@ -1,0 +1,33 @@
+
+
+<pre class="filename">DsIncompleteRecSel.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module DsIncompleteRecSel where
+
+data T = T1 | T2 {x :: Bool}
+
+f :: T -> Bool
+f a = x a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module DsIncompleteRecSel where
+
+data T = T1 | T2 {x :: Bool}
+
+f :: T -> Bool
+f T1 = True -- handle the T1 case
+f a = x a
+</code></pre>
+    </div>
+  </div>
+</div>
+
