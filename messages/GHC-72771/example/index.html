@@ -1,0 +1,57 @@
+<h2 id="error-message">Error Message</h2>
+<pre><code>Lib.hs:10:11: error: [GHC-72771]
+    • The default type signature for enumerate: (Int ~ a) =&gt; a
+      does not match its corresponding non-default type signature
+    • When checking the class method:
+         enumerate :: forall a. Enumerate a =&gt; [a]
+      In the class declaration for ‘Enumerate’
+   |
+10 |   default enumerate :: (Int ~ a) =&gt; a
+   |           ^^^^^^^^^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Here, we have defined an <code>Enumerate</code> typeclass over some type <code>a</code>, its instance <code>enumerate</code> simply has the signature <code>[a]</code>.
+At the same time, we define a default method for <code>enumerate</code>, which is applied in case the <code>a</code> is of type <code>Int</code>.
+But, this default method has the type signature <code>a</code>, which is not equivalent to <code>[a]</code>, therefore this error is thrown.</p>
+<p>To resolve this error, we need to define the default method signature to match the method signature.
+Therefore, we define the default method signature to produce <code>[a]</code> instead of <code>a</code>.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE TypeOperators #-}
+
+module Lib where
+
+import GHC.Generics
+
+class Enumerate a where
+  enumerate :: [a]
+  default enumerate :: (Int ~ a) => a
+  enumerate = [1 ..]
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE TypeOperators #-}
+
+module Lib where
+
+import GHC.Generics
+
+class Enumerate a where
+  enumerate :: [a]
+  default enumerate :: (Int ~ a) => [a]
+  enumerate = [1 ..]
+</code></pre>
+    </div>
+  </div>
+</div>
+
