@@ -19,6 +19,7 @@ import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
 import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import Data.Monoid (mappend)
+import Data.String (IsString)
 import qualified Data.Text as T
 import Data.Traversable
 import Hakyll
@@ -38,6 +39,13 @@ main = hakyll $ do
   match "robots.txt" $ do
     route idRoute
     compile copyFileCompiler
+
+  -- Necessary for Google Search Console verification
+  let googleSiteVerification :: (IsString a) => a
+      googleSiteVerification = "googledf229fed7e7d2ee9.html"
+   in create [googleSiteVerification] $ do
+        route idRoute
+        compile $ makeItem ("google-site-verification: " ++ googleSiteVerification)
 
   match "images/*" $ do
     route idRoute
