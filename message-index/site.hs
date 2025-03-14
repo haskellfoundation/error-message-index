@@ -116,7 +116,7 @@ main = hakyll $ do
                 defaultContext
               ]
           )
-        >>= loadAndApplyTemplate "templates/default.html" (bread <> messageTitleField <> defaultContext)
+        >>= loadAndApplyTemplate "templates/default.html" (indexlessUrlField "url" <> bread <> messageTitleField <> defaultContext)
         >>= relativizeUrls
 
   match "messages/index.md" $ do
