@@ -1,0 +1,32 @@
+<pre><code>Lib.hs:3:11: error: [GHC-10498]
+    Conflicting definitions for ‘a’
+    Bound at: Lib.hs:3:11
+              Lib.hs:3:13
+  |
+3 | data Pair a a = Pair a a
+  |</code></pre>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+data Pair a a = Pair a a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+data Pair a = Pair a a
+</code></pre>
+    </div>
+  </div>
+</div>
+

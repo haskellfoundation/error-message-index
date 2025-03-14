@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conflicting definitions [GHC-10498] — Haskell Error Index</title>
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <script src="../../js/highlight.min.js"></script>
+  <link rel="stylesheet" href="../../css/default.css" />
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="canonical" href="../../messages/GHC-10498/" />
+</head>
+
+<body>
+  <main role="main">
+    <nav class="breadcrumb">
+      
+      <a href="../../">The Haskell Error Index</a>&nbsp;»
+      
+      Conflicting definitions [GHC-10498]
+    </nav>
+    <h1>Conflicting definitions [GHC-10498]</h1>
+    
+
+<p>GHC does not allow the same entity to have more than one
+definition. In some contexts it can figure out which one
+is supposed to shadow another: local definitions take
+priority over global definitions, etc. Shadowing is just
+a warning, GHC-63397. However, if the definitions are on the same
+level it becomes a fatal error.</p>
+
+
+
+<h2>Examples</h2>
+
+<details open="open">
+  <summary>Duplicate function arguments</summary>
+  <div class="details-inner">
+    <pre><code>Lib.hs:4:14: error: [GHC-10498]
+    • Conflicting definitions for ‘x’
+      Bound at: Lib.hs:4:14
+                Lib.hs:4:16
+    • In an equation for ‘areDifferent’
+  |
+4 | areDifferent x x = Nothing
+  |</code></pre>
+<p><em>Advanced topic:</em> somewhat surprisingly, you are allowed
+to duplicate arguments of type-level functions as in</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DataKinds, TypeFamilies #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="kw">family</span> <span class="dt">IsElem</span> x xs <span class="kw">where</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> _ '[]       <span class="ot">=</span> <span class="dt">'False</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> x (x '<span class="op">:</span> xs) <span class="ot">=</span> <span class="dt">'True</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> x (_ '<span class="op">:</span> xs) <span class="ot">=</span> <span class="dt">IsElem</span> x xs</span></code></pre></div>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+areDifferent :: a -> a -> Maybe (a, a)
+areDifferent x x = Nothing
+areDifferent x y = Just (x, y)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+areDifferent :: Eq a => a -> a -> Maybe (a, a)
+areDifferent x y
+  | x == y = Nothing
+areDifferent x y = Just (x, y)
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Duplicate datatype parameters</summary>
+  <div class="details-inner">
+    <pre><code>Lib.hs:3:11: error: [GHC-10498]
+    Conflicting definitions for ‘a’
+    Bound at: Lib.hs:3:11
+              Lib.hs:3:13
+  |
+3 | data Pair a a = Pair a a
+  |</code></pre>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+data Pair a a = Pair a a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+data Pair a = Pair a a
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Just a typo</summary>
+  <div class="details-inner">
+    <pre><code>Lib.hs:7:1: error: [GHC-29916]
+    Multiple declarations of ‘function’
+    Declared at: Lib.hs:4:1
+                 Lib.hs:7:1
+  |
+7 | function _ = 4
+  |</code></pre>
+<p>Because of a typo (<code>functlon</code> instead of <code>function</code>)
+GHC parses the third equation as a definition of
+<code>functlon</code> (without a type signature), while the fourth
+equation becomes a separate, conflicting definition of <code>function</code>.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+function :: Int -> Int
+function 1 = 1
+function 2 = 2
+functlon 3 = 3
+function _ = 4
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+function :: Int -> Int
+function 1 = 1
+function 2 = 2
+function 3 = 3
+function _ = 4
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+<details open="open">
+  <summary>Implicit duplication because of `RecordWildCards`</summary>
+  <div class="details-inner">
+    <pre><code>Lib.hs:8:9: error: [GHC-10498]
+    • Conflicting definitions for ‘x’
+      Bound at: Lib.hs:8:9-10
+                Lib.hs:8:13
+    • In an equation for ‘foo’
+  |
+8 | foo Foo{..} x = x + y
+  |</code></pre>
+<p>Consider using <code>NamedFieldPuns</code> to be more explicit
+about which variables are bound where.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RecordWildCards #-}
+
+module Lib where
+
+data Foo = Foo { x :: Int, y :: Int }
+
+foo :: Foo -> Int -> Int
+foo Foo{..} x = x + y
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NamedFieldPuns #-}
+
+module Lib where
+
+data Foo = Foo { x :: Int, y :: Int }
+
+foo :: Foo -> Int -> Int
+foo Foo{y} x = x + y
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
+
+
+  </main>
+
+  <footer>
+    <p class="HF foot">
+      This site is a project of <a href="https://haskell.foundation" target="_blank" rel="noopener noreferrer">The
+        Haskell Foundation</a>.
+    </p>
+    <p class="shoutout foot">
+      Site proudly generated by
+      <a href="http://jaspervdj.be/hakyll" target="_blank" rel="noopener noreferrer">Hakyll</a>
+    </p>
+  </footer>
+
+  <script>document.querySelectorAll('code.language-haskell').forEach(el => {
+      hljs.highlightElement(el);
+    });</script>
+</body>
+
+</html>

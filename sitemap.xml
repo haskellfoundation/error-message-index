@@ -170,6 +170,13 @@
     </url>
 
     <url>
+        <loc>https://errors.haskell.org/messages/GHC-10498/index.html</loc>
+        <changefreq>weekly</changefreq>
+        <lastmod>2025-03-14</lastmod>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://errors.haskell.org/messages/GHC-11861/index.html</loc>
         <changefreq>weekly</changefreq>
         <lastmod>2025-03-14</lastmod>

@@ -1,0 +1,45 @@
+<pre><code>Lib.hs:8:9: error: [GHC-10498]
+    • Conflicting definitions for ‘x’
+      Bound at: Lib.hs:8:9-10
+                Lib.hs:8:13
+    • In an equation for ‘foo’
+  |
+8 | foo Foo{..} x = x + y
+  |</code></pre>
+<p>Consider using <code>NamedFieldPuns</code> to be more explicit
+about which variables are bound where.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE RecordWildCards #-}
+
+module Lib where
+
+data Foo = Foo { x :: Int, y :: Int }
+
+foo :: Foo -> Int -> Int
+foo Foo{..} x = x + y
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE NamedFieldPuns #-}
+
+module Lib where
+
+data Foo = Foo { x :: Int, y :: Int }
+
+foo :: Foo -> Int -> Int
+foo Foo{y} x = x + y
+</code></pre>
+    </div>
+  </div>
+</div>
+

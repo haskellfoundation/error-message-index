@@ -1,0 +1,45 @@
+<pre><code>Lib.hs:4:14: error: [GHC-10498]
+    • Conflicting definitions for ‘x’
+      Bound at: Lib.hs:4:14
+                Lib.hs:4:16
+    • In an equation for ‘areDifferent’
+  |
+4 | areDifferent x x = Nothing
+  |</code></pre>
+<p><em>Advanced topic:</em> somewhat surprisingly, you are allowed
+to duplicate arguments of type-level functions as in</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE DataKinds, TypeFamilies #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="kw">family</span> <span class="dt">IsElem</span> x xs <span class="kw">where</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> _ '[]       <span class="ot">=</span> <span class="dt">'False</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> x (x '<span class="op">:</span> xs) <span class="ot">=</span> <span class="dt">'True</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">IsElem</span> x (_ '<span class="op">:</span> xs) <span class="ot">=</span> <span class="dt">IsElem</span> x xs</span></code></pre></div>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+areDifferent :: a -> a -> Maybe (a, a)
+areDifferent x x = Nothing
+areDifferent x y = Just (x, y)
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+areDifferent :: Eq a => a -> a -> Maybe (a, a)
+areDifferent x y
+  | x == y = Nothing
+areDifferent x y = Just (x, y)
+</code></pre>
+    </div>
+  </div>
+</div>
+
