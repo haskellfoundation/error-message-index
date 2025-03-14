@@ -33,9 +33,11 @@ The syntax for export lists is described in the <a href="https://www.haskell.org
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
 <p>This tells GHC to include all the symbols exported by the module <code>Data.List</code> to also be exported by <code>My.List.Reexport</code> module.</p>
 <p>The error message <code>GHC-90973</code> occurs when module’s export list contains a module export of a module, which hasn’t been imported.</p>
-<p>The usual way to fix it is to either:
-1. add the missing module import
-2. remove the <code>module &lt;MISSING-MODULE&gt;</code> export from the export list</p>
+<p>The usual way to fix it is to either:</p>
+<ol type="1">
+<li>add the missing module import</li>
+<li>remove the <code>module &lt;MISSING-MODULE&gt;</code> export from the export list</li>
+</ol>
 
 
 
