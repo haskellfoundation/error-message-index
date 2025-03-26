@@ -1,0 +1,53 @@
+<p>In this example, a quantified constraint occurs in the type of a binding.
+Because the head of the quantified constraint is computed from a type family, we
+get the following error message:</p>
+<pre><code>• Quantified predicate must have a class or type variable head:
+    a =&gt; A a
+• In the quantified constraint ‘a =&gt; A a’
+  In the type signature: f :: (a =&gt; A a) =&gt; ()</code></pre>
+<p>One potential fix for this is to convert the type family into a class.</p>
+
+<pre class="filename">QuantifiedFunction.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE QuantifiedConstraints #-}
+{-# LANGUAGE TypeFamilies          #-}
+
+module QuantifiedFunction where
+
+import Data.Kind
+
+class C a where
+
+type family A :: k -> Constraint
+
+f :: (C Int => A Int) => ()
+f = ()
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE QuantifiedConstraints #-}
+{-# LANGUAGE TypeFamilies          #-}
+
+module QuantifiedFunction where
+
+import Data.Kind
+
+class C a where
+
+class A a where
+
+f :: (C Int => A Int) => ()
+f = ()
+</code></pre>
+    </div>
+  </div>
+</div>
+
