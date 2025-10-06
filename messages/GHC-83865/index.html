@@ -142,6 +142,66 @@ isNothing _ = False
   </div>
 </details>
 
+<details open="open">
+  <summary>Forall-quantification not matched</summary>
+  <div class="details-inner">
+    <p>Function <code>f</code> takes an argument of type <code>forall r. r -&gt; r</code>, so you might think
+the function <code>g :: String -&gt; String</code> would be suitable, because the type variable
+<code>r</code> can be instantiated to the concrete type <code>String</code>.</p>
+<p>However, GHC 9.0 and later do not instantiate of forall-quantified variables in function arguments like that.</p>
+<p>You can almost always fix this issue by explicitly applying arguments as shown in the “after” column below.
+In fact, that is what GHC used to do automatically.
+Note that this can prevent sharing in some situation, which is why it was deemed better to make this explicit.</p>
+<p>Since GHC 9.2.4, you can also enable the <code>DeepSubsumption</code> language extension to fix this error which reverts GHC back to its old implicit behavior.</p>
+<p>For more detailed information see:</p>
+<ul>
+<li>Youtube: <a href="https://www.youtube.com/watch?v=XMnXbBRg-B0"><span class="citation" data-cites="rae">@rae</span>: What Haskell’s deep subsumption is, why we killed it, and then why we resurrected it.</a></li>
+<li>GHC Proposal: <a href="https://github.com/ghc-proposals/ghc-proposals/blob/master/proposals/0287-simplify-subsumption.rst">Simplify subsumption</a></li>
+</ul>
+<h2 id="error-message">Error Message</h2>
+<pre><code>Subsumption.hs:2:5: error: [GHC-83865]
+    • Couldn't match type: String -&gt; String
+                     with: forall r. r -&gt; r
+      Expected: (forall r. r -&gt; r) -&gt; Int
+        Actual: (String -&gt; String) -&gt; Int
+    • In the expression: g
+      In an equation for ‘f’: f = g
+  |
+2 | f = g
+  |     ^</code></pre>
+
+<pre class="filename">Subsumption.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">f :: (forall r. r -> r) -> Int
+f = g
+
+g :: (String -> String) -> Int
+g _ = 1337
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">f :: (forall r. r -> r) -> Int
+f x = g x
+
+g :: (String -> String) -> Int
+g _ = 1337
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
 
 
   </main>
