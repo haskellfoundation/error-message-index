@@ -1,0 +1,13 @@
+cabal-version:      3.0
+
+name:                fruits
+version:             0.0.1
+license:             MIT
+author:              Jappie
+maintainer:          hi@jappie.me
+build-type:          Simple
+
+library
+  exposed-modules:  Tomatoes
+  build-depends:       base
+  default-language:    Haskell2010
