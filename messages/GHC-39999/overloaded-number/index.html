@@ -1,0 +1,47 @@
+<h2 id="error-message">Error message</h2>
+<pre><code>Lib.hs:4:17: error: [GHC-39999]
+    • No instance for ‘Num [Int]’ arising from the literal ‘0’
+    • In the second argument of ‘map’, namely ‘0’
+      In the expression: map (+ 1) 0
+      In an equation for ‘foo’: foo = map (+ 1) 0
+  |
+4 | foo = map (+ 1) 0
+  |                 ^</code></pre>
+<h2 id="explanation">Explanation</h2>
+<p>Sometimes, when GHC encounters a type error, it suggests solving
+it from an unexpected end. In this case, when it encouters a literal
+instead of a list, it does not just complain about it. Instead it suspects
+that maybe an author meant to overload numeric literals so that they can mean lists too.</p>
+<p>Every time you write a numeric literal in Haskell,
+it gets desugared using <code>fromInteger :: Num a =&gt; Integer -&gt; a</code>. So the program above
+would be absolutely valid if only <code>[Int]</code> itself (not just <code>Int</code>) was an instance of <code>Num</code>.
+While such interpretation of lists is not entirely out of the realm of possibility
+(say, imagine that lists represent coefficients of polynomials), it’s much more likely
+that <code>map (+ 1) 0</code> is just a typo.</p>
+
+<pre class="filename">Lib.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+foo :: [Int]
+foo = map (+ 1) 0
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">module Lib where
+
+foo :: [Int]
+foo = map (+ 1) [0]
+</code></pre>
+    </div>
+  </div>
+</div>
+
