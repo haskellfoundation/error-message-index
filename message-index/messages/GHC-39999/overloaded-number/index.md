@@ -19,7 +19,7 @@ Lib.hs:4:17: error: [GHC-39999]
 ## Explanation
 
 Sometimes, when GHC encounters a type error, it suggests solving
-it from an unexpected end. In this case, when it encouters a literal
+it from an unexpected end. In this case, when it encounters a literal
 instead of a list, it does not just complain about it. Instead it suspects
 that maybe an author meant to overload numeric literals so that they can mean lists too.
 
