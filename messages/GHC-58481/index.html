@@ -281,6 +281,52 @@ foo = #foo
   </div>
 </details>
 
+<details open="open">
+  <summary>Use of `capi` calling convention</summary>
+  <div class="details-inner">
+    <p>In this example the user attempted to use <code>capi</code> calling convention for foreign imports without enabling the <code>CApiFFI</code> extension, which leads to this generic parsing error.</p>
+<pre><code>CAPI.hs:5:16: error: [GHC-58481]
+    parse error on input ‘capi’
+  |
+5 | foreign import capi &quot;setenv&quot;
+  |                ^^^^</code></pre>
+
+<pre class="filename">CAPI.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module CAPI where
+
+import Foreign.C
+
+foreign import capi "setenv"
+  c_setenv :: CString -> CString -> CInt -> IO CInt
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE CApiFFI #-}
+
+module CAPI where
+
+import Foreign.C
+
+foreign import capi "setenv"
+  c_setenv :: CString -> CString -> CInt -> IO CInt
+</code></pre>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</details>
+
 
 
   </main>
