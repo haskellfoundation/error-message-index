@@ -1,0 +1,3 @@
+module BootModuleDataTypeNotInOrdinaryModule where
+
+data BootModuleOnlyDataType = BootModuleOnlyDataType String
