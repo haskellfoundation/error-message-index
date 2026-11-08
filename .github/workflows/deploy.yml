@@ -15,7 +15,7 @@ jobs:
       matrix:
         target: [haskellorg, githubpages]
         ghc: ["9.2.5"]
-        cabal: ["3.10.1"]
+        cabal: ["3.18"]
 
     steps:
     - name: Check out repo
