@@ -1,0 +1,29 @@
+<p>In the example, type family F is defined with an incorrect injectivity annotation. The left-hand side (LHS) of the injectivity condition should be the output type variable (r), but in the definition, it is the input type variable (a). This is what the error message is referring to.</p>
+
+<pre class="filename">Test.hs</pre>
+<div class="example-container">
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">Before</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format properly -->
+      <pre class="example-pre"><code class="language-haskell">module IncorrectTypeVarLHSInjectivityCondition where
+
+type family F a = r | a -> a
+</code></pre>
+    </div>
+  </div>
+  <div class="example">
+    <div class="example-inner">
+      <div class="example-title">After</div>
+      <!-- keep next line as is, i.e., on one line, or the code will not format propertly -->
+      <pre class="example-pre"><code class="language-haskell">{-# LANGUAGE PolyKinds #-}
+{-# LANGUAGE TypeFamilyDependencies #-}
+
+module IncorrectTypeVarLHSInjectivityCondition where
+
+type family F a = r | r -> a
+</code></pre>
+    </div>
+  </div>
+</div>
+
